@@ -61,91 +61,180 @@
                         </div>
                     </div>
 
-                    {{-- Card Tes Kecerdasan (Tryout CBT filtered) --}}
+                    {{-- Card Tes Bahasa Inggris --}}
                     <div class="col-md-3 mb-4">
                         @php
-                            $canAccessKecerdasan = in_array(Auth::user()->paket_akses, ['free', 'kecerdasan', 'lengkap']);
+                            $canAccessBahasaInggris = in_array(Auth::user()->paket_akses, ['free', 'bahasa_inggris', 'lengkap']);
                         @endphp
-                        <div class="test-card h-100 {{ !$canAccessKecerdasan ? 'disabled-card' : '' }}">
-                            @if (!$canAccessKecerdasan)
+                        <div class="test-card h-100 {{ !$canAccessBahasaInggris ? 'disabled-card' : '' }}">
+                            @if (!$canAccessBahasaInggris)
                                 <div class="lock-overlay">
                                     <i class="fa fa-lock"></i>
                                 </div>
                             @endif
                             <div class="test-icon-container">
-                                <i class="fa fa-brain test-icon"></i>
+                                <i class="fa fa-language test-icon"></i>
                             </div>
                             <div class="test-content">
-                                <h3 class="test-title">Tes Kecerdasan</h3>
+                                <h3 class="test-title">Tes Bahasa Inggris</h3>
                                 <p class="test-description">
-                                    Tryout CBT fokus kecerdasan umum. Materi logika, numerik, dan verbal.
+                                    Tryout CBT fokus Bahasa Inggris. Materi grammar, vocabulary, dan reading comprehension.
                                 </p>
                                 <div class="test-features">
                                     <div class="feature-badge">
-                                        <i class="fa fa-calculator"></i> Numerik
+                                        <i class="fa fa-book"></i> Grammar
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-comments-o"></i> Verbal
+                                        <i class="fa fa-font"></i> Vocabulary
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-cube"></i> Logika
+                                        <i class="fa fa-file-text"></i> Reading
                                     </div>
                                 </div>
                             </div>
                             <div class="test-button-container">
-                                @if ($canAccessKecerdasan)
-                                    <a href="{{ route('user.tryout.index', ['type' => 'kecerdasan']) }}" class="btn btn-test-success">
-                                        <i class="fa fa-play"></i> Mulai Tes Kecerdasan
+                                @if ($canAccessBahasaInggris)
+                                    <a href="{{ route('user.tryout.index', ['type' => 'bahasa_inggris']) }}" class="btn btn-test-success">
+                                        <i class="fa fa-play"></i> Mulai Tes Bahasa Inggris
                                     </a>
                                 @else
                                     <button class="btn btn-disabled" disabled>
-                                        <i class="fa fa-lock"></i> Butuh Paket Kecerdasan
+                                        <i class="fa fa-lock"></i> Butuh Paket Bahasa Inggris
                                     </button>
                                 @endif
                             </div>
                         </div>
                     </div>
 
-                    {{-- Card Tes Kepribadian (Tryout CBT filtered) --}}
+                    {{-- Card Tes Pengetahuan Umum --}}
                     <div class="col-md-3 mb-4">
                         @php
-                            $canAccessKepribadian = in_array(Auth::user()->paket_akses, ['free', 'kepribadian', 'lengkap']);
+                            $canAccessPU = in_array(Auth::user()->paket_akses, ['free', 'pu', 'lengkap']);
                         @endphp
-                        <div class="test-card h-100 {{ !$canAccessKepribadian ? 'disabled-card' : '' }}">
-                            @if (!$canAccessKepribadian)
+                        <div class="test-card h-100 {{ !$canAccessPU ? 'disabled-card' : '' }}">
+                            @if (!$canAccessPU)
                                 <div class="lock-overlay">
                                     <i class="fa fa-lock"></i>
                                 </div>
                             @endif
                             <div class="test-icon-container">
-                                <i class="fa fa-graduation-cap test-icon"></i>
+                                <i class="fa fa-book test-icon"></i>
                             </div>
                             <div class="test-content">
-                                <h3 class="test-title">Tes Kepribadian</h3>
+                                <h3 class="test-title">Tes Pengetahuan Umum</h3>
                                 <p class="test-description">
-                                    Tryout CBT dengan tes kepribadian dan karakter. Simulasi wawancara
-                                    dengan analisis profil lengkap.
+                                    Tryout CBT fokus Pengetahuan Umum. Materi sejarah, geografi, dan pengetahuan umum.
                                 </p>
                                 <div class="test-features">
                                     <div class="feature-badge">
-                                        <i class="fa fa-user"></i> Tes Kepribadian
+                                        <i class="fa fa-history"></i> Sejarah
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-comments"></i> Simulasi Wawancara
+                                        <i class="fa fa-globe"></i> Geografi
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-file-text"></i> Profil Psikologi
+                                        <i class="fa fa-lightbulb-o"></i> Pengetahuan Umum
                                     </div>
                                 </div>
                             </div>
                             <div class="test-button-container">
-                                @if ($canAccessKepribadian)
-                                    <a href="{{ route('user.tryout.index', ['type' => 'kepribadian']) }}" class="btn btn-test-success">
-                                        <i class="fa fa-play"></i> Mulai Tes Kepribadian
+                                @if ($canAccessPU)
+                                    <a href="{{ route('user.tryout.index', ['type' => 'pu']) }}" class="btn btn-test-success">
+                                        <i class="fa fa-play"></i> Mulai Tes Pengetahuan Umum
                                     </a>
                                 @else
                                     <button class="btn btn-disabled" disabled>
-                                        <i class="fa fa-lock"></i> Butuh Paket Kepribadian
+                                        <i class="fa fa-lock"></i> Butuh Paket Pengetahuan Umum
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Card Tes TWK --}}
+                    <div class="col-md-3 mb-4">
+                        @php
+                            $canAccessTWK = in_array(Auth::user()->paket_akses, ['free', 'twk', 'lengkap']);
+                        @endphp
+                        <div class="test-card h-100 {{ !$canAccessTWK ? 'disabled-card' : '' }}">
+                            @if (!$canAccessTWK)
+                                <div class="lock-overlay">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            @endif
+                            <div class="test-icon-container">
+                                <i class="fa fa-flag test-icon"></i>
+                            </div>
+                            <div class="test-content">
+                                <h3 class="test-title">Tes Wawasan Kebangsaan</h3>
+                                <p class="test-description">
+                                    Tryout CBT fokus Tes Wawasan Kebangsaan. Materi Pancasila, UUD 1945, dan wawasan kebangsaan.
+                                </p>
+                                <div class="test-features">
+                                    <div class="feature-badge">
+                                        <i class="fa fa-star"></i> Pancasila
+                                    </div>
+                                    <div class="feature-badge">
+                                        <i class="fa fa-file-text"></i> UUD 1945
+                                    </div>
+                                    <div class="feature-badge">
+                                        <i class="fa fa-flag"></i> Wawasan Kebangsaan
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="test-button-container">
+                                @if ($canAccessTWK)
+                                    <a href="{{ route('user.tryout.index', ['type' => 'twk']) }}" class="btn btn-test-success">
+                                        <i class="fa fa-play"></i> Mulai Tes TWK
+                                    </a>
+                                @else
+                                    <button class="btn btn-disabled" disabled>
+                                        <i class="fa fa-lock"></i> Butuh Paket TWK
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Card Tes Numerik --}}
+                    <div class="col-md-3 mb-4">
+                        @php
+                            $canAccessNumerik = in_array(Auth::user()->paket_akses, ['free', 'numerik', 'lengkap']);
+                        @endphp
+                        <div class="test-card h-100 {{ !$canAccessNumerik ? 'disabled-card' : '' }}">
+                            @if (!$canAccessNumerik)
+                                <div class="lock-overlay">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            @endif
+                            <div class="test-icon-container">
+                                <i class="fa fa-calculator test-icon"></i>
+                            </div>
+                            <div class="test-content">
+                                <h3 class="test-title">Tes Penalaran Numerik</h3>
+                                <p class="test-description">
+                                    Tryout CBT fokus Penalaran Numerik. Materi matematika dasar, logika angka, dan perhitungan.
+                                </p>
+                                <div class="test-features">
+                                    <div class="feature-badge">
+                                        <i class="fa fa-calculator"></i> Matematika Dasar
+                                    </div>
+                                    <div class="feature-badge">
+                                        <i class="fa fa-cube"></i> Logika Angka
+                                    </div>
+                                    <div class="feature-badge">
+                                        <i class="fa fa-chart-line"></i> Perhitungan
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="test-button-container">
+                                @if ($canAccessNumerik)
+                                    <a href="{{ route('user.tryout.index', ['type' => 'numerik']) }}" class="btn btn-test-success">
+                                        <i class="fa fa-play"></i> Mulai Tes Numerik
+                                    </a>
+                                @else
+                                    <button class="btn btn-disabled" disabled>
+                                        <i class="fa fa-lock"></i> Butuh Paket Numerik
                                     </button>
                                 @endif
                             </div>
