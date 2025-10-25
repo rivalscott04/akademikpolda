@@ -60,7 +60,23 @@
                                             <th>Kategori Skor</th>
                                             <td>
                                                 @if ($hasilTes->kategori_skor)
-                                                    <span class="badge badge-success">{{ $hasilTes->kategori_skor }}</span>
+                                                    @php
+                                                        $badgeClass = 'badge-secondary';
+                                                        if ($hasilTes->kategori_skor === 'Sangat Tinggi') {
+                                                            $badgeClass = 'badge-success';
+                                                        } elseif ($hasilTes->kategori_skor === 'Tinggi') {
+                                                            $badgeClass = 'badge-info';
+                                                        } elseif ($hasilTes->kategori_skor === 'Baik') {
+                                                            $badgeClass = 'badge-primary';
+                                                        } elseif ($hasilTes->kategori_skor === 'Cukup') {
+                                                            $badgeClass = 'badge-warning';
+                                                        } elseif ($hasilTes->kategori_skor === 'Rendah') {
+                                                            $badgeClass = 'badge-danger';
+                                                        } elseif ($hasilTes->kategori_skor === 'Sangat Rendah') {
+                                                            $badgeClass = 'badge-danger';
+                                                        }
+                                                    @endphp
+                                                    <span class="badge {{ $badgeClass }}">{{ $hasilTes->kategori_skor }}</span>
                                                 @else
                                                     <span class="badge badge-secondary">Belum Dinilai</span>
                                                 @endif
@@ -443,12 +459,108 @@
                                                 </div>
                                             @endif
                                         @else
-                                            <!-- Untuk jenis tes lain, tampilkan JSON yang diformat -->
+                                            <!-- Tampilan umum untuk semua jenis tes -->
                                             <div class="alert alert-info">
                                                 <i class="fa fa-info-circle"></i> 
-                                                Detail jawaban untuk jenis tes {{ $hasilTes->jenis_tes }}:
+                                                Detail jawaban untuk jenis tes {{ strtoupper($hasilTes->jenis_tes) }}:
                                             </div>
-                                            <pre class="bg-light p-3" style="max-height: 400px; overflow-y: auto;">{{ json_encode($detailJawaban, JSON_PRETTY_PRINT) }}</pre>
+                                            
+                                            @if(isset($detailJawaban['category_scores']) && is_array($detailJawaban['category_scores']))
+                                                <!-- Tampilan untuk tes dengan kategori -->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h6 class="mb-0"><i class="fa fa-chart-bar"></i> Skor per Kategori</h6>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <table class="table table-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Kategori</th>
+                                                                            <th class="text-center">Benar</th>
+                                                                            <th class="text-center">Total</th>
+                                                                            <th class="text-center">Persentase</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($detailJawaban['category_scores'] as $category)
+                                                                        <tr>
+                                                                            <td><strong>{{ $category['nama'] }}</strong></td>
+                                                                            <td class="text-center">
+                                                                                <span class="badge badge-success">{{ $category['correct'] }}</span>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                <span class="badge badge-info">{{ $category['total'] }}</span>
+                                                                            </td>
+                                                                            <td class="text-center">
+                                                                                @php
+                                                                                    $percentage = $category['total'] > 0 ? round(($category['correct'] / $category['total']) * 100, 1) : 0;
+                                                                                    $badgeClass = $percentage >= 80 ? 'badge-success' : ($percentage >= 60 ? 'badge-warning' : 'badge-danger');
+                                                                                @endphp
+                                                                                <span class="badge {{ $badgeClass }}">{{ $percentage }}%</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h6 class="mb-0"><i class="fa fa-info-circle"></i> Ringkasan Tes</h6>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="row text-center">
+                                                                    <div class="col-6">
+                                                                        <h4 class="text-primary">{{ $detailJawaban['correct_answers'] ?? 0 }}</h4>
+                                                                        <small class="text-muted">Jawaban Benar</small>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <h4 class="text-warning">{{ $detailJawaban['wrong_answers'] ?? 0 }}</h4>
+                                                                        <small class="text-muted">Jawaban Salah</small>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="text-center">
+                                                                    <h3 class="text-success">{{ number_format($detailJawaban['final_score'] ?? 0, 1) }}</h3>
+                                                                    <small class="text-muted">Skor Akhir</small>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <!-- Tampilan untuk tes tanpa kategori -->
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="card text-center">
+                                                            <div class="card-body">
+                                                                <h3 class="text-success">{{ $detailJawaban['correct_answers'] ?? 0 }}</h3>
+                                                                <p class="card-text">Jawaban Benar</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card text-center">
+                                                            <div class="card-body">
+                                                                <h3 class="text-danger">{{ $detailJawaban['wrong_answers'] ?? 0 }}</h3>
+                                                                <p class="card-text">Jawaban Salah</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="card text-center">
+                                                            <div class="card-body">
+                                                                <h3 class="text-primary">{{ number_format($detailJawaban['final_score'] ?? 0, 1) }}</h3>
+                                                                <p class="card-text">Skor Akhir</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
