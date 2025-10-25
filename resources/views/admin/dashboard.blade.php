@@ -666,7 +666,7 @@
                                                             <i class="fa fa-brain text-primary"></i> Paket Kecerdasan
                                                             @break
                                                         @case('akademik')
-                                                            <i class="fa fa-user text-info"></i> Paket Kepribadian
+                                                            <i class="fa fa-graduation-cap text-info"></i> Paket AKADEMIK
                                                             @break
                                                         @case('lengkap')
                                                             <i class="fa fa-star text-warning"></i> Paket Lengkap

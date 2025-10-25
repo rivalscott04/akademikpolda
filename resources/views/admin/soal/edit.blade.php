@@ -269,7 +269,7 @@
                 const existingJawabanBenar = '{{ $soal->jawaban_benar }}';
 
                 // Load akademik categories from server
-                function loadKepribadianCodes() {
+                function loadAkademikCodes() {
                     $.get('{{ route('admin.soal.akademik-categories') }}')
                         .done(function(data) {
                             akademikCodes = data;
@@ -286,7 +286,7 @@
                 }
 
                 // Function to check if category is in akademik package
-                function checkIfKepribadianCategory(kategoriId) {
+                function checkIfAkademikCategory(kategoriId) {
                     if (!kategoriId) return false;
 
                     // Get category code from selected option
@@ -297,10 +297,10 @@
                         akademikCodes);
 
                     // Check if category code is in akademik package mapping
-                    const isKepribadian = akademikCodes.some(code => optionText.includes(code));
-                    console.log('Is in akademik package:', isKepribadian);
+                    const isAkademik = akademikCodes.some(code => optionText.includes(code));
+                    console.log('Is in akademik package:', isAkademik);
 
-                    return isKepribadian;
+                    return isAkademik;
                 }
 
                 // Debug: Log data yang diterima
@@ -312,14 +312,14 @@
                 console.log('========================');
 
                 // Load akademik codes on page load
-                loadKepribadianCodes();
+                loadAkademikCodes();
 
                 // Function to toggle akademik styling
-                function toggleKecermatanStyling() {
+                function toggleAkademikStyling() {
                     const kategoriText = $('#kategori_id option:selected').text();
-                    const isKecermatan = kategoriText.includes('KECERMATAN') || kategoriText.includes('Kecermatan');
+                    const isAkademik = kategoriText.includes('BAHASA_INGGRIS') || kategoriText.includes('PU') || kategoriText.includes('TWK') || kategoriText.includes('NUMERIK');
 
-                    if (isKecermatan) {
+                    if (isAkademik) {
                         $('#opsi-container').addClass('akademik-opsi');
                     } else {
                         $('#opsi-container').removeClass('akademik-opsi');
@@ -329,7 +329,7 @@
                 // Initialize form immediately if we have existing data
                 if (existingTipe) {
                     $('#tipe').val(existingTipe);
-                    toggleKecermatanStyling();
+                    toggleAkademikStyling();
                     generateOpsi(existingTipe);
                     toggleJawabanBenar(existingTipe);
                     toggleGambarUpload(existingTipe);
@@ -349,7 +349,7 @@
                     toggleJawabanBenar(tipe);
                     toggleGambarUpload(tipe);
                     setupJawabanHandling(tipe);
-                    toggleKecermatanStyling();
+                    toggleAkademikStyling();
                 });
 
                 // Handle kategori change
@@ -363,18 +363,18 @@
                     }
 
                     // Apply akademik styling
-                    toggleKecermatanStyling();
+                    toggleAkademikStyling();
                 });
 
                 // Function to update bobot inputs based on current category
                 function updateBobotInputs() {
                     const kategoriId = $('#kategori_id').val();
-                    const isKepribadian = checkIfKepribadianCategory(kategoriId);
+                    const isAkademik = checkIfAkademikCategory(kategoriId);
 
                     $('.bobot-input').each(function() {
                         if ($(this).is('input[type="number"]')) {
-                            $(this).attr('step', isKepribadian ? '1' : '0.01');
-                            $(this).attr('min', isKepribadian ? '1' : '0');
+                            $(this).attr('step', isAkademik ? '1' : '0.01');
+                            $(this).attr('min', isAkademik ? '1' : '0');
                             // Remove max attribute to avoid HTML5 validation
                             $(this).removeAttr('max');
                         }
@@ -544,7 +544,7 @@
 
                     // Check if current category is akademik (, PSIKOTES)
                     const kategoriId = $('#kategori_id').val();
-                    const isKepribadian = checkIfKepribadianCategory(kategoriId);
+                    const isAkademik = checkIfAkademikCategory(kategoriId);
 
                     const opsiHtml = `
             <div class="row mb-2 opsi-item" data-letter="${letter}">
@@ -558,9 +558,9 @@
                 ${showBobot ? `
                             <div class="col-2">
                                 <input type="number" class="form-control bobot-input" name="opsi[${opsiCount}][bobot]"
-                                       step="${isKepribadian ? '1' : '0.01'}"
-                                       min="${isKepribadian ? '1' : '0'}"
-                                       placeholder="Bobot" value="${isKepribadian ? '1' : '0'}">
+                                       step="${isAkademik ? '1' : '0.01'}"
+                                       min="${isAkademik ? '1' : '0'}"
+                                       placeholder="Bobot" value="${isAkademik ? '1' : '0'}">
                             </div>
                         ` : `
                             <div class="col-2">
@@ -799,12 +799,12 @@
                     // Check bobot total for pg_bobot
                     if (tipe === 'pg_bobot') {
                         const kategoriId = $('#kategori_id').val();
-                        const isKepribadian = checkIfKepribadianCategory(kategoriId);
+                        const isAkademik = checkIfAkademikCategory(kategoriId);
 
-                        console.log('Form validation - kategoriId:', kategoriId, 'isInKepribadianPackage:',
-                            isKepribadian);
+                        console.log('Form validation - kategoriId:', kategoriId, 'isInAkademikPackage:',
+                            isAkademik);
 
-                        if (isKepribadian) {
+                        if (isAkademik) {
                             // For categories in akademik package, validate each bobot is between 1-5
                             let hasInvalidBobot = false;
                             $('input[name*="[bobot]"]').each(function() {

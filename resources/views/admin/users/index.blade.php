@@ -458,9 +458,11 @@
                                                                     @method('PUT')
                                                                     <input type="hidden" name="package" value="">
                                                                     <button type="button" class="pill-item" data-value="lengkap">Lengkap</button>
-                                                                    <button type="button" class="pill-item" data-value="akademik">Kecermatan</button>
+                                                                    <button type="button" class="pill-item" data-value="bahasa_inggris">Bahasa Inggris</button>
                                                                     <button type="button" class="pill-item" data-value="kecerdasan">Kecerdasan</button>
-                                                                    <button type="button" class="pill-item" data-value="akademik">Kepribadian</button>
+                                                                    <button type="button" class="pill-item" data-value="pu">PU</button>
+                                                                    <button type="button" class="pill-item" data-value="twk">TWK</button>
+                                                                    <button type="button" class="pill-item" data-value="numerik">Numerik</button>
                                                                     <button type="button" class="pill-item" data-value="free">Free</button>
                                                                     <button type="button" class="pill-item" data-value="">No Package</button>
                                                                 </form>

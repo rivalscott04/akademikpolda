@@ -58,7 +58,7 @@
                                     </div>
                                     <h4 class="mt-3">Laporan Per Paket</h4>
                                     <p class="text-muted">
-                                        Analisis mendalam kemampuan siswa per paket tes (Kepribadian, Kecerdasan, dll). 
+                                        Analisis mendalam kemampuan siswa per paket tes (Bahasa Inggris, PU, TWK, Numerik, dll). 
                                         Fokus pada kategori-kategori dalam paket tertentu dengan rekomendasi spesifik 
                                         untuk peningkatan performa.
                                     </p>
@@ -85,7 +85,7 @@
                                 <h5><i class="fa fa-info-circle"></i> Informasi Laporan</h5>
                                 <ul class="mb-0">
                                     <li><strong>Laporan Paket Lengkap:</strong> Menampilkan analisis menyeluruh dari semua tes yang telah diambil siswa</li>
-                                    <li><strong>Laporan Per Paket:</strong> Menampilkan analisis spesifik untuk paket tertentu (Kepribadian, Kecerdasan, dll)</li>
+                                    <li><strong>Laporan Per Paket:</strong> Menampilkan analisis spesifik untuk paket tertentu (Bahasa Inggris, PU, TWK, Numerik, dll)</li>
                                     <li>Semua laporan membandingkan performa tes pertama vs terakhir untuk mengidentifikasi progress</li>
                                     <li>Rekomendasi disesuaikan dengan hasil analisis untuk memberikan strategi belajar yang tepat</li>
                                 </ul>
