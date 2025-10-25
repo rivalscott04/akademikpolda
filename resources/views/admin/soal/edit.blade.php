@@ -48,18 +48,6 @@
                                                             Benar / Salah
                                                         @break
 
-                                                        @case('pg_satu')
-                                                            Pilihan Ganda (Satu Jawaban)
-                                                        @break
-
-                                                        @case('pg_bobot')
-                                                            Pilihan Ganda (Berbobot)
-                                                        @break
-
-                                                        @case('pg_pilih_2')
-                                                            Pilihan Ganda (Pilih 2)
-                                                        @break
-
                                                         @case('gambar')
                                                             Soal dengan Gambar
                                                         @break
@@ -70,6 +58,9 @@
                                         @error('tipe')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        <small class="text-muted">
+                                            <strong>Untuk kategori akademik:</strong> Hanya tersedia tipe Benar/Salah dan Soal dengan Gambar
+                                        </small>
                                     </div>
                                 </div>
                             </div>

@@ -43,9 +43,14 @@ class SoalController extends Controller
     public function create()
     {
         $kategoris = KategoriSoal::active()->get();
-        $tipes = ['benar_salah', 'pg_satu', 'pg_bobot', 'pg_pilih_2', 'gambar'];
+        
+        // Get academic category codes
+        $akademikKategoriCodes = ['BAHASA_ING', 'PU', 'TWK', 'NUMERIK'];
+        
+        // For academic categories, only allow benar_salah and gambar
+        $tipes = ['benar_salah', 'gambar'];
 
-        return view('admin.soal.create', compact('kategoris', 'tipes'));
+        return view('admin.soal.create', compact('kategoris', 'tipes', 'akademikKategoriCodes'));
     }
 
     public function getKepribadianCategories()
@@ -98,7 +103,7 @@ class SoalController extends Controller
         
         $rules = [
             'pertanyaan' => 'required|string',
-            'tipe' => 'required|in:benar_salah,pg_satu,pg_bobot,pg_pilih_2,gambar',
+            'tipe' => 'required|in:benar_salah,gambar',
             'level' => 'required|in:dasar,mudah,sedang,sulit,tersulit,ekstrem',
             'kategori_id' => 'required|exists:kategori_soal,id',
             'pembahasan' => 'nullable|string',
@@ -344,9 +349,14 @@ class SoalController extends Controller
     {
         $soal->load(['kategori', 'opsi']);
         $kategoris = KategoriSoal::active()->get();
-        $tipes = ['benar_salah', 'pg_satu', 'pg_bobot', 'pg_pilih_2', 'gambar'];
+        
+        // Get academic category codes
+        $akademikKategoriCodes = ['BAHASA_ING', 'PU', 'TWK', 'NUMERIK'];
+        
+        // For academic categories, only allow benar_salah and gambar
+        $tipes = ['benar_salah', 'gambar'];
 
-        return view('admin.soal.edit', compact('soal', 'kategoris', 'tipes'));
+        return view('admin.soal.edit', compact('soal', 'kategoris', 'tipes', 'akademikKategoriCodes'));
     }
 
     public function update(Request $request, Soal $soal)
@@ -354,7 +364,7 @@ class SoalController extends Controller
 
         $rules = [
             'pertanyaan' => 'required|string',
-            'tipe' => 'required|in:benar_salah,pg_satu,pg_bobot,pg_pilih_2,gambar',
+            'tipe' => 'required|in:benar_salah,gambar',
             'level' => 'required|in:dasar,mudah,sedang,sulit,tersulit,ekstrem',
             'kategori_id' => 'required|exists:kategori_soal,id',
             'pembahasan' => 'nullable|string',
