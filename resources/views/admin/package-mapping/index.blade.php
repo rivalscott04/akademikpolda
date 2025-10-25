@@ -48,26 +48,28 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             @if($packageType === 'lengkap')
-                                            <div class="custom-control custom-checkbox d-flex align-items-center mb-3">
+                                            <div class="custom-control custom-checkbox mb-3" style="display: flex; align-items: center;">
                                                 <input type="checkbox" 
                                                        class="custom-control-input select-all-checkbox" 
                                                        id="select_all_{{ $packageType }}"
-                                                       data-package-type="{{ $packageType }}">
-                                                <label class="custom-control-label ml-2 font-weight-bold text-primary" for="select_all_{{ $packageType }}">
+                                                       data-package-type="{{ $packageType }}"
+                                                       style="margin-top: 0;">
+                                                <label class="custom-control-label ml-2 font-weight-bold text-primary" for="select_all_{{ $packageType }}" style="margin-bottom: 0; line-height: 1.2;">
                                                     <i class="fa fa-check-square"></i> Centang Semua
                                                 </label>
                                             </div>
                                             @endif
                                             <label class="font-weight-bold">Pilih Kategori Soal:</label>
                                             @foreach($kategoris as $kategori)
-                                                <div class="custom-control custom-checkbox d-flex align-items-center">
+                                                <div class="custom-control custom-checkbox" style="display: flex; align-items: center;">
                                                     <input type="checkbox" 
                                                            class="custom-control-input package-checkbox" 
                                                            id="{{ $packageType }}_{{ $kategori->id }}"
                                                            name="mappings[{{ $packageType }}][]" 
                                                            value="{{ $kategori->id }}"
-                                                           {{ in_array($kategori->kode, $mappings[$packageType] ?? []) ? 'checked' : '' }}>
-                                                    <label class="custom-control-label ml-2" for="{{ $packageType }}_{{ $kategori->id }}">
+                                                           {{ in_array($kategori->kode, $mappings[$packageType] ?? []) ? 'checked' : '' }}
+                                                           style="margin-top: 0;">
+                                                    <label class="custom-control-label ml-2" for="{{ $packageType }}_{{ $kategori->id }}" style="margin-bottom: 0; line-height: 1.2;">
                                                         <strong>{{ $kategori->kode }}</strong> - {{ $kategori->nama }}
                                                     </label>
                                                 </div>

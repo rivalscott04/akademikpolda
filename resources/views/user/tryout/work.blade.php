@@ -691,19 +691,22 @@
         .question-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
             margin-bottom: 1rem;
+            padding: 8px;
         }
 
         .question-number {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
             transition: all 0.2s;
+            margin: 0 auto;
         }
 
         .question-number.current {
@@ -733,7 +736,7 @@
         .question-legend {
             width: 20px;
             height: 20px;
-            border-radius: 50%;
+            border-radius: 4px;
             margin-right: 0.5rem;
         }
 
