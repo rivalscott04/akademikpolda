@@ -713,13 +713,13 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="hero-text">Sukses Tes Akademik</h1>
-                    <h1 class="hero-text">Kepolisian</h1>
-                    <h3 class="hero-subtext">Persiapkan diri dengan matang untuk meraih kesuksesan dalam tes akademik kepolisian</h3>
+                    <h1 class="hero-text">Sukses Tes</h1>
+                    <h1 class="hero-text">Akademik POLRI</h1>
+                    <h3 class="hero-subtext">Persiapan matang untuk sukses tes akademik kepolisian</h3>
                     <div class="tagline-container">
                         <span class="tagline-item">Persiapan.</span>
                         <span class="tagline-item highlight">Sukses.</span>
-                        <span class="tagline-item highlight">Kepolisian.</span>
+                        <span class="tagline-item highlight">POLRI.</span>
                     </div>
                     <div class="d-flex">
                         <a href="{{ route('login') }}" class="get-started-btn me-2">Login</a>
