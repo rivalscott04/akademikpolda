@@ -253,16 +253,12 @@
                                                 <label class="font-weight-bold">Provinsi</label>
                                                 <select id="province" name="province" class="form-control">
                                                     <option value="" {{ !$user->province ? 'selected' : '' }} disabled>Pilih Provinsi</option>
-                                                    @if(isset($provinces) && count($provinces) > 0)
-                                                        @foreach ($provinces as $province)
-                                                            <option value="{{ $province['id'] }}"
-                                                                {{ $user->province == $province['name'] ? 'selected' : '' }}>
-                                                                {{ $province['name'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    @else
-                                                        <option disabled>Gagal memuat data provinsi</option>
-                                                    @endif
+                                                    @foreach ($provinces as $province)
+                                                        <option value="{{ $province['id'] }}"
+                                                            {{ $user->province == $province['name'] ? 'selected' : '' }}>
+                                                            {{ $province['name'] }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

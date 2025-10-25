@@ -19,23 +19,20 @@ class UserController extends Controller
             // When impersonating, skip heavy external calls and load lazily on client
             $isImpersonating = app('impersonate')->isImpersonating();
 
-            $provinces = [];
-            if (!$isImpersonating) {
-                // Get cached provinces (server-side) when not impersonating
-                $provinces = Cache::remember('provinces', 60 * 24, function () {
-                    $response = Http::timeout(5)->retry(1, 200)
-                        ->get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
-                    if (!$response->successful()) {
-                        Log::error('Failed to fetch provinces');
-                        return [];
-                    }
-                    return $response->json();
-                });
-            }
+            // Always load provinces, even when impersonating
+            $provinces = Cache::remember('provinces', 60 * 24, function () {
+                $response = Http::timeout(5)->retry(1, 200)
+                    ->get("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json");
+                if (!$response->successful()) {
+                    Log::error('Failed to fetch provinces');
+                    return [];
+                }
+                return $response->json();
+            });
 
             // Get regencies if province is selected
             $regencies = null;
-            if ($user->province && !$isImpersonating) {
+            if ($user->province) {
                 $provinceData = collect($provinces)->first(function ($province) use ($user) {
                     return $province['name'] === $user->province;
                 });
@@ -207,4 +204,5 @@ class UserController extends Controller
 
         return view('user.test-result-detail', compact('hasilTes'));
     }
+
 }
