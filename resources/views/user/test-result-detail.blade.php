@@ -22,17 +22,13 @@
                                         <tr>
                                             <th width="30%">Jenis Tes</th>
                                             <td>
-                                                @if($hasilTes->jenis_tes === 'kecermatan')
+                                                @if($hasilTes->jenis_tes === 'lengkap')
+                                                    <span class="badge badge-danger">
+                                                        <i class="fa fa-star"></i> Paket Lengkap
+                                                    </span>
+                                                @elseif(in_array($hasilTes->jenis_tes, ['bahasa_inggris', 'pu', 'twk', 'numerik']))
                                                     <span class="badge badge-primary">
-                                                        <i class="fa fa-eye"></i> {{ ucfirst($hasilTes->jenis_tes) }}
-                                                    </span>
-                                                @elseif($hasilTes->jenis_tes === 'kecerdasan')
-                                                    <span class="badge badge-success">
-                                                        <i class="fa fa-brain"></i> {{ ucfirst($hasilTes->jenis_tes) }}
-                                                    </span>
-                                                @elseif($hasilTes->jenis_tes === 'kepribadian')
-                                                    <span class="badge badge-warning">
-                                                        <i class="fa fa-user"></i> {{ ucfirst($hasilTes->jenis_tes) }}
+                                                        <i class="fa fa-graduation-cap"></i> {{ strtoupper($hasilTes->jenis_tes) }}
                                                     </span>
                                                 @else
                                                     <span class="badge badge-info">
@@ -80,7 +76,7 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        @if($hasilTes->jenis_tes === 'kecermatan')
+                                        @if($hasilTes->jenis_tes === 'akademik')
                                         <tr>
                                             <th>Skor Benar</th>
                                             <td><span class="text-success font-weight-bold">{{ $hasilTes->skor_benar }}</span></td>
@@ -109,7 +105,7 @@
                                         <h5>Statistik Detail</h5>
                                     </div>
                                     <div class="ibox-content">
-                                        @if($hasilTes->jenis_tes === 'kecermatan')
+                                        @if($hasilTes->jenis_tes === 'akademik')
                                             @if($hasilTes->panker)
                                             <div class="row">
                                                 <div class="col-6">
@@ -157,14 +153,14 @@
                                             @endif
                                         @endif
 
-                                        @if($hasilTes->jenis_tes === 'kepribadian' && $hasilTes->detail_jawaban)
+                                        @if($hasilTes->jenis_tes === 'akademik' && $hasilTes->detail_jawaban)
                                             @php
                                                 $detail = json_decode($hasilTes->detail_jawaban, true);
                                             @endphp
                                             @if(isset($detail['N']))
                                             <div class="text-center">
                                                 <h4 class="text-primary">{{ $detail['N'] }}</h4>
-                                                <small class="text-muted">Total Soal TKP</small>
+                                                <small class="text-muted">Total Soal </small>
                                             </div>
                                             @endif
                                         @endif
@@ -190,7 +186,7 @@
                                             $detailJawaban = json_decode($hasilTes->detail_jawaban, true);
                                         @endphp
                                         
-                                        @if($hasilTes->jenis_tes === 'kecermatan')
+                                        @if($hasilTes->jenis_tes === 'akademik')
                                             @if(is_array($detailJawaban) && count($detailJawaban) > 0)
                                                 @php
                                                     // Group jawaban by set
@@ -393,11 +389,11 @@
                                                     Detail jawaban tidak tersedia atau format tidak valid.
                                                 </div>
                                             @endif
-                                        @elseif($hasilTes->jenis_tes === 'kepribadian')
-                                            <!-- Tampilan khusus untuk tes kepribadian (TKP) -->
+                                        @elseif($hasilTes->jenis_tes === 'akademik')
+                                            <!-- Tampilan khusus untuk tes akademik () -->
                                             <div class="alert alert-info">
                                                 <i class="fa fa-info-circle"></i> 
-                                                Detail jawaban untuk jenis tes kepribadian (TKP):
+                                                Detail jawaban untuk jenis tes akademik ():
                                             </div>
                                             
                                             @if(is_array($detailJawaban) && isset($detailJawaban['N']) && isset($detailJawaban['T']))
@@ -406,7 +402,7 @@
                                                         <div class="card text-center">
                                                             <div class="card-body">
                                                                 <h3 class="text-primary">{{ $detailJawaban['N'] }}</h3>
-                                                                <p class="card-text">Total Soal TKP</p>
+                                                                <p class="card-text">Total Soal </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -421,8 +417,8 @@
                                                     <div class="col-md-4">
                                                         <div class="card text-center">
                                                             <div class="card-body">
-                                                                <h3 class="text-warning">{{ number_format($detailJawaban['skor_tkp'] ?? 0, 2) }}</h3>
-                                                                <p class="card-text">Skor Final TKP</p>
+                                                                <h3 class="text-warning">{{ number_format($detailJawaban['skor_'] ?? 0, 2) }}</h3>
+                                                                <p class="card-text">Skor Final </p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -436,14 +432,14 @@
                                                         <ul class="mb-0">
                                                             <li><strong>N</strong> = Jumlah soal ({{ $detailJawaban['N'] }})</li>
                                                             <li><strong>T</strong> = Total poin dari jawaban ({{ $detailJawaban['T'] }})</li>
-                                                            <li><strong>Skor Final</strong> = {{ number_format($detailJawaban['skor_tkp'] ?? 0, 2) }} (skala 1-100)</li>
+                                                            <li><strong>Skor Final</strong> = {{ number_format($detailJawaban['skor_'] ?? 0, 2) }} (skala 1-100)</li>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             @else
                                                 <div class="alert alert-warning">
                                                     <i class="fa fa-exclamation-triangle"></i> 
-                                                    Format detail jawaban kepribadian tidak valid atau tidak lengkap.
+                                                    Format detail jawaban akademik tidak valid atau tidak lengkap.
                                                 </div>
                                             @endif
                                         @else

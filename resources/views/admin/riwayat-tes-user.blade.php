@@ -29,7 +29,7 @@
                                     <h4 class="user-name">{{ $user->name }}</h4>
                                     <p class="user-email">{{ $user->email }}</p>
                                     <span
-                                        class="user-package badge badge-{{ $user->package == 'lengkap' ? 'success' : ($user->package == 'kecermatan' ? 'info' : ($user->package == 'kecerdasan' ? 'primary' : ($user->package == 'kepribadian' ? 'warning' : 'secondary'))) }}">
+                                        class="user-package badge badge-{{ $user->package == 'lengkap' ? 'success' : ($user->package == 'akademik' ? 'info' : ($user->package == 'kecerdasan' ? 'primary' : ($user->package == 'akademik' ? 'warning' : 'secondary'))) }}">
                                         Package: {{ $user->getPackageDisplayName() }}
                                     </span>
                                 </div>

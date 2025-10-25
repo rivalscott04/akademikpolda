@@ -18,15 +18,15 @@
                                     @foreach ($allHistory as $history)
                                         <div class="col-lg-6 col-md-6 mb-4">
                                             <a class="history-card-link"
-                                                href="{{ $history['type'] === 'tryout' ? route('user.tryout.finish', ['tryout' => $history['tryout_id'] ?? null]) : route('kecermatan.detail', ['id' => $history['id']]) }}">
+                                                href="{{ $history['type'] === 'tryout' ? route('user.tryout.finish', ['tryout' => $history['tryout_id'] ?? null]) : route('akademik.detail', ['id' => $history['id']]) }}">
                                                 <div class="history-card {{ $history['status'] }}">
                                                     <div class="card-header">
                                                         <div class="card-title">
                                                             <i
                                                                 class="fa {{ $history['type'] == 'tryout' ? 'fa-graduation-cap' : 'fa-eye' }}"></i>
                                                             {{ $history['title'] }}
-                                                            @if ($history['type'] === 'kecermatan')
-                                                                <span class="type-badge kecermatan">
+                                                            @if ($history['type'] === 'akademik')
+                                                                <span class="type-badge akademik">
                                                                     <i class="fa fa-eye"></i>
                                                                     {{ ucfirst($history['type']) }}
                                                                 </span>
@@ -51,13 +51,13 @@
                                                         <div class="score-section">
                                                             <div class="score-circle">
                                                                 @if (
-                                                                    !empty($history['is_tkp']) &&
-                                                                        $history['is_tkp'] &&
-                                                                        in_array($history['jenis_paket'] ?? '', ['kepribadian', 'lengkap']))
+                                                                    !empty($history['is_']) &&
+                                                                        $history['is_'] &&
+                                                                        in_array($history['jenis_paket'] ?? '', ['akademik', 'lengkap']))
                                                                     <div class="score-percentage">
-                                                                        {{ number_format($history['tkp_final'] ?? 0, 2) }}%
+                                                                        {{ number_format($history['_final'] ?? 0, 2) }}%
                                                                     </div>
-                                                                    <div class="score-label">Skor TKP</div>
+                                                                    <div class="score-label">Skor </div>
                                                                 @else
                                                                     <div class="score-percentage">{{ number_format($history['percentage'] ?? 0, 2) }}%
                                                                     </div>
@@ -67,16 +67,16 @@
 
                                                             <div class="score-details">
                                                                 @if (
-                                                                    !empty($history['is_tkp']) &&
-                                                                        $history['is_tkp'] &&
-                                                                        in_array($history['jenis_paket'] ?? '', ['kepribadian', 'lengkap']))
+                                                                    !empty($history['is_']) &&
+                                                                        $history['is_'] &&
+                                                                        in_array($history['jenis_paket'] ?? '', ['akademik', 'lengkap']))
                                                                     <div class="score-item total">
                                                                         <i class="fa fa-list"></i>
-                                                                        <span>{{ $history['tkp_n'] }} Soal</span>
+                                                                        <span>{{ $history['_n'] }} Soal</span>
                                                                     </div>
                                                                     <div class="score-item correct">
                                                                         <i class="fa fa-star"></i>
-                                                                        <span>{{ $history['tkp_t'] }} Poin</span>
+                                                                        <span>{{ $history['_t'] }} Poin</span>
                                                                     </div>
                                                                 @else
                                                                     <div class="score-item correct">
@@ -96,9 +96,9 @@
                                                             </div>
                                                         </div>
 
-                                                        @if (empty($history['is_tkp']) ||
-                                                                !$history['is_tkp'] ||
-                                                                !in_array($history['jenis_paket'] ?? '', ['kepribadian', 'lengkap']))
+                                                        @if (empty($history['is_']) ||
+                                                                !$history['is_'] ||
+                                                                !in_array($history['jenis_paket'] ?? '', ['akademik', 'lengkap']))
                                                             <div class="progress-section">
                                                                 <div class="progress">
                                                                     <div class="progress-bar {{ $history['status'] }}"
@@ -222,7 +222,7 @@
             color: white;
         }
 
-        .type-badge.kecermatan {
+        .type-badge.akademik {
             background-color: #28a745;
             color: white;
         }

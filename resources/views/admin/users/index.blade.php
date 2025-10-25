@@ -442,8 +442,8 @@
                                                             $pkgLabel = $currentPackage ? ucfirst($currentPackage) : 'No Package';
                                                             $pkgClass = match($currentPackage){
                                                                 'lengkap' => 'pill-primary',
-                                                                'kecerdasan','kecermatan' => 'pill-info',
-                                                                'kepribadian' => 'pill-warning',
+                                                                'kecerdasan','akademik' => 'pill-info',
+                                                                'akademik' => 'pill-warning',
                                                                 'free' => 'pill-default',
                                                                 default => 'pill-default',
                                                             };
@@ -458,9 +458,9 @@
                                                                     @method('PUT')
                                                                     <input type="hidden" name="package" value="">
                                                                     <button type="button" class="pill-item" data-value="lengkap">Lengkap</button>
-                                                                    <button type="button" class="pill-item" data-value="kecermatan">Kecermatan</button>
+                                                                    <button type="button" class="pill-item" data-value="akademik">Kecermatan</button>
                                                                     <button type="button" class="pill-item" data-value="kecerdasan">Kecerdasan</button>
-                                                                    <button type="button" class="pill-item" data-value="kepribadian">Kepribadian</button>
+                                                                    <button type="button" class="pill-item" data-value="akademik">Kepribadian</button>
                                                                     <button type="button" class="pill-item" data-value="free">Free</button>
                                                                     <button type="button" class="pill-item" data-value="">No Package</button>
                                                                 </form>

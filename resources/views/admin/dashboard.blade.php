@@ -665,7 +665,7 @@
                                                         @case('kecerdasan')
                                                             <i class="fa fa-brain text-primary"></i> Paket Kecerdasan
                                                             @break
-                                                        @case('kepribadian')
+                                                        @case('akademik')
                                                             <i class="fa fa-user text-info"></i> Paket Kepribadian
                                                             @break
                                                         @case('lengkap')

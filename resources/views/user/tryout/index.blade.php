@@ -58,15 +58,15 @@
 
                                             {{-- <div class="text-center">
                                                 <span
-                                                    class="badge badge-{{ $tryout->jenis_paket === 'lengkap' ? 'danger' : ($tryout->jenis_paket === 'kecerdasan' || $tryout->jenis_paket === 'kepribadian' ? 'primary' : 'success') }} mb-2">
+                                                    class="badge badge-{{ $tryout->jenis_paket === 'lengkap' ? 'danger' : ($tryout->jenis_paket === 'kecerdasan' || $tryout->jenis_paket === 'akademik' ? 'primary' : 'success') }} mb-2">
                                                     {{ strtoupper($tryout->jenis_paket) }}
                                                 </span>
                                                 @if ($tryout->jenis_paket === 'free')
                                                     <br><small class="text-muted">Gratis untuk semua user</small>
                                                 @elseif($tryout->jenis_paket === 'kecerdasan')
                                                     <br><small class="text-muted">Paket Kecerdasan</small>
-                                                @elseif($tryout->jenis_paket === 'kepribadian')
-                                                    <br><small class="text-muted">Paket Kepribadian</small>
+                                                @elseif($tryout->jenis_paket === 'akademik')
+                                                    <br><small class="text-muted">Paket AKADEMIK</small>
                                                 @elseif($tryout->jenis_paket === 'lengkap')
                                                     <br><small class="text-muted">Paket Lengkap</small>
                                                 @endif

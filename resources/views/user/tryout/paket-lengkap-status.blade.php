@@ -32,42 +32,28 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
-                                        <h4><i class="fa fa-eye"></i> Tes Kecermatan</h4>
+                                        <h4><i class="fa fa-graduation-cap"></i> Tryout AKADEMIK</h4>
                                     </div>
                                     <div class="panel-body text-center">
-                                        <h3 class="text-success">{{ $status['kecermatan']['score'] }}</h3>
-                                        <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kecermatan']['tanggal'])->format('d/m/Y H:i') }}</small></p>
+                                        <h3 class="text-success">{{ $status['akademik']['score'] }}</h3>
+                                        @if(isset($status['akademik']['tryout_title']))
+                                            <p><small>{{ $status['akademik']['tryout_title'] }}</small></p>
+                                        @endif
+                                        <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['akademik']['tanggal'])->format('d/m/Y H:i') }}</small></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
-                                        <h4><i class="fa fa-brain"></i> Tryout Kecerdasan</h4>
+                                        <h4><i class="fa fa-chart-line"></i> Simulasi Nilai</h4>
                                     </div>
                                     <div class="panel-body text-center">
-                                        <h3 class="text-success">{{ $status['kecerdasan']['score'] }}</h3>
-                                        @if(isset($status['kecerdasan']['tryout_title']))
-                                            <p><small>{{ $status['kecerdasan']['tryout_title'] }}</small></p>
-                                        @endif
-                                        <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kecerdasan']['tanggal'])->format('d/m/Y H:i') }}</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel panel-success">
-                                    <div class="panel-heading">
-                                        <h4><i class="fa fa-user"></i> Tryout Kepribadian</h4>
-                                    </div>
-                                    <div class="panel-body text-center">
-                                        <h3 class="text-success">{{ $status['kepribadian']['score'] }}</h3>
-                                        @if(isset($status['kepribadian']['tryout_title']))
-                                            <p><small>{{ $status['kepribadian']['tryout_title'] }}</small></p>
-                                        @endif
-                                        <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kepribadian']['tanggal'])->format('d/m/Y H:i') }}</small></p>
+                                        <h3 class="text-success">{{ $status['simulasi']['score'] }}</h3>
+                                        <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['simulasi']['tanggal'])->format('d/m/Y H:i') }}</small></p>
                                     </div>
                                 </div>
                             </div>
@@ -87,44 +73,23 @@
                         </div>
 
                         <div class="row mt-3">
-                            <div class="col-md-4">
-                                <div class="panel {{ $status['kecermatan']['completed'] ? 'panel-success' : 'panel-default' }}">
+                            <div class="col-md-6">
+                                <div class="panel {{ $status['akademik']['completed'] ? 'panel-success' : 'panel-default' }}">
                                     <div class="panel-heading">
                                         <h4>
-                                            <i class="fa {{ $status['kecermatan']['completed'] ? 'fa-check-circle' : 'fa-circle-o' }}"></i> 
-                                            Tes Kecermatan
+                                            <i class="fa {{ $status['akademik']['completed'] ? 'fa-check-circle' : 'fa-circle-o' }}"></i> 
+                                            Tryout AKADEMIK
                                         </h4>
                                     </div>
                                     <div class="panel-body text-center">
-                                        @if($status['kecermatan']['completed'])
-                                            <h3 class="text-success">{{ $status['kecermatan']['score'] }}</h3>
-                                            <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kecermatan']['tanggal'])->format('d/m/Y H:i') }}</small></p>
-                                        @else
-                                            <p class="text-muted">{{ $status['kecermatan']['message'] }}</p>
-                                            <a href="{{ route('kecermatan.index') }}" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-play"></i> Mulai Tes
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel {{ $status['kecerdasan']['completed'] ? 'panel-success' : 'panel-default' }}">
-                                    <div class="panel-heading">
-                                        <h4>
-                                            <i class="fa {{ $status['kecerdasan']['completed'] ? 'fa-check-circle' : 'fa-circle-o' }}"></i> 
-                                            Tryout Kecerdasan
-                                        </h4>
-                                    </div>
-                                    <div class="panel-body text-center">
-                                        @if($status['kecerdasan']['completed'])
-                                            <h3 class="text-success">{{ $status['kecerdasan']['score'] }}</h3>
-                                            @if(isset($status['kecerdasan']['tryout_title']))
-                                                <p><small>{{ $status['kecerdasan']['tryout_title'] }}</small></p>
+                                        @if($status['akademik']['completed'])
+                                            <h3 class="text-success">{{ $status['akademik']['score'] }}</h3>
+                                            @if(isset($status['akademik']['tryout_title']))
+                                                <p><small>{{ $status['akademik']['tryout_title'] }}</small></p>
                                             @endif
-                                            <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kecerdasan']['tanggal'])->format('d/m/Y H:i') }}</small></p>
+                                            <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['akademik']['tanggal'])->format('d/m/Y H:i') }}</small></p>
                                         @else
-                                            <p class="text-muted">{{ $status['kecerdasan']['message'] }}</p>
+                                            <p class="text-muted">{{ $status['akademik']['message'] }}</p>
                                             <a href="{{ route('user.tryout.index') }}" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-play"></i> Mulai Tryout
                                             </a>
@@ -132,25 +97,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="panel {{ $status['kepribadian']['completed'] ? 'panel-success' : 'panel-default' }}">
+                            <div class="col-md-6">
+                                <div class="panel {{ $status['simulasi']['completed'] ? 'panel-success' : 'panel-default' }}">
                                     <div class="panel-heading">
                                         <h4>
-                                            <i class="fa {{ $status['kepribadian']['completed'] ? 'fa-check-circle' : 'fa-circle-o' }}"></i> 
-                                            Tryout Kepribadian
+                                            <i class="fa {{ $status['simulasi']['completed'] ? 'fa-check-circle' : 'fa-circle-o' }}"></i> 
+                                            Simulasi Nilai
                                         </h4>
                                     </div>
                                     <div class="panel-body text-center">
-                                        @if($status['kepribadian']['completed'])
-                                            <h3 class="text-success">{{ $status['kepribadian']['score'] }}</h3>
-                                            @if(isset($status['kepribadian']['tryout_title']))
-                                                <p><small>{{ $status['kepribadian']['tryout_title'] }}</small></p>
-                                            @endif
-                                            <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['kepribadian']['tanggal'])->format('d/m/Y H:i') }}</small></p>
+                                        @if($status['simulasi']['completed'])
+                                            <h3 class="text-success">{{ $status['simulasi']['score'] }}</h3>
+                                            <p><small>Tanggal: {{ \Carbon\Carbon::parse($status['simulasi']['tanggal'])->format('d/m/Y H:i') }}</small></p>
                                         @else
-                                            <p class="text-muted">{{ $status['kepribadian']['message'] }}</p>
-                                            <a href="{{ route('user.tryout.index') }}" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-play"></i> Mulai Tryout
+                                            <p class="text-muted">{{ $status['simulasi']['message'] }}</p>
+                                            <a href="{{ route('simulasi.nilai') }}" class="btn btn-primary btn-sm">
+                                                <i class="fa fa-play"></i> Mulai Simulasi
                                             </a>
                                         @endif
                                     </div>
@@ -168,10 +130,11 @@
                                 <div class="panel-body">
                                     <p><strong>Cara Kerja:</strong></p>
                                     <ul>
-                                        <li>Paket lengkap terdiri dari 2 komponen utama: Tes Kecermatan (wajib) dan Tryout CBT</li>
-                                        <li>Tryout CBT bisa berisi kategori Kecerdasan, Kepribadian, atau keduanya (campuran)</li>
-                                        <li>Skor akhir dihitung dari rata-rata komponen yang tersedia: (Skor Kecermatan + Skor Kecerdasan + Skor Kepribadian) ÷ jumlah komponen</li>
-                                        <li>Kecermatan wajib diselesaikan + minimal 1 tryout CBT untuk mendapatkan skor akhir</li>
+                                        <li>Paket lengkap terdiri dari 2 komponen utama: Tryout AKADEMIK dan Simulasi Nilai</li>
+                                        <li>Tryout AKADEMIK berisi berbagai kategori mata pelajaran akademik</li>
+                                        <li>Simulasi Nilai membantu memprediksi nilai UTBK berdasarkan skor tryout</li>
+                                        <li>Skor akhir dihitung dari rata-rata kedua komponen: (Skor AKADEMIK + Skor Simulasi) ÷ 2</li>
+                                        <li>Kedua komponen wajib diselesaikan untuk mendapatkan skor akhir paket lengkap</li>
                                     </ul>
                                 </div>
                             </div>

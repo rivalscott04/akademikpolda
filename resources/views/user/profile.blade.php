@@ -450,9 +450,9 @@
                                                                 <span class="badge badge-danger text-white">
                                                                     <i class="fa fa-star"></i> Paket Lengkap
                                                                 </span>
-                                                            @elseif($hasil->jenis_tes === 'kecermatan')
+                                                            @elseif(in_array($hasil->jenis_tes, ['bahasa_inggris', 'pu', 'twk', 'numerik']))
                                                                 <span class="badge badge-primary text-white">
-                                                                    <i class="fa fa-eye"></i> {{ ucfirst($hasil->jenis_tes) }}
+                                                                    <i class="fa fa-graduation-cap"></i> {{ strtoupper($hasil->jenis_tes) }}
                                                                 </span>
                                                             @else
                                                                 <span class="badge badge-light text-dark">

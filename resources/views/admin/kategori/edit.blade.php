@@ -27,7 +27,7 @@
                             <input type="text" class="form-control @error('kode') is-invalid @enderror" 
                                    id="kode" name="kode" value="{{ old('kode', $kategori->kode) }}" 
                                    maxlength="10" required>
-                            <small class="form-text text-muted">Contoh: TWK, TIU, TKP</small>
+                            <small class="form-text text-muted">Contoh: TWK, TIU, Bahasa Inggris</small>
                             @error('kode')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

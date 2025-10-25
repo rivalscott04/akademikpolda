@@ -106,7 +106,7 @@
                                     </td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <span class="badge badge-{{ $user->package == 'lengkap' ? 'success' : ($user->package == 'kecermatan' ? 'info' : ($user->package == 'kecerdasan' ? 'primary' : ($user->package == 'kepribadian' ? 'warning' : 'secondary'))) }}">
+                                        <span class="badge badge-{{ $user->package == 'lengkap' ? 'success' : ($user->package == 'akademik' ? 'info' : ($user->package == 'kecerdasan' ? 'primary' : ($user->package == 'akademik' ? 'warning' : 'secondary'))) }}">
                                             {{ $user->getPackageDisplayName() }}
                                         </span>
                                     </td>

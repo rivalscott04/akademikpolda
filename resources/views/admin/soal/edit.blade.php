@@ -263,29 +263,29 @@
         <script>
             $(document).ready(function() {
                 let opsiCount = 0;
-                let kepribadianCodes = []; // Will be loaded dynamically
+                let akademikCodes = []; // Will be loaded dynamically
                 const existingOpsi = @json($soal->opsi);
                 const existingTipe = '{{ $soal->tipe }}';
                 const existingJawabanBenar = '{{ $soal->jawaban_benar }}';
 
-                // Load kepribadian categories from server
+                // Load akademik categories from server
                 function loadKepribadianCodes() {
-                    $.get('{{ route('admin.soal.kepribadian-categories') }}')
+                    $.get('{{ route('admin.soal.akademik-categories') }}')
                         .done(function(data) {
-                            kepribadianCodes = data;
-                            console.log('Loaded kepribadian codes from API:', kepribadianCodes);
+                            akademikCodes = data;
+                            console.log('Loaded akademik codes from API:', akademikCodes);
                         })
                         .fail(function() {
-                            console.error('Failed to load kepribadian codes from API');
-                            // Fallback to comprehensive list including all possible kepribadian codes
-                            kepribadianCodes = ['TKP', 'PSIKOTES', 'ID', 'OPY', 'KB', 'PGD', 'KBS', 'KDDJ', 'IDK',
+                            console.error('Failed to load akademik codes from API');
+                            // Fallback to comprehensive list including all possible akademik codes
+                            akademikCodes = ['', 'PSIKOTES', 'ID', 'OPY', 'KB', 'PGD', 'KBS', 'KDDJ', 'IDK',
                                 'KDS', 'TJ', 'OPP'
                             ];
-                            console.log('Using fallback kepribadian codes:', kepribadianCodes);
+                            console.log('Using fallback akademik codes:', akademikCodes);
                         });
                 }
 
-                // Function to check if category is in kepribadian package
+                // Function to check if category is in akademik package
                 function checkIfKepribadianCategory(kategoriId) {
                     if (!kategoriId) return false;
 
@@ -293,12 +293,12 @@
                     const selectedOption = $(`#kategori_id option[value="${kategoriId}"]`);
                     const optionText = selectedOption.text();
 
-                    console.log('Checking category:', optionText, 'against kepribadian package codes:',
-                        kepribadianCodes);
+                    console.log('Checking category:', optionText, 'against akademik package codes:',
+                        akademikCodes);
 
-                    // Check if category code is in kepribadian package mapping
-                    const isKepribadian = kepribadianCodes.some(code => optionText.includes(code));
-                    console.log('Is in kepribadian package:', isKepribadian);
+                    // Check if category code is in akademik package mapping
+                    const isKepribadian = akademikCodes.some(code => optionText.includes(code));
+                    console.log('Is in akademik package:', isKepribadian);
 
                     return isKepribadian;
                 }
@@ -311,18 +311,18 @@
                 console.log('Existing Jawaban Benar:', existingJawabanBenar);
                 console.log('========================');
 
-                // Load kepribadian codes on page load
+                // Load akademik codes on page load
                 loadKepribadianCodes();
 
-                // Function to toggle kecermatan styling
+                // Function to toggle akademik styling
                 function toggleKecermatanStyling() {
                     const kategoriText = $('#kategori_id option:selected').text();
                     const isKecermatan = kategoriText.includes('KECERMATAN') || kategoriText.includes('Kecermatan');
 
                     if (isKecermatan) {
-                        $('#opsi-container').addClass('kecermatan-opsi');
+                        $('#opsi-container').addClass('akademik-opsi');
                     } else {
-                        $('#opsi-container').removeClass('kecermatan-opsi');
+                        $('#opsi-container').removeClass('akademik-opsi');
                     }
                 }
 
@@ -362,7 +362,7 @@
                         updateBobotInputs();
                     }
 
-                    // Apply kecermatan styling
+                    // Apply akademik styling
                     toggleKecermatanStyling();
                 });
 
@@ -542,7 +542,7 @@
                 function addOpsiItem(letter, defaultText = '', showBobot = false) {
                     console.log('Adding opsi item:', letter, defaultText, showBobot);
 
-                    // Check if current category is kepribadian (TKP, PSIKOTES)
+                    // Check if current category is akademik (, PSIKOTES)
                     const kategoriId = $('#kategori_id').val();
                     const isKepribadian = checkIfKepribadianCategory(kategoriId);
 
@@ -805,7 +805,7 @@
                             isKepribadian);
 
                         if (isKepribadian) {
-                            // For categories in kepribadian package, validate each bobot is between 1-5
+                            // For categories in akademik package, validate each bobot is between 1-5
                             let hasInvalidBobot = false;
                             $('input[name*="[bobot]"]').each(function() {
                                 const bobot = parseInt($(this).val()) || 0;
@@ -817,11 +817,11 @@
 
                             if (hasInvalidBobot) {
                                 alert(
-                                    'Bobot untuk kategori dalam paket kepribadian harus berupa bilangan bulat antara 1-5');
+                                    'Bobot untuk kategori dalam paket akademik harus berupa bilangan bulat antara 1-5');
                                 valid = false;
                             }
                         } else {
-                            // For categories not in kepribadian package, validate total bobot = 1
+                            // For categories not in akademik package, validate total bobot = 1
                             let totalBobot = 0;
                             $('input[name*="[bobot]"]').each(function() {
                                 const bobot = parseFloat($(this).val()) || 0;
@@ -971,8 +971,8 @@
                 border-radius: 5px;
             }
 
-            /* Styling khusus untuk soal kecermatan */
-            .kecermatan-opsi .form-control {
+            /* Styling khusus untuk soal akademik */
+            .akademik-opsi .form-control {
                 font-size: 10px !important;
                 height: 30px !important;
                 padding: 4px 8px !important;
@@ -980,32 +980,32 @@
                 border-radius: 4px !important;
             }
 
-            .kecermatan-opsi .opsi-item {
+            .akademik-opsi .opsi-item {
                 margin-bottom: 6px !important;
             }
 
-            .kecermatan-opsi .col-8,
-            .kecermatan-opsi .col-6 {
+            .akademik-opsi .col-8,
+            .akademik-opsi .col-6 {
                 padding-left: 3px !important;
                 padding-right: 3px !important;
             }
 
-            .kecermatan-opsi .col-8 {
+            .akademik-opsi .col-8 {
                 flex: 0 0 70% !important;
                 max-width: 70% !important;
             }
 
-            .kecermatan-opsi .col-6 {
+            .akademik-opsi .col-6 {
                 flex: 0 0 60% !important;
                 max-width: 60% !important;
             }
 
-            .kecermatan-opsi .badge {
+            .akademik-opsi .badge {
                 font-size: 10px !important;
                 padding: 4px 8px !important;
             }
 
-            .kecermatan-opsi .form-check-label {
+            .akademik-opsi .form-check-label {
                 font-size: 10px !important;
             }
         </style>

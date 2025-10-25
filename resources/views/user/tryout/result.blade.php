@@ -54,14 +54,6 @@
                                 <span>Skor terendah:</span>
                                 <strong>{{ number_format($userAnswers->min('skor'), 2) }}</strong>
                             </div>
-                            @if ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap')
-                                @isset($tkpFinalScore)
-                                    <div class="stat-row">
-                                        <span>Skor TKP (1–100):</span>
-                                        <strong>{{ number_format($tkpFinalScore, 2) }}</strong>
-                                    </div>
-                                @endisset
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -78,7 +70,6 @@
                                     $questionStatus = $userAnswers->where('urutan', $i)->first();
                                     $statusClass = '';
                                     $statusText = '';
-                                    if (!empty($isTkp) && $isTkp) {
                                         if ($questionStatus && $questionStatus->sudah_dijawab) {
                                             $statusClass = 'answered';
                                             $statusText = 'Terjawab';
@@ -104,7 +95,6 @@
                         </div>
 
                         <div class="mt-2">
-                            @if (!empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="question-legend answered"></span>
                                     <small>Terjawab</small>
@@ -159,9 +149,8 @@
                             <div class="col-md-6">
                                 <div class="score-card text-center p-4">
                                     <div class="score-circle">
-                                        @if (!empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
-                                            <div class="score-number">{{ number_format($tkpFinalScore, 2) }}</div>
-                                            <div class="score-label">Skor TKP (1–100)</div>
+                                            <div class="score-number">{{ number_format($totalScore, 1) }}</div>
+                                            <div class="score-label">Total Skor</div>
                                         @else
                                             <div class="score-number">{{ number_format($totalScore, 1) }}</div>
                                             <div class="score-label">Total Skor</div>
@@ -171,17 +160,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="score-details">
-                                    @if (!empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="stat-item">
-                                                    <div class="stat-number">{{ $tkpN }}</div>
+                                                    <div class="stat-number">{{ $totalQuestions }}</div>
                                                     <div class="stat-label">Jumlah Soal</div>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="stat-item">
-                                                    <div class="stat-number">{{ $tkpT }}</div>
+                                                    <div class="stat-number">{{ $totalScore }}</div>
                                                     <div class="stat-label">Total Poin</div>
                                                 </div>
                                             </div>
@@ -237,7 +225,6 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="mb-1">{{ $category['nama'] }}</h6>
-                                        @if (!empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                             <small class="text-muted">Poin: {{ number_format($category['score'], 1) }}
                                                 dari {{ $category['total'] * 5 }}</small>
                                         @else
@@ -247,14 +234,12 @@
                                     </div>
                                     <div class="text-right">
                                         <div class="score-badge">{{ number_format($category['score'], 1) }}</div>
-                                        @if (empty($isTkp) || !$isTkp || !($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                             <div class="percentage">
                                                 {{ number_format(($category['correct'] / $category['total']) * 100, 1) }}%
                                             </div>
                                         @endif
                                     </div>
                                 </div>
-                                @if (empty($isTkp) || !$isTkp || !($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                     <div class="progress mt-2" style="height: 8px;">
                                         <div class="progress-bar"
                                             style="width: {{ ($category['correct'] / $category['total']) * 100 }}%"></div>
@@ -296,12 +281,11 @@
                         @endphp
 
                         <div id="review-soal-{{ $userAnswer->urutan }}"
-                            class="answer-review mb-4 {{ !empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap') ? 'tkp' : ($userAnswer->skor > 0 ? 'correct' : 'incorrect') }}">
+                            class="answer-review mb-4 {{ $userAnswer->skor > 0 ? 'correct' : 'incorrect' }}">
                             <div class="question-header">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h6 class="mb-1">Soal {{ $userAnswer->urutan }}</h6>
                                     <div class="score-indicator">
-                                        @if (!empty($isTkp) && $isTkp && ($tryout->jenis_paket === 'kepribadian' || $tryout->jenis_paket === 'lengkap'))
                                             @php
                                                 // Dapatkan data review untuk soal ini (sudah teracak)
                                                 $reviewData = $reviewData[$userAnswer->id] ?? null;
@@ -359,7 +343,6 @@
                                 </div>
                                 <small class="text-muted">{{ $userAnswer->soal->kategori->nama }} -
                                     {{ ucfirst(str_replace('_', ' ', $userAnswer->soal->tipe)) }}</small>
-                                @if (!empty($isTkp) && $isTkp)
                                     @php
                                         // Handle variable dengan deteksi format yang fleksibel
                                         if (is_array($reviewData) && isset($reviewData[$userAnswer->id])) {
