@@ -713,13 +713,13 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="hero-text">Tryout Psikotes</h1>
-                    <h1 class="hero-text">Bintara POLRI</h1>
-                    <h3 class="hero-subtext">Asah Kecermatan, Kecerdasan, dan Kepribadian untuk Raih Nilai Tinggi</h3>
+                    <h1 class="hero-text">Sukses Tes Akademik</h1>
+                    <h1 class="hero-text">Kepolisian</h1>
+                    <h3 class="hero-subtext">Persiapkan diri dengan matang untuk meraih kesuksesan dalam tes akademik kepolisian</h3>
                     <div class="tagline-container">
-                        <span class="tagline-item">Cermat.</span>
-                        <span class="tagline-item highlight">Cerdas.</span>
-                        <span class="tagline-item highlight">Lulus.</span>
+                        <span class="tagline-item">Persiapan.</span>
+                        <span class="tagline-item highlight">Sukses.</span>
+                        <span class="tagline-item highlight">Kepolisian.</span>
                     </div>
                     <div class="d-flex">
                         <a href="{{ route('login') }}" class="get-started-btn me-2">Login</a>
@@ -757,7 +757,7 @@
         <div class="container" style="padding-top:25px">
             <div class="section-title">
                 <h2>Pilih Paket Berlangganan</h2>
-                <p>Akses penuh ke semua fitur persiapan tes BINTARA POLRI</p>
+                <p>Akses penuh ke semua fitur persiapan tes akademik kepolisian</p>
             </div>
 
             <div class="row d-flex align-items-stretch">
