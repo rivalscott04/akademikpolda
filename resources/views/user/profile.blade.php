@@ -435,31 +435,31 @@
                                                     <tr>
                                                         <td>
                                                             @if($hasil->jenis_tes === 'bahasa_inggris')
-                                                                <span class="badge badge-info">
+                                                                <span class="badge badge-info text-white">
                                                                     <i class="fa fa-language"></i> Bahasa Inggris
                                                                 </span>
                                                             @elseif($hasil->jenis_tes === 'pu')
-                                                                <span class="badge badge-primary">
+                                                                <span class="badge badge-primary text-white">
                                                                     <i class="fa fa-book"></i> Pengetahuan Umum
                                                                 </span>
                                                             @elseif($hasil->jenis_tes === 'twk')
-                                                                <span class="badge badge-warning">
+                                                                <span class="badge badge-warning text-white">
                                                                     <i class="fa fa-flag"></i> Tes Wawasan Kebangsaan
                                                                 </span>
                                                             @elseif($hasil->jenis_tes === 'numerik')
-                                                                <span class="badge badge-secondary">
+                                                                <span class="badge badge-secondary text-white">
                                                                     <i class="fa fa-calculator"></i> Penalaran Numerik
                                                                 </span>
                                                             @elseif($hasil->jenis_tes === 'lengkap')
-                                                                <span class="badge badge-danger">
+                                                                <span class="badge badge-danger text-white">
                                                                     <i class="fa fa-star"></i> Paket Lengkap
                                                                 </span>
                                                             @elseif($hasil->jenis_tes === 'kecermatan')
-                                                                <span class="badge badge-primary">
+                                                                <span class="badge badge-primary text-white">
                                                                     <i class="fa fa-eye"></i> {{ ucfirst($hasil->jenis_tes) }}
                                                                 </span>
                                                             @else
-                                                                <span class="badge badge-light">
+                                                                <span class="badge badge-light text-dark">
                                                                     {{ ucfirst($hasil->jenis_tes) }}
                                                                 </span>
                                                             @endif
