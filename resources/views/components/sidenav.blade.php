@@ -1,5 +1,20 @@
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
+        <style>
+            .fa.arrow {
+                float: right !important;
+                margin-top: 2px !important;
+                line-height: 1 !important;
+            }
+            .nav > li > a {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+            }
+            .nav > li > a .nav-label {
+                flex: 1 !important;
+            }
+        </style>
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
@@ -63,6 +78,12 @@
                             <a href="{{ route('admin.tryout.index') }}">
                                 <i class="fa fa-graduation-cap"></i>
                                 <span class="nav-label">Tryout</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.riwayat-tes') }}">
+                                <i class="fa fa-history"></i>
+                                <span class="nav-label">Riwayat Tes</span>
                             </a>
                         </li>
                     </ul>
@@ -168,16 +189,6 @@
             @endif
             @endauth
 
-            @auth
-            @if (Auth::user()->role == 'admin')
-                <li>
-                    <a href="{{ route('admin.riwayat-tes') }}">
-                        <i class="fa fa-history"></i>
-                        <span class="nav-label">Riwayat Tes</span>
-                    </a>
-                </li>
-            @endif
-            @endauth
 
         </ul>
     </div>
