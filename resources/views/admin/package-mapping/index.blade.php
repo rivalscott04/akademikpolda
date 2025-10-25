@@ -46,7 +46,17 @@
                                         </h5>
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group">                                            <label class="font-weight-bold">Pilih Kategori Soal:</label>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox mb-3">
+                                                <input type="checkbox" 
+                                                       class="custom-control-input select-all-checkbox" 
+                                                       id="select_all_{{ $packageType }}"
+                                                       data-package-type="{{ $packageType }}">
+                                                <label class="custom-control-label font-weight-bold text-primary" for="select_all_{{ $packageType }}">
+                                                    <i class="fa fa-check-square"></i> Centang Semua
+                                                </label>
+                                            </div>
+                                            <label class="font-weight-bold">Pilih Kategori Soal:</label>
                                             @foreach($kategoris as $kategori)
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" 
@@ -159,6 +169,46 @@ $('.package-checkbox').on('change', function() {
     if (checkedBoxes.length > 0) {
         $(`.card:has(input[name="mappings[${packageType}][]"])`).removeClass('border-danger');
     }
+    
+    // Update select all checkbox state
+    updateSelectAllState(packageType);
+});
+
+// Handle select all checkbox functionality
+$('.select-all-checkbox').on('change', function() {
+    const packageType = $(this).data('package-type');
+    const isChecked = $(this).is(':checked');
+    
+    // Check/uncheck all checkboxes for this package type
+    $(`input[name="mappings[${packageType}][]"]`).prop('checked', isChecked);
+    
+    // Remove border-danger class if any checkbox is checked
+    if (isChecked) {
+        $(`.card:has(input[name="mappings[${packageType}][]"])`).removeClass('border-danger');
+    }
+});
+
+// Function to update select all checkbox state
+function updateSelectAllState(packageType) {
+    const totalCheckboxes = $(`input[name="mappings[${packageType}][]"]`).length;
+    const checkedCheckboxes = $(`input[name="mappings[${packageType}][]"]:checked`).length;
+    const selectAllCheckbox = $(`#select_all_${packageType}`);
+    
+    if (checkedCheckboxes === 0) {
+        selectAllCheckbox.prop('indeterminate', false).prop('checked', false);
+    } else if (checkedCheckboxes === totalCheckboxes) {
+        selectAllCheckbox.prop('indeterminate', false).prop('checked', true);
+    } else {
+        selectAllCheckbox.prop('indeterminate', true).prop('checked', false);
+    }
+}
+
+// Initialize select all checkbox states on page load
+$(document).ready(function() {
+    const packageTypes = ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap'];
+    packageTypes.forEach(packageType => {
+        updateSelectAllState(packageType);
+    });
 });
 </script>
 @endpush
