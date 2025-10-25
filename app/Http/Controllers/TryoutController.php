@@ -1293,7 +1293,7 @@ class TryoutController extends Controller
         $totalScore = $userAnswers->sum('skor');
         $totalQuestions = $userAnswers->count();
 
-        // TKP dihitung hanya untuk tryout kepribadian atau lengkap
+        // TKP tidak digunakan lagi di sistem akademik
         $tkpFinalScore = null;
         $tkpN = null; // jumlah soal TKP
         $tkpT = null; // total poin TKP (raw sum 1..5)
@@ -1345,47 +1345,10 @@ class TryoutController extends Controller
             ];
         }
 
-        // Persist TKP score to hasil_tes as a summarized record (no breakdown)
-        if (!is_null($tkpFinalScore)) {
-            try {
-                $durationMinutes = $tryout->durasi_menit;
-                $durationSeconds = $durationMinutes * 60;
-                $tkpCount = $tkpQuestions->count();
-                $averageTime = $tkpCount > 0 ? round($durationSeconds / $tkpCount, 2) : null;
+        // TKP tidak digunakan lagi di sistem akademik - kode dihapus
 
-                // Determine TKP score category
-                $tkpKategoriSkor = $this->getTkpScoreCategory($tkpFinalScore);
-
-                // Use updateOrCreate to prevent duplicates based on session ID
-                \App\Models\HasilTes::updateOrCreate(
-                    [
-                        'user_id' => $user->id,
-                        'jenis_tes' => 'kepribadian',
-                        'detail_jawaban' => json_encode([
-                            'N' => $tkpCount,
-                            'T' => (int) round($tkpQuestions->sum('skor')),
-                            'skor_tkp' => $tkpFinalScore,
-                            'session_id' => $session->id,
-                        ])
-                    ],
-                    [
-                        'skor_benar' => 0,
-                        'skor_salah' => 0,
-                        'waktu_total' => $durationSeconds,
-                        'average_time' => $averageTime,
-                        'tkp_final_score' => $tkpFinalScore,
-                        'skor_akhir' => $tkpFinalScore,
-                        'kategori_skor' => $tkpKategoriSkor,
-                        'tanggal_tes' => now(),
-                    ]
-                );
-            } catch (\Throwable $e) {
-                // ignore persistence errors
-            }
-        }
-
-        // Persist intelligence test results to hasil_tes
-        if ($tryout->jenis_paket === 'kecerdasan' || $tryout->jenis_paket === 'lengkap') {
+        // Persist academic test results to hasil_tes
+        if (in_array($tryout->jenis_paket, ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap'])) {
             try {
                 $durationMinutes = $tryout->durasi_menit;
                 $durationSeconds = $durationMinutes * 60;
@@ -1401,7 +1364,7 @@ class TryoutController extends Controller
                 \App\Models\HasilTes::updateOrCreate(
                     [
                         'user_id' => $user->id,
-                        'jenis_tes' => 'kecerdasan',
+                        'jenis_tes' => $tryout->jenis_paket,
                         'detail_jawaban' => json_encode([
                             'total_questions' => $totalQuestions,
                             'correct_answers' => $correctAnswers,
@@ -1432,7 +1395,7 @@ class TryoutController extends Controller
         $currentReviewNumber = is_numeric($requestedReview) ? max(1, min((int)$requestedReview, $totalQuestions)) : 1;
         $currentReviewItem = $userAnswers->firstWhere('urutan', $currentReviewNumber) ?? $userAnswers->first();
 
-        $isTkp = !is_null($tkpFinalScore) && in_array($tryout->jenis_paket, ['kepribadian', 'lengkap'], true);
+        $isTkp = false; // TKP tidak digunakan lagi di sistem akademik
 
         return view('user.tryout.result', compact(
             'tryout',

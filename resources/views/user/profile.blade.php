@@ -434,20 +434,32 @@
                                                 @foreach ($user->hasilTes()->latest()->take(10)->get() as $hasil)
                                                     <tr>
                                                         <td>
-                                                            @if($hasil->jenis_tes === 'kecermatan')
+                                                            @if($hasil->jenis_tes === 'bahasa_inggris')
+                                                                <span class="badge badge-info">
+                                                                    <i class="fa fa-language"></i> Bahasa Inggris
+                                                                </span>
+                                                            @elseif($hasil->jenis_tes === 'pu')
+                                                                <span class="badge badge-primary">
+                                                                    <i class="fa fa-book"></i> Pengetahuan Umum
+                                                                </span>
+                                                            @elseif($hasil->jenis_tes === 'twk')
+                                                                <span class="badge badge-warning">
+                                                                    <i class="fa fa-flag"></i> Tes Wawasan Kebangsaan
+                                                                </span>
+                                                            @elseif($hasil->jenis_tes === 'numerik')
+                                                                <span class="badge badge-secondary">
+                                                                    <i class="fa fa-calculator"></i> Penalaran Numerik
+                                                                </span>
+                                                            @elseif($hasil->jenis_tes === 'lengkap')
+                                                                <span class="badge badge-danger">
+                                                                    <i class="fa fa-star"></i> Paket Lengkap
+                                                                </span>
+                                                            @elseif($hasil->jenis_tes === 'kecermatan')
                                                                 <span class="badge badge-primary">
                                                                     <i class="fa fa-eye"></i> {{ ucfirst($hasil->jenis_tes) }}
                                                                 </span>
-                                                            @elseif($hasil->jenis_tes === 'kecerdasan')
-                                                                <span class="badge badge-success">
-                                                                    <i class="fa fa-brain"></i> {{ ucfirst($hasil->jenis_tes) }}
-                                                                </span>
-                                                            @elseif($hasil->jenis_tes === 'kepribadian')
-                                                                <span class="badge badge-warning">
-                                                                    <i class="fa fa-user"></i> {{ ucfirst($hasil->jenis_tes) }}
-                                                                </span>
                                                             @else
-                                                                <span class="badge badge-info">
+                                                                <span class="badge badge-light">
                                                                     {{ ucfirst($hasil->jenis_tes) }}
                                                                 </span>
                                                             @endif
@@ -456,7 +468,7 @@
                                                         <td>
                                                             @if ($hasil->skor_akhir)
                                                                 <span class="font-weight-bold text-primary">{{ $hasil->skor_akhir }}
-                                                                @if($hasil->jenis_tes === 'kecerdasan' || $hasil->jenis_tes === 'kepribadian')
+                                                                @if(in_array($hasil->jenis_tes, ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap']))
                                                                     %
                                                                 @endif
                                                                 </span>
