@@ -47,7 +47,7 @@
                                                 @if ($hasilTes->skor_akhir)
                                                     <span class="font-weight-bold text-primary" style="font-size: 1.2em;">
                                                         {{ number_format($hasilTes->skor_akhir, 2) }}
-                                                        @if($hasilTes->jenis_tes === 'kecerdasan')
+                                                        @if(in_array($hasilTes->jenis_tes, ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap']))
                                                             %
                                                         @endif
                                                     </span>
@@ -92,23 +92,13 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        @if($hasilTes->jenis_tes === 'akademik')
+                                        @if(in_array($hasilTes->jenis_tes, ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap']))
                                         <tr>
                                             <th>Skor Benar</th>
                                             <td><span class="text-success font-weight-bold">{{ $hasilTes->skor_benar }}</span></td>
                                         </tr>
                                         <tr>
                                             <th>Skor Salah</th>
-                                            <td><span class="text-danger font-weight-bold">{{ $hasilTes->skor_salah }}</span></td>
-                                        </tr>
-                                        @endif
-                                        @if($hasilTes->jenis_tes === 'kecerdasan')
-                                        <tr>
-                                            <th>Jawaban Benar</th>
-                                            <td><span class="text-success font-weight-bold">{{ $hasilTes->skor_benar }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Jawaban Salah</th>
                                             <td><span class="text-danger font-weight-bold">{{ $hasilTes->skor_salah }}</span></td>
                                         </tr>
                                         @endif
@@ -121,65 +111,64 @@
                                         <h5>Statistik Detail</h5>
                                     </div>
                                     <div class="ibox-content">
-                                        @if($hasilTes->jenis_tes === 'akademik')
-                                            @if($hasilTes->panker)
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h4 class="text-primary">{{ number_format($hasilTes->panker, 2) }}</h4>
-                                                        <small class="text-muted">PANKER</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h4 class="text-info">{{ number_format($hasilTes->tianker, 2) }}</h4>
-                                                        <small class="text-muted">TIANKER</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h4 class="text-warning">{{ number_format($hasilTes->janker, 2) }}</h4>
-                                                        <small class="text-muted">JANKER</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h4 class="text-success">{{ number_format($hasilTes->hanker, 2) }}</h4>
-                                                        <small class="text-muted">HANKER</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        @endif
-
-                                        @if($hasilTes->jenis_tes === 'kecerdasan' && $hasilTes->detail_jawaban)
+                                        @if($hasilTes->detail_jawaban)
                                             @php
                                                 $detail = json_decode($hasilTes->detail_jawaban, true);
                                             @endphp
-                                            @if(isset($detail['category_scores']))
-                                            <h6>Skor per Kategori:</h6>
-                                            @foreach($detail['category_scores'] as $category)
-                                            <div class="d-flex justify-content-between">
-                                                <span>{{ $category['nama'] }}</span>
-                                                <span class="font-weight-bold">{{ $category['correct'] }}/{{ $category['total'] }}</span>
+                                            
+                                            @if(isset($detail['category_scores']) && is_array($detail['category_scores']))
+                                                <!-- Statistik untuk tes dengan kategori -->
+                                                <h6><i class="fa fa-chart-bar"></i> Skor per Kategori:</h6>
+                                                @foreach($detail['category_scores'] as $category)
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="font-weight-bold">{{ $category['nama'] }}</span>
+                                                    <div class="text-right">
+                                                        <span class="badge badge-primary">{{ $category['correct'] }}/{{ $category['total'] }}</span>
+                                                        @php
+                                                            $percentage = $category['total'] > 0 ? round(($category['correct'] / $category['total']) * 100, 1) : 0;
+                                                            $badgeClass = $percentage >= 80 ? 'badge-success' : ($percentage >= 60 ? 'badge-warning' : 'badge-danger');
+                                                        @endphp
+                                                        <span class="badge {{ $badgeClass }} ml-1">{{ $percentage }}%</span>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                                
+                                                <hr>
+                                                <div class="row text-center">
+                                                <div class="col-6">
+                                                        <h4 class="text-success">{{ $detail['correct_answers'] ?? 0 }}</h4>
+                                                        <small class="text-muted">Jawaban Benar</small>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <h4 class="text-danger">{{ $detail['wrong_answers'] ?? 0 }}</h4>
+                                                        <small class="text-muted">Jawaban Salah</small>
+                                                </div>
                                             </div>
-                                            @endforeach
+                                            @else
+                                                <!-- Statistik untuk tes tanpa kategori -->
+                                                <div class="row text-center">
+                                                <div class="col-6">
+                                                        <h4 class="text-success">{{ $detail['correct_answers'] ?? 0 }}</h4>
+                                                        <small class="text-muted">Jawaban Benar</small>
+                                                </div>
+                                                <div class="col-6">
+                                                        <h4 class="text-danger">{{ $detail['wrong_answers'] ?? 0 }}</h4>
+                                                        <small class="text-muted">Jawaban Salah</small>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="text-center">
+                                                    <h3 class="text-primary">{{ number_format($detail['final_score'] ?? 0, 1) }}</h3>
+                                                    <small class="text-muted">Skor Akhir</small>
+                                            </div>
                                             @endif
+                                        @else
+                                            <div class="text-center text-muted">
+                                                <i class="fa fa-info-circle"></i>
+                                                <p class="mb-0">Tidak ada data statistik tersedia</p>
+                                            </div>
                                         @endif
 
-                                        @if($hasilTes->jenis_tes === 'akademik' && $hasilTes->detail_jawaban)
-                                            @php
-                                                $detail = json_decode($hasilTes->detail_jawaban, true);
-                                            @endphp
-                                            @if(isset($detail['N']))
-                                            <div class="text-center">
-                                                <h4 class="text-primary">{{ $detail['N'] }}</h4>
-                                                <small class="text-muted">Total Soal </small>
-                                            </div>
-                                            @endif
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +191,7 @@
                                             $detailJawaban = json_decode($hasilTes->detail_jawaban, true);
                                         @endphp
                                         
-                                        @if($hasilTes->jenis_tes === 'akademik')
+                                        @if(false)
                                             @if(is_array($detailJawaban) && count($detailJawaban) > 0)
                                                 @php
                                                     // Group jawaban by set
@@ -580,172 +569,10 @@
     // Data jawaban untuk modal detail
     const detailJawaban = @json(json_decode($hasilTes->detail_jawaban ?? '[]', true));
     
-    // Group jawaban by set untuk pagination
-    const jawabanBySet = {};
-    detailJawaban.forEach((jawaban, index) => {
-        if (jawaban.set && jawaban.benar !== undefined) {
-            if (!jawabanBySet[jawaban.set]) {
-                jawabanBySet[jawaban.set] = [];
-            }
-            jawaban.original_index = index;
-            jawabanBySet[jawaban.set].push(jawaban);
-        }
-    });
+    // Data jawaban untuk modal detail (simplified - tidak digunakan untuk sistem baru)
     
-    const availableSets = Object.keys(jawabanBySet).sort((a, b) => parseInt(a) - parseInt(b));
-    let currentSet = availableSets[0] || '1';
-    
-    function showSet(setNumber) {
-        currentSet = setNumber;
-        
-        // Update button states
-        $('.set-btn').removeClass('btn-primary').addClass('btn-outline-primary');
-        $(`.set-btn[data-set="${setNumber}"]`).removeClass('btn-outline-primary').addClass('btn-primary');
-        
-        // Update info
-        $('#current-set-info').text(`Set ${setNumber}`);
-        $('#current-count').text(jawabanBySet[setNumber] ? jawabanBySet[setNumber].length : 0);
-        
-        // Update table content
-        const tbody = $('#jawaban-table-body');
-        tbody.empty();
-        
-        if (jawabanBySet[setNumber]) {
-            jawabanBySet[setNumber].forEach(jawaban => {
-                const statusBadge = jawaban.benar === true ? 
-                    '<span class="badge badge-success"><i class="fa fa-check"></i> Benar</span>' :
-                    '<span class="badge badge-danger"><i class="fa fa-times"></i> Salah</span>';
-                
-                const row = `
-                    <tr data-set="${jawaban.set}">
-                        <td class="text-center">
-                            <span class="badge badge-info">${jawaban.set || '-'}</span>
-                        </td>
-                        <td>
-                            <code class="text-primary">${jawaban.soal_asli || '-'}</code>
-                        </td>
-                        <td>
-                            <code class="text-secondary">${jawaban.soal_acak || '-'}</code>
-                        </td>
-                        <td class="text-center">
-                            <span class="badge badge-warning">${jawaban.huruf_hilang || '-'}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="badge badge-secondary">${jawaban.posisi_huruf_hilang || '-'}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="badge badge-primary">${jawaban.jawaban || '-'}</span>
-                        </td>
-                        <td class="text-center">
-                            ${statusBadge}
-                        </td>
-                        <td class="text-center">
-                            <small class="text-muted">${jawaban.waktu || 0}s</small>
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-xs btn-outline-info" 
-                                    onclick="showDetail(${jawaban.original_index})" 
-                                    title="Lihat Detail">
-                                <i class="fa fa-eye"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                tbody.append(row);
-            });
-        }
-    }
-    
-    function showDetail(index) {
-        const jawaban = detailJawaban[index];
-        if (!jawaban) return;
-        
-        let modalContent = `
-            <div class="row">
-                <div class="col-md-6">
-                    <h6><i class="fa fa-info-circle text-primary"></i> Informasi Soal</h6>
-                    <table class="table table-sm table-bordered">
-                        <tr>
-                            <th width="40%">Set/Kolom:</th>
-                            <td><span class="badge badge-info">${jawaban.set || '-'}</span></td>
-                        </tr>
-                        <tr>
-                            <th>Soal Asli:</th>
-                            <td><code class="text-primary">${jawaban.soal_asli || '-'}</code></td>
-                        </tr>
-                        <tr>
-                            <th>Soal Acak:</th>
-                            <td><code class="text-secondary">${jawaban.soal_acak || '-'}</code></td>
-                        </tr>
-                        <tr>
-                            <th>Huruf Hilang:</th>
-                            <td><span class="badge badge-warning">${jawaban.huruf_hilang || '-'}</span></td>
-                        </tr>
-                        <tr>
-                            <th>Posisi:</th>
-                            <td><span class="badge badge-secondary">${jawaban.posisi_huruf_hilang || '-'}</span></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <h6><i class="fa fa-user text-success"></i> Jawaban User</h6>
-                    <table class="table table-sm table-bordered">
-                        <tr>
-                            <th width="40%">Jawaban:</th>
-                            <td><span class="badge badge-primary">${jawaban.jawaban || '-'}</span></td>
-                        </tr>
-                        <tr>
-                            <th>Status:</th>
-                            <td>
-                                ${jawaban.benar === true ? 
-                                    '<span class="badge badge-success"><i class="fa fa-check"></i> Benar</span>' : 
-                                    '<span class="badge badge-danger"><i class="fa fa-times"></i> Salah</span>'
-                                }
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Waktu:</th>
-                            <td><span class="text-muted">${jawaban.waktu || 0} detik</span></td>
-                        </tr>
-                        <tr>
-                            <th>Analisis:</th>
-                            <td>
-                                ${jawaban.benar === true ? 
-                                    '<span class="text-success"><i class="fa fa-thumbs-up"></i> Jawaban tepat!</span>' : 
-                                    '<span class="text-danger"><i class="fa fa-thumbs-down"></i> Perlu lebih teliti</span>'
-                                }
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('detailModalBody').innerHTML = modalContent;
-        const modalEl = document.getElementById('detailModal');
-        // Support Bootstrap 4 (jQuery plugin) and Bootstrap 5 (native)
-        try {
-            if (window.jQuery && typeof jQuery.fn.modal === 'function') {
-                // Reset and show using jQuery plugin
-                jQuery('#detailModal').modal('hide');
-                jQuery('#detailModal').modal({ backdrop: true, keyboard: true });
-                jQuery('#detailModal').modal('show');
-            } else if (window.bootstrap && modalEl) {
-                const instance = bootstrap.Modal.getOrCreateInstance(modalEl, { backdrop: true, keyboard: true });
-                instance.show();
-            } else {
-                // Fallback: toggle class for visibility
-                modalEl.classList.add('show');
-                modalEl.style.display = 'block';
-            }
-        } catch (e) {
-            // Last-resort fallback if any error occurs
-            if (modalEl) {
-                modalEl.classList.add('show');
-                modalEl.style.display = 'block';
-            }
-        }
-    }
+    // Function showDetail dihapus karena tidak relevan dengan sistem baru
+    // Semua JavaScript untuk kecermatan sudah dihapus karena tidak digunakan lagi
     
     // Defensive close handlers for Bootstrap 4/5 variants
     $(document).on('click', '#detailModal .close, #detailModal [data-dismiss="modal"], #detailModal [data-bs-dismiss="modal"], #detailModal .btn-close', function(e) {
