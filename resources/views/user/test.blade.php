@@ -18,48 +18,6 @@
 
                 <div class="row justify-content-center">
 
-                    {{-- Card Tryout AKADEMIK --}}
-                    <div class="col-md-3 mb-4">
-                        <div class="test-card h-100 {{ !Auth::user()->canAccessTryout() ? 'disabled-card' : '' }}">
-                            @if (!Auth::user()->canAccessTryout())
-                                <div class="lock-overlay">
-                                    <i class="fa fa-lock"></i>
-                                </div>
-                            @endif
-                            <div class="test-icon-container">
-                                <i class="fa fa-graduation-cap test-icon"></i>
-                            </div>
-                            <div class="test-content">
-                                <h3 class="test-title">Tryout AKADEMIK</h3>
-                                <p class="test-description">
-                                    Bank soal akademik lengkap dengan berbagai kategori dan level kesulitan.
-                                    Latihan soal unlimited dengan sistem CAT (Computer Adaptive Testing).
-                                </p>
-                                <div class="test-features">
-                                    <div class="feature-badge">
-                                        <i class="fa fa-clock-o"></i> Timer Simulasi
-                                    </div>
-                                    <div class="feature-badge">
-                                        <i class="fa fa-chart-line"></i> Analisis Progress
-                                    </div>
-                                    <div class="feature-badge">
-                                        <i class="fa fa-infinity"></i> Latihan Unlimited
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="test-button-container">
-                                @if (Auth::user()->canAccessTryout())
-                                    <a href="{{ route('user.tryout.index') }}" class="btn btn-test-primary">
-                                        <i class="fa fa-play"></i> Mulai Tryout AKADEMIK
-                                    </a>
-                                @else
-                                    <button class="btn btn-disabled" disabled>
-                                        <i class="fa fa-lock"></i> Butuh Paket AKADEMIK
-                                    </button>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
 
                     {{-- Card Tes Bahasa Inggris --}}
                     <div class="col-md-3 mb-4">
@@ -257,27 +215,27 @@
                                 <i class="fa fa-star test-icon"></i>
                             </div>
                             <div class="test-content">
-                                <h3 class="test-title">Tes Lengkap</h3>
+                                <h3 class="test-title">Paket Lengkap</h3>
                                 <p class="test-description">
-                                    Paket lengkap yang menggabungkan tes kecermatan dan psikologi.
+                                    Paket lengkap yang menggabungkan semua tes akademik.
                                     Simulasi ujian komprehensif dengan analisis mendalam.
                                 </p>
                                 <div class="test-features">
                                     <div class="feature-badge">
-                                        <i class="fa fa-eye"></i> Tes Kecermatan
+                                        <i class="fa fa-language"></i> Bahasa Inggris
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-graduation-cap"></i> Tes Psikologi
+                                        <i class="fa fa-book"></i> Pengetahuan Umum
                                     </div>
                                     <div class="feature-badge">
-                                        <i class="fa fa-trophy"></i> Analisis Komprehensif
+                                        <i class="fa fa-flag"></i> TWK & Numerik
                                     </div>
                                 </div>
                             </div>
                             <div class="test-button-container">
                                 @if ($canAccessLengkap)
                                     <a href="{{ route('user.tryout.index', ['type' => 'lengkap']) }}" class="btn btn-test-warning">
-                                        <i class="fa fa-play"></i> Mulai Tes Lengkap
+                                        <i class="fa fa-play"></i> Mulai Paket Lengkap
                                     </a>
                                 @else
                                     <button class="btn btn-disabled" disabled>
