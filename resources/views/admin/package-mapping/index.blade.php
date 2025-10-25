@@ -47,25 +47,27 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <div class="custom-control custom-checkbox mb-3">
+                                            @if($packageType === 'lengkap')
+                                            <div class="custom-control custom-checkbox d-flex align-items-center mb-3">
                                                 <input type="checkbox" 
                                                        class="custom-control-input select-all-checkbox" 
                                                        id="select_all_{{ $packageType }}"
                                                        data-package-type="{{ $packageType }}">
-                                                <label class="custom-control-label font-weight-bold text-primary" for="select_all_{{ $packageType }}">
+                                                <label class="custom-control-label ml-2 font-weight-bold text-primary" for="select_all_{{ $packageType }}">
                                                     <i class="fa fa-check-square"></i> Centang Semua
                                                 </label>
                                             </div>
+                                            @endif
                                             <label class="font-weight-bold">Pilih Kategori Soal:</label>
                                             @foreach($kategoris as $kategori)
-                                                <div class="custom-control custom-checkbox">
+                                                <div class="custom-control custom-checkbox d-flex align-items-center">
                                                     <input type="checkbox" 
                                                            class="custom-control-input package-checkbox" 
                                                            id="{{ $packageType }}_{{ $kategori->id }}"
                                                            name="mappings[{{ $packageType }}][]" 
                                                            value="{{ $kategori->id }}"
                                                            {{ in_array($kategori->kode, $mappings[$packageType] ?? []) ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="{{ $packageType }}_{{ $kategori->id }}">
+                                                    <label class="custom-control-label ml-2" for="{{ $packageType }}_{{ $kategori->id }}">
                                                         <strong>{{ $kategori->kode }}</strong> - {{ $kategori->nama }}
                                                     </label>
                                                 </div>
@@ -203,12 +205,9 @@ function updateSelectAllState(packageType) {
     }
 }
 
-// Initialize select all checkbox states on page load
+// Initialize select all checkbox states on page load (only for Paket Lengkap)
 $(document).ready(function() {
-    const packageTypes = ['bahasa_inggris', 'pu', 'twk', 'numerik', 'lengkap'];
-    packageTypes.forEach(packageType => {
-        updateSelectAllState(packageType);
-    });
+    updateSelectAllState('lengkap');
 });
 </script>
 @endpush
