@@ -10,9 +10,10 @@
     const btnHitung = document.getElementById('btnHitung');
     const btnReset = document.querySelector('button[formaction*="reset"]');
     const inputs = {
-        kecermatan: document.querySelector('input[name="kecermatan"]'),
-        kecerdasan: document.querySelector('input[name="kecerdasan"]'),
-        kepribadian: document.querySelector('input[name="kepribadian"]')
+        bahasa_inggris: document.querySelector('input[name="bahasa_inggris"]'),
+        pengetahuan_umum: document.querySelector('input[name="pengetahuan_umum"]'),
+        twk: document.querySelector('input[name="twk"]'),
+        numerik: document.querySelector('input[name="numerik"]')
     };
     
     // Cache result elements
@@ -56,7 +57,7 @@
         // Update weights display
         if (resultElements.weightsDisplay) {
             resultElements.weightsDisplay.textContent = 
-                `Bobot saat ini: Kecermatan ${settings.weights.kecermatan}%, Kecerdasan ${settings.weights.kecerdasan}%, Kepribadian ${settings.weights.kepribadian}%.`;
+                `Bobot saat ini: Bahasa Inggris ${settings.weights.bahasa_inggris}%, Pengetahuan Umum ${settings.weights.pengetahuan_umum}%, TWK ${settings.weights.twk}%, Penalaran Numerik ${settings.weights.numerik}%.`;
         }
         
         // Update passing grade display
@@ -67,7 +68,7 @@
         // Update formula display
         if (resultElements.formulaDisplay) {
             resultElements.formulaDisplay.textContent = 
-                `Rumus: (${settings.weights.kecermatan}% × Kecermatan) + (${settings.weights.kecerdasan}% × Kecerdasan) + (${settings.weights.kepribadian}% × Kepribadian)`;
+                `Rumus: (${settings.weights.bahasa_inggris}% × Bahasa Inggris) + (${settings.weights.pengetahuan_umum}% × Pengetahuan Umum) + (${settings.weights.twk}% × TWK) + (${settings.weights.numerik}% × Penalaran Numerik)`;
         }
     }
     
@@ -138,9 +139,10 @@
         if (!settings) return;
         
         const values = {
-            kecermatan: parseFloat(inputs.kecermatan?.value || 0),
-            kecerdasan: parseFloat(inputs.kecerdasan?.value || 0),
-            kepribadian: parseFloat(inputs.kepribadian?.value || 0)
+            bahasa_inggris: parseFloat(inputs.bahasa_inggris?.value || 0),
+            pengetahuan_umum: parseFloat(inputs.pengetahuan_umum?.value || 0),
+            twk: parseFloat(inputs.twk?.value || 0),
+            numerik: parseFloat(inputs.numerik?.value || 0)
         };
         
         // Validate inputs
@@ -151,11 +153,12 @@
         }
         
         // Calculate final score
-        const w1 = settings.weights.kecermatan / 100;
-        const w2 = settings.weights.kecerdasan / 100;
-        const w3 = settings.weights.kepribadian / 100;
+        const w1 = settings.weights.bahasa_inggris / 100;
+        const w2 = settings.weights.pengetahuan_umum / 100;
+        const w3 = settings.weights.twk / 100;
+        const w4 = settings.weights.numerik / 100;
         
-        const finalScore = (w1 * values.kecermatan) + (w2 * values.kecerdasan) + (w3 * values.kepribadian);
+        const finalScore = (w1 * values.bahasa_inggris) + (w2 * values.pengetahuan_umum) + (w3 * values.twk) + (w4 * values.numerik);
         const passed = finalScore >= settings.passing_grade;
         
         // Update display

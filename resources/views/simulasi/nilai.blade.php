@@ -20,16 +20,20 @@
 					<form method="POST" action="{{ route('simulasi.nilai.calculate') }}" class="form-horizontal">
 						@csrf
 
-                        <div class="form-group"><label class="col-sm-5 control-label">Kecermatan</label>
-                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="kecermatan" value="{{ old('kecermatan') }}" placeholder="Masukkan skor kecermatan (0-100)" required></div>
+                        <div class="form-group"><label class="col-sm-5 control-label">Bahasa Inggris</label>
+                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="bahasa_inggris" value="{{ old('bahasa_inggris') }}" placeholder="Masukkan skor bahasa Inggris (0-100)" required></div>
                         </div>
 
-                        <div class="form-group"><label class="col-sm-5 control-label">Kecerdasan</label>
-                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="kecerdasan" value="{{ old('kecerdasan') }}" placeholder="Masukkan skor kecerdasan (0-100)" required></div>
+                        <div class="form-group"><label class="col-sm-5 control-label">Pengetahuan Umum</label>
+                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="pengetahuan_umum" value="{{ old('pengetahuan_umum') }}" placeholder="Masukkan skor pengetahuan umum (0-100)" required></div>
                         </div>
 
-                        <div class="form-group"><label class="col-sm-5 control-label">Kepribadian</label>
-                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="kepribadian" value="{{ old('kepribadian') }}" placeholder="Masukkan skor kepribadian (0-100)" required></div>
+                        <div class="form-group"><label class="col-sm-5 control-label">Tes Wawasan Kebangsaan</label>
+                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="twk" value="{{ old('twk') }}" placeholder="Masukkan skor TWK (0-100)" required></div>
+                        </div>
+
+                        <div class="form-group"><label class="col-sm-5 control-label">Penalaran Numerik</label>
+                            <div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="numerik" value="{{ old('numerik') }}" placeholder="Masukkan skor penalaran numerik (0-100)" required></div>
                         </div>
 
                     <div class="form-group">
@@ -52,13 +56,13 @@
 			<div class="ibox">
 				<div class="ibox-title"><h5>Hasil</h5></div>
 				<div class="ibox-content">
-                <p class="weights-display">Bobot saat ini: Kecermatan {{ $setting->weight_kecermatan }}%, Kecerdasan {{ $setting->weight_kecerdasan }}%, Kepribadian {{ $setting->weight_kepribadian }}%.</p>
+                <p class="weights-display">Bobot saat ini: Bahasa Inggris {{ $setting->weight_bahasa_inggris }}%, Pengetahuan Umum {{ $setting->weight_pu }}%, TWK {{ $setting->weight_twk }}%, Penalaran Numerik {{ $setting->weight_numerik }}%.</p>
                 <p>Nilai minimal kelulusan: <strong class="passing-grade">{{ $setting->passing_grade }}</strong></p>
                 @php $hasResult = isset($result); $score = $hasResult ? $result['score'] : 0; @endphp
                 <h3 class="m-t-none">Nilai Akhir: <strong class="score-display">{{ $score }}</strong>
                     {!! $hasResult ? ($result['passed'] ? '<span class="label label-success m-l-sm">LULUS</span>' : '<span class="label label-danger m-l-sm">TIDAK LULUS</span>') : '<span class="label label-default m-l-sm">Belum dihitung</span>' !!}
                 </h3>
-                <p class="text-muted formula-display">Rumus: ({{ $setting->weight_kecermatan }}% × Kecermatan) + ({{ $setting->weight_kecerdasan }}% × Kecerdasan) + ({{ $setting->weight_kepribadian }}% × Kepribadian)</p>
+                <p class="text-muted formula-display">Rumus: ({{ $setting->weight_bahasa_inggris }}% × Bahasa Inggris) + ({{ $setting->weight_pu }}% × Pengetahuan Umum) + ({{ $setting->weight_twk }}% × TWK) + ({{ $setting->weight_numerik }}% × Penalaran Numerik)</p>
 				</div>
 			</div>
 		</div>

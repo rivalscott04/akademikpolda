@@ -16,13 +16,14 @@ class ScoringSettingController extends Controller
 	public function update(Request $request)
 	{
 		$request->validate([
-			'weight_kecermatan' => 'required|integer|min:0|max:100',
-			'weight_kecerdasan' => 'required|integer|min:0|max:100',
-			'weight_kepribadian' => 'required|integer|min:0|max:100',
+			'weight_bahasa_inggris' => 'required|integer|min:0|max:100',
+			'weight_pu' => 'required|integer|min:0|max:100',
+			'weight_twk' => 'required|integer|min:0|max:100',
+			'weight_numerik' => 'required|integer|min:0|max:100',
 			'passing_grade' => 'required|integer|min:0|max:100',
 		]);
 
-		$total = (int) $request->weight_kecermatan + (int) $request->weight_kecerdasan + (int) $request->weight_kepribadian;
+		$total = (int) $request->weight_bahasa_inggris + (int) $request->weight_pu + (int) $request->weight_twk + (int) $request->weight_numerik;
 		if ($total !== 100) {
 			return back()->withInput()->withErrors(['weights' => 'Jumlah bobot harus tepat 100%. Saat ini: ' . $total . '%']);
 		}
@@ -33,9 +34,10 @@ class ScoringSettingController extends Controller
 		}
 
 		$setting->fill($request->only([
-			'weight_kecermatan',
-			'weight_kecerdasan',
-			'weight_kepribadian',
+			'weight_bahasa_inggris',
+			'weight_pu',
+			'weight_twk',
+			'weight_numerik',
 			'passing_grade',
 		]));
 		$setting->save();

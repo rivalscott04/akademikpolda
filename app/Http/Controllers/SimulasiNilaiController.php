@@ -19,15 +19,17 @@ class SimulasiNilaiController extends Controller
 	public function calculate(Request $request, ScoringService $service)
 	{
 		$request->validate([
-			'kecermatan' => 'required|numeric|min:0|max:100',
-			'kecerdasan' => 'required|numeric|min:0|max:100',
-			'kepribadian' => 'required|numeric|min:0|max:100',
+			'bahasa_inggris' => 'required|numeric|min:0|max:100',
+			'pengetahuan_umum' => 'required|numeric|min:0|max:100',
+			'twk' => 'required|numeric|min:0|max:100',
+			'numerik' => 'required|numeric|min:0|max:100',
 		]);
 
 		$result = $service->calculateFinalScore(
-			(float) $request->kecermatan,
-			(float) $request->kecerdasan,
-			(float) $request->kepribadian
+			(float) $request->bahasa_inggris,
+			(float) $request->pengetahuan_umum,
+			(float) $request->twk,
+			(float) $request->numerik
 		);
 
 		return redirect()->route('simulasi.nilai')->with('result', $result);
@@ -47,9 +49,10 @@ class SimulasiNilaiController extends Controller
 		$setting = ScoringSetting::current();
 		return response()->json([
 			'weights' => [
-				'kecermatan' => $setting->weight_kecermatan,
-				'kecerdasan' => $setting->weight_kecerdasan,
-				'kepribadian' => $setting->weight_kepribadian,
+				'bahasa_inggris' => $setting->weight_bahasa_inggris,
+				'pengetahuan_umum' => $setting->weight_pu,
+				'twk' => $setting->weight_twk,
+				'numerik' => $setting->weight_numerik,
 			],
 			'passing_grade' => $setting->passing_grade,
 		]);

@@ -34,16 +34,20 @@
 						@csrf
 						@method('PUT')
 
-						<div class="form-group"><label class="col-sm-5 control-label">Bobot Kecermatan (%)</label>
-							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_kecermatan" value="{{ old('weight_kecermatan', $setting->weight_kecermatan) }}" required></div>
+						<div class="form-group"><label class="col-sm-5 control-label">Bobot Bahasa Inggris (%)</label>
+							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_bahasa_inggris" value="{{ old('weight_bahasa_inggris', $setting->weight_bahasa_inggris) }}" required></div>
 						</div>
 
-						<div class="form-group"><label class="col-sm-5 control-label">Bobot Kecerdasan (%)</label>
-							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_kecerdasan" value="{{ old('weight_kecerdasan', $setting->weight_kecerdasan) }}" required></div>
+						<div class="form-group"><label class="col-sm-5 control-label">Bobot Pengetahuan Umum (%)</label>
+							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_pu" value="{{ old('weight_pu', $setting->weight_pu) }}" required></div>
 						</div>
 
-						<div class="form-group"><label class="col-sm-5 control-label">Bobot Kepribadian (%)</label>
-							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_kepribadian" value="{{ old('weight_kepribadian', $setting->weight_kepribadian) }}" required></div>
+						<div class="form-group"><label class="col-sm-5 control-label">Bobot Tes Wawasan Kebangsaan (%)</label>
+							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_twk" value="{{ old('weight_twk', $setting->weight_twk) }}" required></div>
+						</div>
+
+						<div class="form-group"><label class="col-sm-5 control-label">Bobot Penalaran Numerik (%)</label>
+							<div class="col-sm-7"><input type="number" min="0" max="100" class="form-control" name="weight_numerik" value="{{ old('weight_numerik', $setting->weight_numerik) }}" required></div>
 						</div>
 
 						<div class="form-group"><label class="col-sm-5 control-label">Nilai Minimal Kelulusan</label>
