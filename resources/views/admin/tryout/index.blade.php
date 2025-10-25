@@ -18,17 +18,22 @@
                         <div class="col-md-3">
                             <select class="form-control" id="filterJenis">
                                 <option value="">Semua Jenis</option>
-                                <option value="kecerdasan" {{ request('jenis') == 'kecerdasan' ? 'selected' : '' }}>Kecerdasan</option>
-                                <option value="kepribadian" {{ request('jenis') == 'kepribadian' ? 'selected' : '' }}>Kepribadian</option>
-                                <option value="lengkap" {{ request('jenis') == 'lengkap' ? 'selected' : '' }}>Lengkap</option>
+                                <option value="bahasa_inggris" {{ request('jenis') == 'bahasa_inggris' ? 'selected' : '' }}>Bahasa Inggris</option>
+                                <option value="pu" {{ request('jenis') == 'pu' ? 'selected' : '' }}>Pengetahuan Umum</option>
+                                <option value="twk" {{ request('jenis') == 'twk' ? 'selected' : '' }}>Tes Wawasan Kebangsaan</option>
+                                <option value="numerik" {{ request('jenis') == 'numerik' ? 'selected' : '' }}>Penalaran Numerik</option>
+                                <option value="lengkap" {{ request('jenis') == 'lengkap' ? 'selected' : '' }}>Paket Lengkap</option>
                             </select>
                         </div>
                         <div class="col-md-3">
                             <select class="form-control" id="filterAkses">
                                 <option value="">Semua Akses</option>
                                 <option value="free" {{ request('akses') == 'free' ? 'selected' : '' }}>Free</option>
-                                <option value="premium" {{ request('akses') == 'premium' ? 'selected' : '' }}>Premium</option>
-                                <option value="vip" {{ request('akses') == 'vip' ? 'selected' : '' }}>VIP</option>
+                                <option value="bahasa_inggris" {{ request('akses') == 'bahasa_inggris' ? 'selected' : '' }}>Bahasa Inggris</option>
+                                <option value="pu" {{ request('akses') == 'pu' ? 'selected' : '' }}>Pengetahuan Umum</option>
+                                <option value="twk" {{ request('akses') == 'twk' ? 'selected' : '' }}>Tes Wawasan Kebangsaan</option>
+                                <option value="numerik" {{ request('akses') == 'numerik' ? 'selected' : '' }}>Penalaran Numerik</option>
+                                <option value="lengkap" {{ request('akses') == 'lengkap' ? 'selected' : '' }}>Paket Lengkap</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -129,16 +134,27 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @switch($tryout->akses_paket)
+                                        @switch($tryout->jenis_paket)
                                             @case('free')
                                                 <span class="badge badge-success">Free</span>
                                                 @break
-                                            @case('premium')
-                                                <span class="badge badge-primary">Premium</span>
+                                            @case('bahasa_inggris')
+                                                <span class="badge badge-info">Bahasa Inggris</span>
                                                 @break
-                                            @case('vip')
-                                                <span class="badge badge-danger">VIP</span>
+                                            @case('pu')
+                                                <span class="badge badge-primary">Pengetahuan Umum</span>
                                                 @break
+                                            @case('twk')
+                                                <span class="badge badge-warning">Tes Wawasan Kebangsaan</span>
+                                                @break
+                                            @case('numerik')
+                                                <span class="badge badge-secondary">Penalaran Numerik</span>
+                                                @break
+                                            @case('lengkap')
+                                                <span class="badge badge-danger">Paket Lengkap</span>
+                                                @break
+                                            @default
+                                                <span class="badge badge-light">{{ ucfirst($tryout->jenis_paket) }}</span>
                                         @endswitch
                                     </td>
                                     <td>
