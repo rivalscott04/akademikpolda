@@ -252,15 +252,17 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Provinsi</label>
                                                 <select id="province" name="province" class="form-control">
-                                                    @if (!$user->province)
-                                                        <option selected disabled>Pilih Provinsi</option>
+                                                    <option value="" {{ !$user->province ? 'selected' : '' }} disabled>Pilih Provinsi</option>
+                                                    @if(isset($provinces) && count($provinces) > 0)
+                                                        @foreach ($provinces as $province)
+                                                            <option value="{{ $province['id'] }}"
+                                                                {{ $user->province == $province['name'] ? 'selected' : '' }}>
+                                                                {{ $province['name'] }}
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option disabled>Gagal memuat data provinsi</option>
                                                     @endif
-                                                    @foreach ($provinces as $province)
-                                                        <option value="{{ $province['id'] }}"
-                                                            {{ $user->province == $province['name'] ? 'selected' : '' }}>
-                                                            {{ $province['name'] }}
-                                                        </option>
-                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -271,9 +273,7 @@
                                             <div class="form-group">
                                                 <label class="font-weight-bold">Kota/Kabupaten</label>
                                                 <select id="regency" name="regency" class="form-control" {{ !$user->province ? 'disabled' : '' }}>
-                                                    @if (!$user->regency)
-                                                        <option selected disabled>Pilih Kota/Kabupaten</option>
-                                                    @endif
+                                                    <option value="" {{ !$user->regency ? 'selected' : '' }} disabled>Pilih Kota/Kabupaten</option>
                                                     @if ($regencies)
                                                         @foreach ($regencies as $regency)
                                                             <option value="{{ $regency['id'] }}"
