@@ -93,9 +93,6 @@
                                         @error('tipe')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                        <small class="text-muted">
-                                            <strong>Untuk kategori akademik:</strong> Hanya tersedia tipe Benar/Salah dan Soal dengan Gambar
-                                        </small>
                                     </div>
                                 </div>
                             </div>
