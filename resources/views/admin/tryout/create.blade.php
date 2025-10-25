@@ -48,22 +48,25 @@
                                         <select class="form-control @error('jenis_paket') is-invalid @enderror"
                                             id="jenis_paket" name="jenis_paket" required>
                                             <option value="">Pilih Jenis Paket</option>
-                                            <option value="kecerdasan"
-                                                {{ old('jenis_paket') == 'kecerdasan' ? 'selected' : '' }}>Kecerdasan
+                                            <option value="bahasa_inggris"
+                                                {{ old('jenis_paket') == 'bahasa_inggris' ? 'selected' : '' }}>Bahasa Inggris
                                             </option>
-                                            <option value="kepribadian"
-                                                {{ old('jenis_paket') == 'kepribadian' ? 'selected' : '' }}>Kepribadian
+                                            <option value="pengetahuan_umum"
+                                                {{ old('jenis_paket') == 'pengetahuan_umum' ? 'selected' : '' }}>Pengetahuan Umum
                                             </option>
-                                            <option value="lengkap"
-                                                {{ old('jenis_paket') == 'lengkap' ? 'selected' : '' }}>Lengkap</option>
+                                            <option value="twk"
+                                                {{ old('jenis_paket') == 'twk' ? 'selected' : '' }}>Tes Wawasan Kebangsaan</option>
+                                            <option value="numerik"
+                                                {{ old('jenis_paket') == 'numerik' ? 'selected' : '' }}>Penalaran Numerik</option>
                                         </select>
                                         @error('jenis_paket')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted">
-                                            <strong>Kecerdasan:</strong> User paket kecerdasan bisa akses<br>
-                                            <strong>Kepribadian:</strong> User paket kepribadian bisa akses<br>
-                                            <strong>Lengkap:</strong> User paket lengkap bisa akses
+                                            <strong>Bahasa Inggris:</strong> User paket bahasa Inggris bisa akses<br>
+                                            <strong>Pengetahuan Umum:</strong> User paket pengetahuan umum bisa akses<br>
+                                            <strong>Tes Wawasan Kebangsaan:</strong> User paket TWK bisa akses<br>
+                                            <strong>Penalaran Numerik:</strong> User paket numerik bisa akses
                                         </small>
                                     </div>
                                 </div>

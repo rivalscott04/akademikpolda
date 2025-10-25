@@ -12,7 +12,7 @@
                                 <p class="text-muted mb-0">
                                     Paket Anda:
                                     <span
-                                        class="badge badge-{{ auth()->user()->paket_akses === 'lengkap' ? 'danger' : (auth()->user()->paket_akses === 'kecerdasan' || auth()->user()->paket_akses === 'kepribadian' ? 'primary' : 'success') }}">
+                                        class="badge badge-{{ auth()->user()->paket_akses === 'lengkap' ? 'danger' : 'primary' }}">
                                         {{ strtoupper(auth()->user()->paket_akses) }}
                                     </span>
                                     <small class="text-muted">({{ auth()->user()->getAvailableTryoutsCount() }} tryout
@@ -88,12 +88,14 @@
                                         <h5>Tidak ada tryout tersedia</h5>
                                         <p class="text-muted">
                                             @php $t = request('type'); @endphp
-                                            @if ($t === 'kecerdasan')
-                                                Tidak ada tryout kecerdasan yang tersedia untuk paket Anda saat ini.
-                                            @elseif($t === 'kepribadian')
-                                                Tidak ada tryout kepribadian yang tersedia untuk paket Anda saat ini.
-                                            @elseif($t === 'lengkap')
-                                                Tidak ada tryout paket lengkap yang tersedia untuk paket Anda saat ini.
+                                            @if ($t === 'bahasa_inggris')
+                                                Tidak ada tryout bahasa Inggris yang tersedia untuk paket Anda saat ini.
+                                            @elseif($t === 'pengetahuan_umum')
+                                                Tidak ada tryout pengetahuan umum yang tersedia untuk paket Anda saat ini.
+                                            @elseif($t === 'twk')
+                                                Tidak ada tryout TWK yang tersedia untuk paket Anda saat ini.
+                                            @elseif($t === 'numerik')
+                                                Tidak ada tryout penalaran numerik yang tersedia untuk paket Anda saat ini.
                                             @else
                                                 Saat ini belum ada tryout yang tersedia untuk paket Anda.
                                             @endif

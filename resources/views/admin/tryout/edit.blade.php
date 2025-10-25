@@ -50,21 +50,24 @@
                                         <select class="form-control @error('jenis_paket') is-invalid @enderror"
                                             id="jenis_paket" name="jenis_paket" required>
                                             <option value="">Pilih Jenis Paket</option>
-                                            <option value="kecerdasan"
-                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'kecerdasan' ? 'selected' : '' }}>
-                                                Kecerdasan</option>
-                                            <option value="kepribadian"
-                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'kepribadian' ? 'selected' : '' }}>
-                                                Kepribadian</option>
-                                            <option value="lengkap"
-                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'lengkap' ? 'selected' : '' }}>
-                                                Lengkap</option>
+                                            <option value="bahasa_inggris"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'bahasa_inggris' ? 'selected' : '' }}>
+                                                Bahasa Inggris</option>
+                                            <option value="pengetahuan_umum"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'pengetahuan_umum' ? 'selected' : '' }}>
+                                                Pengetahuan Umum</option>
+                                            <option value="twk"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'twk' ? 'selected' : '' }}>
+                                                Tes Wawasan Kebangsaan</option>
+                                            <option value="numerik"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'numerik' ? 'selected' : '' }}>
+                                                Penalaran Numerik</option>
                                         </select>
                                         @error('jenis_paket')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted">
-                                            Pilih jenis paket utama. User FREE boleh mencoba masing-masing jenis maksimal 1.
+                                            Pilih jenis paket akademik. User dapat mengakses sesuai paket yang dimiliki.
                                         </small>
                                     </div>
                                 </div>
