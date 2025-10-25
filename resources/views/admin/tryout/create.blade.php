@@ -51,13 +51,15 @@
                                             <option value="bahasa_inggris"
                                                 {{ old('jenis_paket') == 'bahasa_inggris' ? 'selected' : '' }}>Bahasa Inggris
                                             </option>
-                                            <option value="pengetahuan_umum"
-                                                {{ old('jenis_paket') == 'pengetahuan_umum' ? 'selected' : '' }}>Pengetahuan Umum
+                                            <option value="pu"
+                                                {{ old('jenis_paket') == 'pu' ? 'selected' : '' }}>Pengetahuan Umum
                                             </option>
                                             <option value="twk"
                                                 {{ old('jenis_paket') == 'twk' ? 'selected' : '' }}>Tes Wawasan Kebangsaan</option>
                                             <option value="numerik"
                                                 {{ old('jenis_paket') == 'numerik' ? 'selected' : '' }}>Penalaran Numerik</option>
+                                            <option value="lengkap"
+                                                {{ old('jenis_paket') == 'lengkap' ? 'selected' : '' }}>Paket Lengkap</option>
                                         </select>
                                         @error('jenis_paket')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -66,7 +68,8 @@
                                             <strong>Bahasa Inggris:</strong> User paket bahasa Inggris bisa akses<br>
                                             <strong>Pengetahuan Umum:</strong> User paket pengetahuan umum bisa akses<br>
                                             <strong>Tes Wawasan Kebangsaan:</strong> User paket TWK bisa akses<br>
-                                            <strong>Penalaran Numerik:</strong> User paket numerik bisa akses
+                                            <strong>Penalaran Numerik:</strong> User paket numerik bisa akses<br>
+                                            <strong>Paket Lengkap:</strong> User paket lengkap bisa akses
                                         </small>
                                     </div>
                                 </div>

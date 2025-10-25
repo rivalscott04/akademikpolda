@@ -8,12 +8,60 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @keyframes animate {
+        /* Animasi Badge Polisi - Looping dari bawah ke atas */
+        @keyframes badgeFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(1);
+                opacity: 0.2;
+            }
+            10% {
+                transform: translateY(80vh) rotate(36deg) scale(1.02);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(50vh) rotate(180deg) scale(1.05);
+                opacity: 0.4;
+            }
+            90% {
+                transform: translateY(20vh) rotate(324deg) scale(1.02);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1);
+                opacity: 0.2;
+            }
+        }
+
+        /* Animasi Grid Pattern - Looping dari bawah ke atas */
+        @keyframes gridPulse {
+            0% {
+                transform: translateY(100vh) scale(0.9);
+                opacity: 0.2;
+            }
+            10% {
+                transform: translateY(80vh) scale(0.95);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(50vh) scale(1.1);
+                opacity: 0.4;
+            }
+            90% {
+                transform: translateY(20vh) scale(0.95);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) scale(0.9);
+                opacity: 0.2;
+            }
+        }
+
+        /* Animasi Angka Akademik - Looping dari bawah ke atas */
+        @keyframes academicFloat {
             0% {
                 transform: translateY(0) rotate(0deg);
                 opacity: 1;
             }
-
             100% {
                 transform: translateY(-1000px) rotate(720deg);
                 opacity: 0;
@@ -44,135 +92,149 @@
             z-index: -1;
         }
 
-        .background li {
+        .academic-number {
             position: absolute;
             display: block;
-            list-style: none;
             color: rgba(255, 255, 255, 0.2);
             font-size: 86px;
             font-weight: bold;
-            animation: animate 19s linear infinite;
+            animation: academicFloat 19s linear infinite;
         }
 
-        /* Animation positions remain the same */
-        .background li:nth-child(1) {
+        /* Badge Polisi Elements */
+        .badge-polisi {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.3);
+            animation: badgeFloat 16s linear infinite;
+        }
+
+        /* Grid Pattern Elements */
+        .grid-pattern {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 2px;
+            padding: 5px;
+            animation: gridPulse 14s linear infinite;
+        }
+
+        .grid-dot {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: gridPulse 6s ease-in-out infinite;
+        }
+
+        /* Academic Elements Positioning - Start from bottom */
+        .academic-number:nth-child(1) {
             left: 74%;
             bottom: -100px;
             animation-delay: 4s;
         }
 
-        .background li:nth-child(2) {
+        .academic-number:nth-child(2) {
             left: 16%;
             bottom: -100px;
             animation-delay: 2s;
         }
 
-        .background li:nth-child(3) {
+        .academic-number:nth-child(3) {
             left: 88%;
             bottom: -100px;
             animation-delay: 9s;
         }
 
-        .background li:nth-child(4) {
+        .academic-number:nth-child(4) {
             left: 64%;
             bottom: -100px;
             animation-delay: 12s;
         }
 
-        .background li:nth-child(5) {
+        .academic-number:nth-child(5) {
             left: 69%;
             bottom: -100px;
             animation-delay: 21s;
         }
 
-        .background li:nth-child(6) {
+        .academic-number:nth-child(6) {
             left: 71%;
             bottom: -100px;
             animation-delay: 18s;
         }
 
-        .background li:nth-child(7) {
+        .academic-number:nth-child(7) {
             left: 38%;
             bottom: -100px;
             animation-delay: 9s;
         }
 
-        .background li:nth-child(8) {
+        .academic-number:nth-child(8) {
             left: 75%;
             bottom: -100px;
             animation-delay: 33s;
         }
 
-        .background li:nth-child(9) {
+        .academic-number:nth-child(9) {
             left: 9%;
             bottom: -100px;
             animation-delay: 27s;
         }
 
-        .background li:nth-child(10) {
+        .academic-number:nth-child(10) {
             left: 4%;
             bottom: -100px;
             animation-delay: 1s;
         }
 
-        .background li:nth-child(11) {
+        /* Badge Polisi Positioning - Start from bottom */
+        .badge-polisi:nth-child(11) {
+            left: 20%;
+            bottom: -100px;
+            animation-delay: 0s;
+        }
+
+        .badge-polisi:nth-child(12) {
+            left: 80%;
+            bottom: -100px;
+            animation-delay: 6s;
+        }
+
+        .badge-polisi:nth-child(13) {
             left: 45%;
             bottom: -100px;
-            animation-delay: 15s;
+            animation-delay: 3s;
         }
 
-        .background li:nth-child(12) {
-            left: 25%;
+        /* Grid Pattern Positioning - Start from bottom */
+        .grid-pattern:nth-child(14) {
+            left: 10%;
             bottom: -100px;
-            animation-delay: 8s;
+            animation-delay: 1s;
         }
 
-        .background li:nth-child(13) {
-            left: 55%;
-            bottom: -100px;
-            animation-delay: 23s;
-        }
-
-        .background li:nth-child(14) {
+        .grid-pattern:nth-child(15) {
             left: 85%;
             bottom: -100px;
-            animation-delay: 17s;
+            animation-delay: 4s;
         }
 
-        .background li:nth-child(15) {
-            left: 32%;
+        .grid-pattern:nth-child(16) {
+            left: 60%;
             bottom: -100px;
-            animation-delay: 11s;
-        }
-
-        .background li:nth-child(16) {
-            left: 92%;
-            bottom: -100px;
-            animation-delay: 14s;
-        }
-
-        .background li:nth-child(17) {
-            left: 28%;
-            bottom: -100px;
-            animation-delay: 19s;
-        }
-
-        .background li:nth-child(18) {
-            left: 62%;
-            bottom: -100px;
-            animation-delay: 25s;
-        }
-
-        .background li:nth-child(19) {
-            left: 15%;
-            bottom: -100px;
-            animation-delay: 30s;
-        }
-
-        .background li:nth-child(20) {
-            left: 48%;
-            bottom: -100px;
-            animation-delay: 22s;
+            animation-delay: 2s;
         }
 
         /* Updated Navbar Styles */
@@ -667,28 +729,89 @@
 </head>
 
 <body>
-    <ul class="background">
-        <li>A</li>
-        <li>7</li>
-        <li>Γ</li>
-        <li>4</li>
-        <li>B</li>
-        <li>Θ</li>
-        <li>9</li>
-        <li>Σ</li>
-        <li>C</li>
-        <li>2</li>
-        <li>Ω</li>
-        <li>D</li>
-        <li>5</li>
-        <li>ω</li>
-        <li>E</li>
-        <li>3</li>
-        <li>λ</li>
-        <li>F</li>
-        <li>8</li>
-        <li>π</li>
-    </ul>
+    <div class="background">
+        <!-- Badge Polisi Elements -->
+        <div class="academic-number">👮</div>
+        <div class="academic-number">🛡️</div>
+        <div class="academic-number">⭐</div>
+        <div class="academic-number">👮</div>
+        <div class="academic-number">🛡️</div>
+        <div class="academic-number">⭐</div>
+        <div class="academic-number">👮</div>
+        <div class="academic-number">🛡️</div>
+        <div class="academic-number">⭐</div>
+        <div class="academic-number">👮</div>
+        
+        <!-- Grid Pattern Elements -->
+        <div class="grid-pattern">
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+        </div>
+        
+        <div class="grid-pattern">
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+        </div>
+        
+        <div class="grid-pattern">
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+            <div class="grid-dot"></div>
+        </div>
+    </div>
 
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">

@@ -53,8 +53,8 @@
                                             <option value="bahasa_inggris"
                                                 {{ old('jenis_paket', $tryout->jenis_paket) == 'bahasa_inggris' ? 'selected' : '' }}>
                                                 Bahasa Inggris</option>
-                                            <option value="pengetahuan_umum"
-                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'pengetahuan_umum' ? 'selected' : '' }}>
+                                            <option value="pu"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'pu' ? 'selected' : '' }}>
                                                 Pengetahuan Umum</option>
                                             <option value="twk"
                                                 {{ old('jenis_paket', $tryout->jenis_paket) == 'twk' ? 'selected' : '' }}>
@@ -62,6 +62,9 @@
                                             <option value="numerik"
                                                 {{ old('jenis_paket', $tryout->jenis_paket) == 'numerik' ? 'selected' : '' }}>
                                                 Penalaran Numerik</option>
+                                            <option value="lengkap"
+                                                {{ old('jenis_paket', $tryout->jenis_paket) == 'lengkap' ? 'selected' : '' }}>
+                                                Paket Lengkap</option>
                                         </select>
                                         @error('jenis_paket')
                                             <div class="invalid-feedback">{{ $message }}</div>
