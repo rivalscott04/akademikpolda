@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Mahir Cermat | Reset Password</title>
+  <title>Mahir Akademik | Reset Password</title>
 
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -54,7 +54,7 @@
 
         <a class="btn btn-sm btn-white btn-block" href="{{ route('login') }}">Kembali ke Login</a>
       </form>
-      <p class="m-t"> <small>Mahir Cermat &copy; 2025</small> </p>
+      <p class="m-t"> <small>Mahir Akademik &copy; 2025</small> </p>
     </div>
   </div>
 

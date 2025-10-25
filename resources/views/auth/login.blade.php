@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mahir Cermat | Login</title>
+    <title>Mahir Akademik | Login</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -42,7 +42,7 @@
             <div>
                 <img src="{{ asset('img/login-removebg-preview.png') }}" alt="dashboard" class="img-fluid float-right">
             </div>
-            <h3>Mahir Cermat</h3>
+            <h3>Mahir Akademik</h3>
 
             @if (session('message'))
                 <div class="alert alert-info">
@@ -77,7 +77,7 @@
                 </p>
                 <a class="btn btn-sm btn-white btn-block" href="{{ url('register') }}">Buat Akun</a>
             </form>
-            <p class="m-t"> <small>Mahir Cermat &copy; 2025</small> </p>
+            <p class="m-t"> <small>Mahir Akademik &copy; 2025</small> </p>
         </div>
     </div>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahir Cermat</title>
+    <title>Mahir Akademik</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -722,8 +722,7 @@
                         <span class="tagline-item highlight">POLRI.</span>
                     </div>
                     <div class="d-flex">
-                        <a href="{{ route('login') }}" class="get-started-btn me-2">Login</a>
-                        <a href="{{ route('register') }}" class="get-started-btn">Daftar</a>
+                        <a href="{{ route('register') }}" class="get-started-btn" style="padding: 0.8rem 3rem;">Daftar</a>
                     </div>
                 </div>
                 <div class="col-lg-6">

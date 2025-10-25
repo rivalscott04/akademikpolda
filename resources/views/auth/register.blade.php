@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahir Cermat | Buat Akun</title>
+    <title>Mahir Akademik | Buat Akun</title>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
@@ -78,7 +78,7 @@
                         <div class="mb-4 text-center">
                             <img src="{{ asset('img/regis-removebg-preview.png') }}" alt="dashboard" class="img-fluid"
                                 style="max-width: 200px;">
-                            <h3 class="mt-3">Buat Akun Mahir Cermat</h3>
+                            <h3 class="mt-3">Buat Akun Mahir Akademik</h3>
                         </div>
 
                         @if ($errors->any())

@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 text-center">
                 <p class="mb-0 text-muted">
-                    <strong>Copyright</strong> Mahir Cermat &copy; {{ date('Y') }}
+                    <strong>Copyright</strong> Mahir Akademik &copy; {{ date('Y') }}
                 </p>
             </div>
         </div>
