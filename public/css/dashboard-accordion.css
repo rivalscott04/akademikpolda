@@ -1,0 +1,119 @@
+/* Dashboard Accordion Custom Styles */
+/* Independent accordion behavior - no conflicts with existing styles */
+
+.dashboard-accordion {
+    margin-bottom: 20px;
+}
+
+.dashboard-accordion .panel {
+    border: 1px solid #e7eaec;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.dashboard-accordion .panel-heading {
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+    border-bottom: 1px solid #e7eaec;
+    padding: 0;
+}
+
+.dashboard-accordion .panel-title {
+    margin: 0;
+}
+
+.dashboard-accordion .panel-title a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.dashboard-accordion .panel-title a:hover {
+    background: linear-gradient(to right, #1ab394, #18a085);
+    color: #fff;
+    text-decoration: none;
+}
+
+.dashboard-accordion .panel-title a:hover .accordion-icon {
+    color: #fff !important;
+}
+
+.dashboard-accordion .panel-title a:hover i:first-child {
+    color: #fff !important;
+}
+
+.dashboard-accordion .accordion-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+    color: #999;
+    font-size: 14px;
+}
+
+/* Active/Open state */
+.dashboard-accordion .panel-title a[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+    color: #1ab394 !important;
+}
+
+.dashboard-accordion .panel-title a[aria-expanded="true"] {
+    background: linear-gradient(to right, #1ab394, #18a085);
+    color: #fff;
+}
+
+.dashboard-accordion .panel-title a[aria-expanded="true"] i:first-child {
+    color: #fff !important;
+}
+
+/* Collapsed state */
+.dashboard-accordion .panel-title a[aria-expanded="false"] .accordion-icon {
+    transform: rotate(0deg);
+    color: #999;
+}
+
+.dashboard-accordion .panel-title a[aria-expanded="false"] {
+    background: linear-gradient(to right, #f8f9fa, #ffffff);
+    color: #333;
+}
+
+.dashboard-accordion .panel-title a[aria-expanded="false"] i:first-child {
+    color: #333 !important;
+}
+
+.dashboard-accordion .panel-body {
+    padding: 20px;
+    background: #fff;
+}
+
+/* Smooth collapse animation */
+.dashboard-accordion .panel-collapse {
+    transition: height 0.35s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dashboard-accordion .panel-title a {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .dashboard-accordion .panel-body {
+        padding: 15px;
+    }
+}
+
+/* Ensure no conflicts with existing accordion styles */
+.dashboard-accordion .panel-group {
+    margin-bottom: 0;
+}
+
+.dashboard-accordion .panel-group .panel {
+    margin-bottom: 10px;
+}
+
+.dashboard-accordion .panel-group .panel:last-child {
+    margin-bottom: 0;
+}

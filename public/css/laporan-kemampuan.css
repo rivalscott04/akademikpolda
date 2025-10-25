@@ -1,0 +1,391 @@
+/* Laporan Kemampuan Siswa - Custom CSS */
+
+/* Card Styles */
+.laporan-card {
+    background: #fff;
+    border: 1px solid #e7eaec;
+    border-radius: 8px;
+    padding: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.laporan-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.laporan-card .card-body {
+    padding: 30px;
+}
+
+/* Icon Styles */
+.laporan-icon {
+    margin-bottom: 20px;
+}
+
+.laporan-icon i {
+    color: #1ab394;
+}
+
+/* Features List */
+.laporan-features {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.laporan-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.laporan-features ul li {
+    padding: 5px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.laporan-features ul li i {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+/* Siswa Card Styles */
+.siswa-card {
+    background: #fff;
+    border: 1px solid #e7eaec;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.siswa-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.siswa-card .card-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.siswa-avatar {
+    margin-bottom: 15px;
+}
+
+.siswa-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.siswa-email {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.siswa-stats {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.stat-item:last-child {
+    margin-bottom: 0;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Paket Card Styles */
+.paket-card {
+    background: #fff;
+    border: 1px solid #e7eaec;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.paket-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.paket-card .card-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.paket-icon {
+    margin-bottom: 15px;
+}
+
+.paket-name {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.paket-info {
+    margin-bottom: 20px;
+}
+
+/* Summary Card Styles */
+.summary-card {
+    background: #fff;
+    border: 1px solid #e7eaec;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-card .card-body {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.summary-icon {
+    font-size: 2rem;
+    margin-right: 15px;
+}
+
+.summary-content h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.summary-content p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Kategori Card Styles */
+.kategori-card {
+    background: #fff;
+    border: 1px solid #e7eaec;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.kategori-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e7eaec;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kategori-header h5 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.stat-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.stat-badge.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.stat-badge.danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.kategori-content {
+    padding: 20px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Rekomendasi Section */
+.rekomendasi-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e7eaec;
+}
+
+.rekomendasi-section h6 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.rekomendasi-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Empty State */
+.empty-state {
+    padding: 60px 20px;
+}
+
+.empty-state i {
+    margin-bottom: 20px;
+}
+
+/* Button Styles */
+.btn-lg {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Alert Styles */
+.alert-info {
+    border-left: 4px solid #1ab394;
+}
+
+.alert-info h5 {
+    color: #1ab394;
+    margin-bottom: 15px;
+}
+
+.alert-info ul li {
+    margin-bottom: 8px;
+}
+
+/* Print Styles */
+@media print {
+    .ibox-tools {
+        display: none !important;
+    }
+    
+    .summary-card {
+        break-inside: avoid;
+    }
+    
+    .kategori-card {
+        break-inside: avoid;
+        margin-bottom: 15px;
+    }
+    
+    .laporan-card,
+    .siswa-card,
+    .paket-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .laporan-card .card-body,
+    .siswa-card .card-body,
+    .paket-card .card-body {
+        padding: 20px;
+    }
+    
+    .summary-card .card-body {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .summary-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .kategori-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .kategori-header h5 {
+        margin-bottom: 10px;
+    }
+}
+
+/* Animation Styles */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.laporan-card,
+.siswa-card,
+.paket-card,
+.kategori-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #1ab394;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
