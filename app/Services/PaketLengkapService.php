@@ -60,18 +60,16 @@ class PaketLengkapService
             return null;
         }
 
-        $akademikScore = $status['akademik']['score'];
-        $simulasiScore = $status['simulasi']['score'];
-
-        // Kedua skor wajib
-        if (!is_numeric($akademikScore) || !is_numeric($simulasiScore)) {
-            return null;
-        }
-
-        // Calculate average of both scores
-        $finalScore = ($akademikScore + $simulasiScore) / 2;
+        // Gunakan ScoringService untuk menghitung dengan bobot
+        $scoringService = app(ScoringService::class);
+        $result = $scoringService->calculateFinalScore(
+            (float) ($status['bahasa_inggris']['score'] ?? 0),
+            (float) ($status['pu']['score'] ?? 0),
+            (float) ($status['twk']['score'] ?? 0),
+            (float) ($status['numerik']['score'] ?? 0)
+        );
         
-        return round($finalScore, 2);
+        return $result['score'];
     }
 
 
@@ -89,7 +87,7 @@ class PaketLengkapService
             $status = $this->getCompletionStatus($user);
             $completedCount = 0;
 
-            // Akademik wajib (1 poin)
+            // Akademik wajib (1 poin) - semua jenis tes harus selesai
             if ($status['akademik']['completed']) $completedCount++;
             
             // Simulasi wajib (1 poin)
@@ -129,13 +127,24 @@ class PaketLengkapService
                 'passing_grade' => $status['scoring_info']['passing_grade'],
                 'details' => [
                     'akademik' => $status['akademik'],
-                    'simulasi' => $status['simulasi']
+                    'simulasi' => $status['simulasi'],
+                    'bahasa_inggris' => $status['bahasa_inggris'],
+                    'pu' => $status['pu'],
+                    'twk' => $status['twk'],
+                    'numerik' => $status['numerik']
                 ]
             ];
         }
 
         $remainingTasks = [];
-        if (!$status['akademik']['completed']) $remainingTasks[] = 'Tes AKADEMIK';
+        if (!$status['akademik']['completed']) {
+            $akademikTasks = [];
+            if (!$status['bahasa_inggris']['completed']) $akademikTasks[] = 'Bahasa Inggris';
+            if (!$status['pu']['completed']) $akademikTasks[] = 'PU';
+            if (!$status['twk']['completed']) $akademikTasks[] = 'TWK';
+            if (!$status['numerik']['completed']) $akademikTasks[] = 'Numerik';
+            $remainingTasks[] = 'Tes AKADEMIK (' . implode(', ', $akademikTasks) . ')';
+        }
         if (!$status['simulasi']['completed']) $remainingTasks[] = 'Simulasi Nilai';
 
         return [
@@ -145,7 +154,11 @@ class PaketLengkapService
             'message' => 'Selesaikan: ' . implode(', ', $remainingTasks),
             'details' => [
                 'akademik' => $status['akademik'],
-                'simulasi' => $status['simulasi']
+                'simulasi' => $status['simulasi'],
+                'bahasa_inggris' => $status['bahasa_inggris'],
+                'pu' => $status['pu'],
+                'twk' => $status['twk'],
+                'numerik' => $status['numerik']
             ]
         ];
     }
@@ -176,17 +189,77 @@ class PaketLengkapService
      */
     private function getAllCompletionDataInOneQuery(User $user): array
     {
-        // 1. Ambil data akademik (query terpisah karena tabel berbeda)
-        $akademikResult = HasilTes::where('user_id', $user->id)
-            ->whereIn('jenis_tes', ['bahasa_inggris', 'pu', 'twk', 'numerik'])
+        // 1. Ambil data per jenis tes akademik
+        $bahasaInggrisResult = HasilTes::where('user_id', $user->id)
+            ->where('jenis_tes', 'bahasa_inggris')
             ->orderBy('tanggal_tes', 'desc')
             ->first();
 
+        $puResult = HasilTes::where('user_id', $user->id)
+            ->where('jenis_tes', 'pu')
+            ->orderBy('tanggal_tes', 'desc')
+            ->first();
+
+        $twkResult = HasilTes::where('user_id', $user->id)
+            ->where('jenis_tes', 'twk')
+            ->orderBy('tanggal_tes', 'desc')
+            ->first();
+
+        $numerikResult = HasilTes::where('user_id', $user->id)
+            ->where('jenis_tes', 'numerik')
+            ->orderBy('tanggal_tes', 'desc')
+            ->first();
+
+        // Status per jenis tes
+        $bahasaInggrisStatus = [
+            'completed' => $bahasaInggrisResult ? true : false,
+            'score' => $bahasaInggrisResult ? $bahasaInggrisResult->skor_akhir : null,
+            'tanggal' => $bahasaInggrisResult ? $bahasaInggrisResult->tanggal_tes : null,
+            'message' => $bahasaInggrisResult ? 'Tes Bahasa Inggris sudah selesai' : 'Belum mengerjakan tes Bahasa Inggris'
+        ];
+
+        $puStatus = [
+            'completed' => $puResult ? true : false,
+            'score' => $puResult ? $puResult->skor_akhir : null,
+            'tanggal' => $puResult ? $puResult->tanggal_tes : null,
+            'message' => $puResult ? 'Tes PU sudah selesai' : 'Belum mengerjakan tes PU'
+        ];
+
+        $twkStatus = [
+            'completed' => $twkResult ? true : false,
+            'score' => $twkResult ? $twkResult->skor_akhir : null,
+            'tanggal' => $twkResult ? $twkResult->tanggal_tes : null,
+            'message' => $twkResult ? 'Tes TWK sudah selesai' : 'Belum mengerjakan tes TWK'
+        ];
+
+        $numerikStatus = [
+            'completed' => $numerikResult ? true : false,
+            'score' => $numerikResult ? $numerikResult->skor_akhir : null,
+            'tanggal' => $numerikResult ? $numerikResult->tanggal_tes : null,
+            'message' => $numerikResult ? 'Tes Numerik sudah selesai' : 'Belum mengerjakan tes Numerik'
+        ];
+
+        // Status akademik (semua jenis tes harus selesai)
+        $akademikCompleted = $bahasaInggrisStatus['completed'] && 
+                           $puStatus['completed'] && 
+                           $twkStatus['completed'] && 
+                           $numerikStatus['completed'];
+
         $akademikStatus = [
-            'completed' => $akademikResult ? true : false,
-            'score' => $akademikResult ? $akademikResult->skor_akhir : null,
-            'tanggal' => $akademikResult ? $akademikResult->tanggal_tes : null,
-            'message' => $akademikResult ? 'Tes AKADEMIK sudah selesai' : 'Belum mengerjakan tes AKADEMIK'
+            'completed' => $akademikCompleted,
+            'score' => $akademikCompleted ? $this->calculateFinalScoreFromData([
+                'bahasa_inggris' => $bahasaInggrisStatus,
+                'pu' => $puStatus,
+                'twk' => $twkStatus,
+                'numerik' => $numerikStatus
+            ]) : null,
+            'tanggal' => $akademikCompleted ? max(
+                $bahasaInggrisResult->tanggal_tes,
+                $puResult->tanggal_tes,
+                $twkResult->tanggal_tes,
+                $numerikResult->tanggal_tes
+            ) : null,
+            'message' => $akademikCompleted ? 'Semua tes AKADEMIK sudah selesai' : 'Belum menyelesaikan semua tes AKADEMIK'
         ];
 
         // 2. Ambil data simulasi
@@ -223,7 +296,11 @@ class PaketLengkapService
 
         return [
             'akademik' => $akademikStatus,
-            'simulasi' => $simulasiStatus
+            'simulasi' => $simulasiStatus,
+            'bahasa_inggris' => $bahasaInggrisStatus,
+            'pu' => $puStatus,
+            'twk' => $twkStatus,
+            'numerik' => $numerikStatus
         ];
     }
 
@@ -234,18 +311,22 @@ class PaketLengkapService
      */
     private function calculateFinalScoreFromData(array $allData): float
     {
-        $akademikScore = $allData['akademik']['score'];
-        $simulasiScore = $allData['simulasi']['score'];
+        // Ambil skor per jenis tes dari data akademik
+        $bahasaInggrisScore = $allData['bahasa_inggris']['score'] ?? 0;
+        $puScore = $allData['pu']['score'] ?? 0;
+        $twkScore = $allData['twk']['score'] ?? 0;
+        $numerikScore = $allData['numerik']['score'] ?? 0;
 
-        // Kedua skor wajib
-        if (!is_numeric($akademikScore) || !is_numeric($simulasiScore)) {
-            return 0;
-        }
-
-        // Calculate average of both scores
-        $finalScore = ($akademikScore + $simulasiScore) / 2;
+        // Gunakan ScoringService untuk menghitung dengan bobot
+        $scoringService = app(ScoringService::class);
+        $result = $scoringService->calculateFinalScore(
+            (float) $bahasaInggrisScore,
+            (float) $puScore,
+            (float) $twkScore,
+            (float) $numerikScore
+        );
         
-        return round($finalScore, 2);
+        return $result['score'];
     }
 
     /**
@@ -253,24 +334,26 @@ class PaketLengkapService
      */
     private function getScoringInfo(array $allData): array
     {
-        $akademikScore = $allData['akademik']['score'];
-        $simulasiScore = $allData['simulasi']['score'];
+        // Ambil skor per jenis tes dari data akademik
+        $bahasaInggrisScore = $allData['bahasa_inggris']['score'] ?? 0;
+        $puScore = $allData['pu']['score'] ?? 0;
+        $twkScore = $allData['twk']['score'] ?? 0;
+        $numerikScore = $allData['numerik']['score'] ?? 0;
 
-        // Calculate final score as average of both scores
-        $finalScore = ($akademikScore + $simulasiScore) / 2;
-        
-        // Simple passing grade check (adjust as needed)
-        $passingGrade = 60; // Default passing grade
-        $passed = $finalScore >= $passingGrade;
+        // Gunakan ScoringService untuk menghitung dengan bobot dan passing grade
+        $scoringService = app(ScoringService::class);
+        $result = $scoringService->calculateFinalScore(
+            (float) $bahasaInggrisScore,
+            (float) $puScore,
+            (float) $twkScore,
+            (float) $numerikScore
+        );
 
         return [
-            'final_score' => round($finalScore, 2),
-            'passed' => $passed,
-            'passing_grade' => $passingGrade,
-            'weights' => [
-                'akademik' => 50,
-                'simulasi' => 50
-            ]
+            'final_score' => $result['score'],
+            'passed' => $result['passed'],
+            'passing_grade' => $result['passing_grade'],
+            'weights' => $result['weights']
         ];
     }
 }
