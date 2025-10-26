@@ -70,13 +70,13 @@
                                     $questionStatus = $userAnswers->where('urutan', $i)->first();
                                     $statusClass = '';
                                     $statusText = '';
-                                        if ($questionStatus && $questionStatus->sudah_dijawab) {
-                                            $statusClass = 'answered';
-                                            $statusText = 'Terjawab';
-                                        } elseif ($questionStatus) {
-                                            $statusClass = 'unanswered';
-                                            $statusText = 'Tidak dijawab';
-                                        }
+                                    
+                                    if ($questionStatus && $questionStatus->sudah_dijawab) {
+                                        $statusClass = 'answered';
+                                        $statusText = 'Terjawab';
+                                    } elseif ($questionStatus) {
+                                        $statusClass = 'unanswered';
+                                        $statusText = 'Tidak dijawab';
                                     } else {
                                         if ($questionStatus && $questionStatus->skor > 0) {
                                             $statusClass = 'answered';
