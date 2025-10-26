@@ -136,40 +136,95 @@
                                 </div>
                             </div>
                             <div class="row g-3">
-                                <div class="col-md-4">
+                                {{-- Card Bahasa Inggris --}}
+                                <div class="col-md-3">
                                     <div class="progress-item">
                                         <div class="d-flex align-items-center">
-                                            <i class="fa fa-{{ $paketLengkapStatus['kecermatan']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['kecermatan']['completed'] ? 'success' : 'danger' }}"></i>
-                                            <span class="fw-medium">Kecermatan</span>
+                                            <i class="fa fa-{{ $paketLengkapStatus['bahasa_inggris']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['bahasa_inggris']['completed'] ? 'success' : 'danger' }}"></i>
+                                            <span class="fw-medium">Bahasa Inggris</span>
                                         </div>
-                                        @if($paketLengkapStatus['kecermatan']['completed'])
-                                            <small class="text-muted">Skor: {{ $paketLengkapStatus['kecermatan']['score'] }}</small>
+                                        @if($paketLengkapStatus['bahasa_inggris']['completed'])
+                                            <small class="text-muted">Skor: {{ number_format($paketLengkapStatus['bahasa_inggris']['score'], 1) }}</small>
+                                        @else
+                                            <small class="text-muted">-</small>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                
+                                {{-- Card PU --}}
+                                <div class="col-md-3">
                                     <div class="progress-item">
                                         <div class="d-flex align-items-center">
-                                            <i class="fa fa-{{ $paketLengkapStatus['kecerdasan']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['kecerdasan']['completed'] ? 'success' : 'danger' }}"></i>
-                                            <span class="fw-medium">Kecerdasan</span>
+                                            <i class="fa fa-{{ $paketLengkapStatus['pu']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['pu']['completed'] ? 'success' : 'danger' }}"></i>
+                                            <span class="fw-medium">PU</span>
                                         </div>
-                                        @if($paketLengkapStatus['kecerdasan']['completed'])
-                                            <small class="text-muted">Skor: {{ $paketLengkapStatus['kecerdasan']['score'] }}</small>
+                                        @if($paketLengkapStatus['pu']['completed'])
+                                            <small class="text-muted">Skor: {{ number_format($paketLengkapStatus['pu']['score'], 1) }}</small>
+                                        @else
+                                            <small class="text-muted">-</small>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                
+                                {{-- Card TWK --}}
+                                <div class="col-md-3">
                                     <div class="progress-item">
                                         <div class="d-flex align-items-center">
-                                            <i class="fa fa-{{ $paketLengkapStatus['kepribadian']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['kepribadian']['completed'] ? 'success' : 'danger' }}"></i>
-                                            <span class="fw-medium">Kepribadian</span>
+                                            <i class="fa fa-{{ $paketLengkapStatus['twk']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['twk']['completed'] ? 'success' : 'danger' }}"></i>
+                                            <span class="fw-medium">TWK</span>
                                         </div>
-                                        @if($paketLengkapStatus['kepribadian']['completed'])
-                                            <small class="text-muted">Skor: {{ $paketLengkapStatus['kepribadian']['score'] }}</small>
+                                        @if($paketLengkapStatus['twk']['completed'])
+                                            <small class="text-muted">Skor: {{ number_format($paketLengkapStatus['twk']['score'], 1) }}</small>
+                                        @else
+                                            <small class="text-muted">-</small>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                                {{-- Card Numerik --}}
+                                <div class="col-md-3">
+                                    <div class="progress-item">
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa fa-{{ $paketLengkapStatus['numerik']['completed'] ? 'check' : 'times' }}-circle me-2 text-{{ $paketLengkapStatus['numerik']['completed'] ? 'success' : 'danger' }}"></i>
+                                            <span class="fw-medium">Numerik</span>
+                                        </div>
+                                        @if($paketLengkapStatus['numerik']['completed'])
+                                            <small class="text-muted">Skor: {{ number_format($paketLengkapStatus['numerik']['score'], 1) }}</small>
+                                        @else
+                                            <small class="text-muted">-</small>
                                         @endif
                                     </div>
                                 </div>
                             </div>
+                            
+                            {{-- Final Score Section - hanya muncul jika semua paket selesai --}}
+                            @if($paketLengkapStatus['is_complete'] && $paketLengkapStatus['final_score'])
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="card border-success">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title text-success">
+                                                <i class="fa fa-trophy"></i> Nilai Akhir Paket Lengkap
+                                            </h5>
+                                            <h2 class="text-success mb-2">{{ number_format($paketLengkapStatus['final_score'], 2) }}</h2>
+                                            <p class="text-muted mb-0">
+                                                Formula: (Skor × Bobot) ÷ 4
+                                            </p>
+                                            @if(isset($paketLengkapStatus['scoring_info']))
+                                            <div class="mt-3">
+                                                <span class="badge badge-{{ $paketLengkapStatus['scoring_info']['passed'] ? 'success' : 'danger' }} badge-lg">
+                                                    {{ $paketLengkapStatus['scoring_info']['passed'] ? 'LULUS' : 'TIDAK LULUS' }}
+                                                </span>
+                                                <small class="text-muted ml-2">
+                                                    Standar: {{ $paketLengkapStatus['scoring_info']['passing_grade'] }}
+                                                </small>
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -117,7 +117,7 @@ class AuthController extends Controller
                 $hasActiveSubscription = $user->hasActiveSubscription();
                 
                 return $hasActiveSubscription
-                    ? redirect()->route('kecermatan')
+                    ? redirect()->route('user.tryout.index')
                     : redirect()->route('user.profile', ['userId' => $user->id]);
             }
 

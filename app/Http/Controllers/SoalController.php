@@ -48,11 +48,6 @@ class SoalController extends Controller
         return view('admin.soal.create', compact('kategoris', 'tipes'));
     }
 
-    public function getKepribadianCategories()
-    {
-        $kepribadianCodes = PackageCategoryMapping::getCategoriesForPackage('kepribadian');
-        return response()->json($kepribadianCodes);
-    }
 
     public function getAkademikCategories()
     {
@@ -71,18 +66,7 @@ class SoalController extends Controller
                 return $inputBobot > 0 ? 0.5 : 0;
                 
             case 'pg_bobot':
-                // Untuk pg_bobot, gunakan bobot asli dari input (1-5 untuk kepribadian, 0-1 untuk lainnya)
-                if ($kategoriId) {
-                    $kategori = KategoriSoal::find($kategoriId);
-                    if ($kategori) {
-                        $kepribadianKategoriCodes = PackageCategoryMapping::getCategoriesForPackage('kepribadian');
-                        if (in_array($kategori->kode, $kepribadianKategoriCodes)) {
-                            // Untuk kategori kepribadian, bobot 1-5
-                            return max(1, min(5, $inputBobot));
-                        }
-                    }
-                }
-                // Untuk non-kepribadian, bobot 0-1
+                // Untuk pg_bobot, gunakan bobot 0-1 (sistem akademik)
                 return max(0, min(1, $inputBobot));
                 
             case 'pg_satu':
@@ -121,17 +105,7 @@ class SoalController extends Controller
             $rules['gambar'] = 'required|image|mimes:jpeg,png,jpg,gif|max:2048';
         }
 
-        // Dynamic validation for kepribadian categories (TKP/PSIKOTES via package mapping)
-        // PERBAIKAN: Validasi bobot 1-5 hanya untuk tipe pg_bobot dengan kategori kepribadian
-        if ($request->filled('kategori_id') && $request->tipe === 'pg_bobot') {
-            $kategori = KategoriSoal::find($request->kategori_id);
-            if ($kategori) {
-                $kepribadianKategoriCodes = PackageCategoryMapping::getCategoriesForPackage('kepribadian');
-                if (in_array($kategori->kode, $kepribadianKategoriCodes)) {
-                    $rules['opsi.*.bobot'] = 'required|integer|between:1,5';
-                }
-            }
-        }
+        // Sistem akademik menggunakan bobot 0-1 untuk semua tipe soal
 
         try {
             $request->validate($rules);
@@ -377,17 +351,7 @@ class SoalController extends Controller
             $rules['gambar'] = 'image|mimes:jpeg,png,jpg,gif|max:2048';
         }
 
-        // Dynamic validation for kepribadian categories
-        // PERBAIKAN: Dynamic validation hanya untuk pg_bobot dengan kategori kepribadian
-        if ($request->filled('kategori_id') && $request->tipe === 'pg_bobot') {
-            $kategori = KategoriSoal::find($request->kategori_id);
-            if ($kategori) {
-                $kepribadianKategoriCodes = PackageCategoryMapping::getCategoriesForPackage('kepribadian');
-                if (in_array($kategori->kode, $kepribadianKategoriCodes)) {
-                    $rules['opsi.*.bobot'] = 'required|numeric|between:1,5';
-                }
-            }
-        }
+        // Sistem akademik menggunakan bobot 0-1 untuk semua tipe soal
 
         try {
             $request->validate($rules);

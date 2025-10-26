@@ -31,32 +31,16 @@ class HistoryController extends Controller
 
                 $correctAnswers = (clone $answersQuery)->where('skor', '>', 0)->count();
 
-                // Determine if this tryout session is TKP by checking kategori codes
-                $kepribadianKategoriCodes = \App\Models\PackageCategoryMapping::getCategoriesForPackage('kepribadian');
-                $tkpQuestions = (clone $answersQuery)->with('soal.kategori')->get()->filter(function ($ans) use ($kepribadianKategoriCodes) {
-                    $kategori = $ans->soal->kategori ?? null;
-                    return $kategori && in_array($kategori->kode, $kepribadianKategoriCodes);
-                });
-                $isTkp = $tkpQuestions->count() > 0;
+                // Sistem akademik tidak menggunakan TKP (Tes Karakteristik Pribadi)
+                $isTkp = false;
 
+                // TKP scoring tidak digunakan dalam sistem akademik
                 $tkpN = null;
                 $tkpT = null;
                 $tkpFinal = null;
-                if ($isTkp) {
-                    $tkpN = $tkpQuestions->count();
-                    $tkpT = (int) round($tkpQuestions->sum('skor'));
-                    try {
-                        $svc = app(\App\Services\TkpScoringService::class);
-                        $tkpFinal = $svc->calculateFinalScore($tkpN, $tkpT);
-                    } catch (\Throwable $e) {
-                        $tkpFinal = null;
-                    }
-                }
 
-                // Determine status based on tryout type
-                $status = $isTkp && $tkpFinal !== null
-                    ? $this->getTkpStatus($tkpFinal)
-                    : $this->getTryoutStatus($correctAnswers, $totalQuestions);
+                // Determine status based on tryout type (akademik system)
+                $status = $this->getTryoutStatus($correctAnswers, $totalQuestions);
 
                 return [
                     'id' => $session->id,
@@ -80,40 +64,8 @@ class HistoryController extends Controller
                 ];
             });
 
-        // Get kecermatan history
-        $kecermatanHistory = HasilTes::where('user_id', $user->id)
-            ->where('jenis_tes', 'kecermatan')
-            ->orderBy('tanggal_tes', 'desc')
-            ->get()
-            ->map(function ($hasil) {
-                $totalQuestions = $hasil->skor_benar + $hasil->skor_salah;
-                
-                // Use skor_akhir if available (calculated with complex algorithm), 
-                // otherwise fallback to simple percentage calculation
-                $percentage = $hasil->skor_akhir !== null 
-                    ? round($hasil->skor_akhir, 2) 
-                    : ($totalQuestions > 0 ? round(($hasil->skor_benar / $totalQuestions) * 100, 2) : 0);
-
-                return [
-                    'id' => $hasil->id,
-                    'type' => 'kecermatan',
-                    'title' => 'Tes Kecermatan',
-                    'date' => $hasil->tanggal_tes,
-                    'score' => $hasil->skor_benar,
-                    'total_questions' => $totalQuestions,
-                    'correct_answers' => $hasil->skor_benar,
-                    'wrong_answers' => $hasil->skor_salah,
-                    'percentage' => $percentage,
-                    'duration' => $hasil->waktu_total ?? 0,
-                    'status' => $this->getKecermatanStatus($percentage, 100) // Use percentage directly for status
-                ];
-            });
-
-        // TODO: If/when kecerdasan & kepribadian standalone results are stored in hasil_tes,
-        // add queries similar to $kecermatanHistory for 'kecerdasan' and 'kepribadian'
-
         // Combine and sort all history
-        $allHistory = $tryoutHistory->concat($kecermatanHistory)
+        $allHistory = $tryoutHistory
             ->sortByDesc('date')
             ->take(10); // Limit to 10 most recent
 
@@ -132,32 +84,5 @@ class HistoryController extends Controller
         return 'poor';
     }
 
-    /**
-     * Get TKP status based on final score according to TKP scoring system
-     * 91-100: Sangat Tinggi (excellent)
-     * 76-90:  Tinggi (good)
-     * 61-75:  Cukup Tinggi (fair)
-     * 41-60:  Sedang (poor)
-     * ≤40:    Rendah (poor)
-     */
-    private function getTkpStatus($finalScore)
-    {
-        if ($finalScore === null || $finalScore === 0) return 'unknown';
 
-        if ($finalScore >= 91) return 'excellent';      // Sangat Tinggi
-        if ($finalScore >= 76) return 'good';           // Tinggi
-        if ($finalScore >= 61) return 'fair';           // Cukup Tinggi
-        if ($finalScore >= 41) return 'poor';           // Sedang
-        return 'poor';                                  // Rendah
-    }
-
-    private function getKecermatanStatus($percentage, $maxScore = 100)
-    {
-        if ($maxScore == 0) return 'unknown';
-
-        if ($percentage >= 90) return 'excellent';
-        if ($percentage >= 80) return 'good';
-        if ($percentage >= 70) return 'fair';
-        return 'poor';
-    }
 }

@@ -40,6 +40,10 @@ class PaketLengkapService
                 'is_complete' => $isComplete,
                 'akademik' => $akademikStatus,
                 'simulasi' => $simulasiStatus,
+                'bahasa_inggris' => $allData['bahasa_inggris'],
+                'pu' => $allData['pu'],
+                'twk' => $allData['twk'],
+                'numerik' => $allData['numerik'],
                 'final_score' => $isComplete ? $this->calculateFinalScoreFromData($allData) : null,
                 'scoring_info' => $isComplete ? $this->getScoringInfo($allData) : null
             ];
@@ -60,16 +64,22 @@ class PaketLengkapService
             return null;
         }
 
-        // Gunakan ScoringService untuk menghitung dengan bobot
-        $scoringService = app(ScoringService::class);
-        $result = $scoringService->calculateFinalScore(
-            (float) ($status['bahasa_inggris']['score'] ?? 0),
-            (float) ($status['pu']['score'] ?? 0),
-            (float) ($status['twk']['score'] ?? 0),
-            (float) ($status['numerik']['score'] ?? 0)
-        );
+        // Hitung final score dengan formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
+        $bahasaInggrisScore = $status['bahasa_inggris']['score'] ?? 0;
+        $puScore = $status['pu']['score'] ?? 0;
+        $twkScore = $status['twk']['score'] ?? 0;
+        $numerikScore = $status['numerik']['score'] ?? 0;
+
+        $setting = \App\Models\ScoringSetting::current();
+        $w1 = $setting->weight_bahasa_inggris / 100;
+        $w2 = $setting->weight_pu / 100;
+        $w3 = $setting->weight_twk / 100;
+        $w4 = $setting->weight_numerik / 100;
+
+        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
+        $finalScore = round($weightedSum / 4, 2);
         
-        return $result['score'];
+        return $finalScore;
     }
 
 
@@ -125,6 +135,7 @@ class PaketLengkapService
                 'final_score' => $status['scoring_info']['final_score'],
                 'passed' => $status['scoring_info']['passed'],
                 'passing_grade' => $status['scoring_info']['passing_grade'],
+                'weights' => $status['scoring_info']['weights'],
                 'details' => [
                     'akademik' => $status['akademik'],
                     'simulasi' => $status['simulasi'],
@@ -308,6 +319,7 @@ class PaketLengkapService
 
     /**
      * Calculate final score from pre-loaded data
+     * Formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
      */
     private function calculateFinalScoreFromData(array $allData): float
     {
@@ -326,7 +338,17 @@ class PaketLengkapService
             (float) $numerikScore
         );
         
-        return $result['score'];
+        // Sesuai permintaan: (skor tiap paket × bobot) dijumlahkan dibagi 4
+        $setting = \App\Models\ScoringSetting::current();
+        $w1 = $setting->weight_bahasa_inggris / 100;
+        $w2 = $setting->weight_pu / 100;
+        $w3 = $setting->weight_twk / 100;
+        $w4 = $setting->weight_numerik / 100;
+
+        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
+        $finalScore = $weightedSum / 4;
+        
+        return round($finalScore, 2);
     }
 
     /**
@@ -340,20 +362,29 @@ class PaketLengkapService
         $twkScore = $allData['twk']['score'] ?? 0;
         $numerikScore = $allData['numerik']['score'] ?? 0;
 
-        // Gunakan ScoringService untuk menghitung dengan bobot dan passing grade
-        $scoringService = app(ScoringService::class);
-        $result = $scoringService->calculateFinalScore(
-            (float) $bahasaInggrisScore,
-            (float) $puScore,
-            (float) $twkScore,
-            (float) $numerikScore
-        );
+        // Hitung final score dengan formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
+        $setting = \App\Models\ScoringSetting::current();
+        $w1 = $setting->weight_bahasa_inggris / 100;
+        $w2 = $setting->weight_pu / 100;
+        $w3 = $setting->weight_twk / 100;
+        $w4 = $setting->weight_numerik / 100;
+
+        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
+        $finalScore = round($weightedSum / 4, 2);
+        
+        // Cek kelulusan berdasarkan passing grade
+        $passed = $finalScore >= (float) $setting->passing_grade;
 
         return [
-            'final_score' => $result['score'],
-            'passed' => $result['passed'],
-            'passing_grade' => $result['passing_grade'],
-            'weights' => $result['weights']
+            'final_score' => $finalScore,
+            'passed' => $passed,
+            'passing_grade' => (int) $setting->passing_grade,
+            'weights' => [
+                'bahasa_inggris' => (int) $setting->weight_bahasa_inggris,
+                'pu' => (int) $setting->weight_pu,
+                'twk' => (int) $setting->weight_twk,
+                'numerik' => (int) $setting->weight_numerik,
+            ]
         ];
     }
 }

@@ -427,7 +427,7 @@ class TryoutController extends Controller
                 ->with('subscriptionError', 'Anda tidak memiliki akses ke Tryout CBT.');
         }
 
-        // Optional filter by tryout type (kecerdasan/kepribadian/lengkap/free)
+        // Optional filter by tryout type (akademik/lengkap/free)
         $type = $request->get('type');
 
         // Build base query with dynamic allowed types
@@ -438,12 +438,12 @@ class TryoutController extends Controller
             $query->byJenisPaket($type);
         }
 
-        // Enforce FREE user quota: max 1 tryout per jenis (kecerdasan, kepribadian, lengkap)
+        // Enforce FREE user quota: max 1 tryout per jenis (akademik, lengkap)
         if ($user->paket_akses === 'free') {
             $all = $query->get();
             $grouped = $all->groupBy('jenis_paket');
             $limited = collect();
-            foreach (['kecerdasan', 'kepribadian', 'lengkap'] as $jenis) {
+            foreach (['akademik', 'lengkap'] as $jenis) {
                 if ($grouped->has($jenis)) {
                     $limited->push($grouped[$jenis]->first());
                 }

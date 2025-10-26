@@ -127,7 +127,7 @@ class AdminController extends Controller
         $user = User::findOrFail($userId);
 
         $request->validate([
-            'package' => 'nullable|in:,free,kecermatan,kecerdasan,kepribadian,lengkap'
+            'package' => 'nullable|in:,free,bahasa_inggris,pu,twk,numerik,lengkap'
         ]);
 
         $package = $request->input('package');
@@ -409,12 +409,16 @@ class AdminController extends Controller
         }
         
         // Test type specific recommendations
-        if ($testType === 'kecermatan') {
-            $recommendations[] = 'Latih kecepatan dan ketelitian dalam mengamati detail untuk meningkatkan performa.';
-        } else if ($testType === 'kecerdasan') {
-            $recommendations[] = 'Tingkatkan kemampuan analisis dan pemecahan masalah melalui latihan rutin.';
-        } else if ($testType === 'kepribadian') {
-            $recommendations[] = 'Evaluasi jawaban untuk memahami karakteristik diri dan area pengembangan.';
+        if ($testType === 'akademik') {
+            $recommendations[] = 'Tingkatkan kemampuan akademik melalui latihan rutin dan pemahaman konsep yang mendalam.';
+        } else if ($testType === 'twk') {
+            $recommendations[] = 'Perbanyak membaca materi wawasan kebangsaan dan sejarah Indonesia.';
+        } else if ($testType === 'numerik') {
+            $recommendations[] = 'Latih kemampuan logika dan perhitungan matematis secara konsisten.';
+        } else if ($testType === 'bahasa_inggris') {
+            $recommendations[] = 'Perbanyak latihan vocabulary, grammar, dan reading comprehension.';
+        } else if ($testType === 'pu') {
+            $recommendations[] = 'Tingkatkan wawasan umum dengan membaca berbagai topik pengetahuan.';
         }
         
         $recommendations[] = 'Manajemen waktu yang lebih baik dapat meningkatkan hasil tes.';
