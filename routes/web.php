@@ -131,6 +131,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('soal', SoalController::class);
     Route::post('soal/upload-word', [SoalController::class, 'uploadWord'])->name('soal.upload-word');
     Route::get('soal/kepribadian-categories', [SoalController::class, 'getKepribadianCategories'])->name('soal.kepribadian-categories');
+    Route::get('soal/akademik-categories', [SoalController::class, 'getAkademikCategories'])->name('soal.akademik-categories');
 
     Route::resource('tryout', TryoutController::class);
     Route::post('tryout/{tryout}/toggle-status', [TryoutController::class, 'toggleStatus'])->name('tryout.toggle-status');

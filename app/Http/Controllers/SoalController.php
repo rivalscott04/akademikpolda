@@ -54,6 +54,12 @@ class SoalController extends Controller
         return response()->json($kepribadianCodes);
     }
 
+    public function getAkademikCategories()
+    {
+        $akademikCodes = PackageCategoryMapping::getCategoriesForPackage('akademik');
+        return response()->json($akademikCodes);
+    }
+
     /**
      * Calculate bobot berdasarkan tipe soal
      */
