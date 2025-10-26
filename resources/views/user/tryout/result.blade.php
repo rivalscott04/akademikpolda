@@ -376,7 +376,6 @@
                                         Pilihan Anda: {{ $userLetterStr }}
                                         ({{ number_format($userPoinLive, 2) }})
                                     </div>
-                                @endif
                             </div>
 
                             <div class="question-content mt-3">
