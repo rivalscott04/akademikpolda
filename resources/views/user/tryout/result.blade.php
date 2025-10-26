@@ -236,7 +236,6 @@
                                             <div class="percentage">
                                                 {{ number_format(($category['correct'] / $category['total']) * 100, 1) }}%
                                             </div>
-                                        @endif
                                     </div>
                                 </div>
                                     <div class="progress mt-2" style="height: 8px;">
