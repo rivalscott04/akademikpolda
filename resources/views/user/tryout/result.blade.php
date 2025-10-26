@@ -223,6 +223,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <h6 class="mb-1">{{ $category['nama'] }}</h6>
+                                        @if($tryout->jenis_tes === 'kecerdasan')
                                             <small class="text-muted">Poin: {{ number_format($category['score'], 1) }}
                                                 dari {{ $category['total'] * 5 }}</small>
                                         @else
@@ -326,6 +327,7 @@
                                             <span class="badge badge-info">
                                                 <i class="fa fa-star"></i> Poin ({{ number_format($userPoinLive, 2) }})
                                             </span>
+                                        @if($userAnswer->soal->tipe === 'pg_bobot')
                                         @else
                                             @if ($userAnswer->skor > 0)
                                                 <span class="badge badge-success">
