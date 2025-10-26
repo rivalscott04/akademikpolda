@@ -150,17 +150,14 @@
                             <div class="col-md-6">
                                 <div class="score-card text-center p-4">
                                     <div class="score-circle">
-                                            <div class="score-number">{{ number_format($totalScore, 1) }}</div>
-                                            <div class="score-label">Total Skor</div>
-                                        @else
-                                            <div class="score-number">{{ number_format($totalScore, 1) }}</div>
-                                            <div class="score-label">Total Skor</div>
-                                        @endif
+                                        <div class="score-number">{{ number_format($totalScore, 1) }}</div>
+                                        <div class="score-label">Total Skor</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="score-details">
+                                    @if($tryout->jenis_tes === 'kecerdasan')
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="stat-item">
