@@ -274,8 +274,60 @@
 
                             <!-- Pagination -->
                             @if ($soals->hasPages())
-                                <div class="d-flex justify-content-center mt-4">
-                                    {{ $soals->appends(request()->query())->links('pagination::bootstrap-4') }}
+                                <div class="row mt-4">
+                                    <div class="col-sm-5">
+                                        <div class="dataTables_info" role="status" aria-live="polite">
+                                            Menampilkan {{ $soals->firstItem() ?? 0 }} sampai {{ $soals->lastItem() ?? 0 }} dari {{ $soals->total() }} data
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+                                            <ul class="pagination">
+                                                {{-- Previous Page Link --}}
+                                                @if ($soals->onFirstPage())
+                                                    <li class="paginate_button page-item previous disabled">
+                                                        <a href="#" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0">
+                                                            <i class="fa fa-angle-double-left"></i>
+                                                        </a>
+                                                    </li>
+                                                @else
+                                                    <li class="paginate_button page-item previous">
+                                                        <a href="{{ $soals->appends(request()->query())->previousPageUrl() }}" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0" rel="prev">
+                                                            <i class="fa fa-angle-double-left"></i>
+                                                        </a>
+                                                    </li>
+                                                @endif
+
+                                                {{-- Pagination Elements --}}
+                                                @foreach ($soals->getUrlRange(1, $soals->lastPage()) as $page => $url)
+                                                    @if ($page == $soals->currentPage())
+                                                        <li class="paginate_button page-item active">
+                                                            <a href="#" class="page-link" aria-controls="editable" data-dt-idx="{{ $page }}" tabindex="0">{{ $page }}</a>
+                                                        </li>
+                                                    @else
+                                                        <li class="paginate_button page-item">
+                                                            <a href="{{ $soals->appends(request()->query())->url($page) }}" class="page-link" aria-controls="editable" data-dt-idx="{{ $page }}" tabindex="0">{{ $page }}</a>
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+
+                                                {{-- Next Page Link --}}
+                                                @if ($soals->hasMorePages())
+                                                    <li class="paginate_button page-item next">
+                                                        <a href="{{ $soals->appends(request()->query())->nextPageUrl() }}" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0" rel="next">
+                                                            <i class="fa fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                @else
+                                                    <li class="paginate_button page-item next disabled">
+                                                        <a href="#" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0">
+                                                            <i class="fa fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -447,44 +499,6 @@
 
     @push('styles')
         <style>
-            .pagination {
-                margin: 20px 0;
-                justify-content: center;
-            }
-
-            .pagination .page-link {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.9rem;
-                border: 1px solid #dee2e6;
-                color: #007bff;
-                background-color: #fff;
-                margin: 0 2px;
-                border-radius: 4px;
-            }
-
-            .pagination .page-link:hover {
-                color: #0056b3;
-                background-color: #e9ecef;
-                border-color: #dee2e6;
-                text-decoration: none;
-            }
-
-            .pagination .page-item.active .page-link {
-                color: #fff;
-                background-color: #007bff;
-                border-color: #007bff;
-            }
-
-            .pagination .page-item.disabled .page-link {
-                color: #6c757d;
-                background-color: #fff;
-                border-color: #dee2e6;
-            }
-
-            .pagination .page-link i {
-                font-size: 0.8rem;
-            }
-
             /* Ensure proper spacing from footer */
             .card {
                 margin-bottom: 30px;

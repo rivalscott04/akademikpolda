@@ -137,9 +137,64 @@
                             </table>
                         </div>
 
-                        <div class="d-flex justify-content-center">
-                            {{ $kategoris->links() }}
-                        </div>
+                        <!-- Pagination -->
+                        @if ($kategoris->hasPages())
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="dataTables_info" role="status" aria-live="polite">
+                                        Menampilkan {{ $kategoris->firstItem() ?? 0 }} sampai {{ $kategoris->lastItem() ?? 0 }} dari {{ $kategoris->total() }} data
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($kategoris->onFirstPage())
+                                                <li class="paginate_button page-item previous disabled">
+                                                    <a href="#" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0">
+                                                        <i class="fa fa-angle-double-left"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="paginate_button page-item previous">
+                                                    <a href="{{ $kategoris->previousPageUrl() }}" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0" rel="prev">
+                                                        <i class="fa fa-angle-double-left"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($kategoris->getUrlRange(1, $kategoris->lastPage()) as $page => $url)
+                                                @if ($page == $kategoris->currentPage())
+                                                    <li class="paginate_button page-item active">
+                                                        <a href="#" class="page-link" aria-controls="editable" data-dt-idx="{{ $page }}" tabindex="0">{{ $page }}</a>
+                                                    </li>
+                                                @else
+                                                    <li class="paginate_button page-item">
+                                                        <a href="{{ $url }}" class="page-link" aria-controls="editable" data-dt-idx="{{ $page }}" tabindex="0">{{ $page }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+
+                                            {{-- Next Page Link --}}
+                                            @if ($kategoris->hasMorePages())
+                                                <li class="paginate_button page-item next">
+                                                    <a href="{{ $kategoris->nextPageUrl() }}" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0" rel="next">
+                                                        <i class="fa fa-angle-double-right"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="paginate_button page-item next disabled">
+                                                    <a href="#" class="page-link" aria-controls="editable" data-dt-idx="0" tabindex="0">
+                                                        <i class="fa fa-angle-double-right"></i>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
