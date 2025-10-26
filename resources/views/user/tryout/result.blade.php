@@ -95,6 +95,7 @@
                         </div>
 
                         <div class="mt-2">
+                            @if($tryout->jenis_tes === 'kecerdasan')
                                 <div class="d-flex align-items-center mb-2">
                                     <span class="question-legend answered"></span>
                                     <small>Terjawab</small>
