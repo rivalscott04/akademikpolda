@@ -242,7 +242,6 @@
                                         <div class="progress-bar"
                                             style="width: {{ ($category['correct'] / $category['total']) * 100 }}%"></div>
                                     </div>
-                                @endif
                             </div>
                         @endforeach
                     </div>
