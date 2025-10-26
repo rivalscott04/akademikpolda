@@ -201,6 +201,102 @@
                             </div>
                         </div>
                     </div>
+                    
+                    {{-- Individual Academic Category Cards --}}
+                    <div class="row m-t-md">
+                        <div class="col-md-3">
+                            <div class="widget style1 {{ $paketLengkapStatus['bahasa_inggris']['completed'] ? 'navy-bg' : 'gray-bg' }}">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <div class="progress-icon-container">
+                                            <i class="fa fa-{{ $paketLengkapStatus['bahasa_inggris']['completed'] ? 'check' : 'times' }}-circle fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="progress-text-container">
+                                            <span class="progress-label">Bahasa Inggris</span>
+                                            @if($paketLengkapStatus['bahasa_inggris']['completed'])
+                                                <h3 class="font-bold">{{ number_format($paketLengkapStatus['bahasa_inggris']['score'], 1) }}</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['bahasa_inggris']['tanggal'])->format('d M Y H:i') }}</small>
+                                            @else
+                                                <h3 class="font-bold">-</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">Belum selesai</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget style1 {{ $paketLengkapStatus['pu']['completed'] ? 'navy-bg' : 'gray-bg' }}">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <div class="progress-icon-container">
+                                            <i class="fa fa-{{ $paketLengkapStatus['pu']['completed'] ? 'check' : 'times' }}-circle fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="progress-text-container">
+                                            <span class="progress-label">Pengetahuan Umum</span>
+                                            @if($paketLengkapStatus['pu']['completed'])
+                                                <h3 class="font-bold">{{ number_format($paketLengkapStatus['pu']['score'], 1) }}</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['pu']['tanggal'])->format('d M Y H:i') }}</small>
+                                            @else
+                                                <h3 class="font-bold">-</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">Belum selesai</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget style1 {{ $paketLengkapStatus['twk']['completed'] ? 'navy-bg' : 'gray-bg' }}">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <div class="progress-icon-container">
+                                            <i class="fa fa-{{ $paketLengkapStatus['twk']['completed'] ? 'check' : 'times' }}-circle fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="progress-text-container">
+                                            <span class="progress-label">TWK</span>
+                                            @if($paketLengkapStatus['twk']['completed'])
+                                                <h3 class="font-bold">{{ number_format($paketLengkapStatus['twk']['score'], 1) }}</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['twk']['tanggal'])->format('d M Y H:i') }}</small>
+                                            @else
+                                                <h3 class="font-bold">-</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">Belum selesai</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="widget style1 {{ $paketLengkapStatus['numerik']['completed'] ? 'navy-bg' : 'gray-bg' }}">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <div class="progress-icon-container">
+                                            <i class="fa fa-{{ $paketLengkapStatus['numerik']['completed'] ? 'check' : 'times' }}-circle fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="progress-text-container">
+                                            <span class="progress-label">Numerik</span>
+                                            @if($paketLengkapStatus['numerik']['completed'])
+                                                <h3 class="font-bold">{{ number_format($paketLengkapStatus['numerik']['score'], 1) }}</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['numerik']['tanggal'])->format('d M Y H:i') }}</small>
+                                            @else
+                                                <h3 class="font-bold">-</h3>
+                                                <small style="font-size: 10px; opacity: 0.8;">Belum selesai</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             @endif
