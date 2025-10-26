@@ -71,20 +71,23 @@
                                     $statusClass = '';
                                     $statusText = '';
                                     
-                                    if ($questionStatus && $questionStatus->sudah_dijawab) {
-                                        $statusClass = 'answered';
-                                        $statusText = 'Terjawab';
-                                    } elseif ($questionStatus) {
+                                    if ($questionStatus) {
+                                        // Cek apakah soal sudah dijawab berdasarkan sudah_dijawab
+                                        if ($questionStatus->sudah_dijawab) {
+                                            if ($questionStatus->skor > 0) {
+                                                $statusClass = 'answered';
+                                                $statusText = 'Benar';
+                                            } else {
+                                                $statusClass = 'unanswered';
+                                                $statusText = 'Salah';
+                                            }
+                                        } else {
+                                            $statusClass = 'unanswered';
+                                            $statusText = 'Tidak dijawab';
+                                        }
+                                    } else {
                                         $statusClass = 'unanswered';
                                         $statusText = 'Tidak dijawab';
-                                    } else {
-                                        if ($questionStatus && $questionStatus->skor > 0) {
-                                            $statusClass = 'answered';
-                                            $statusText = 'Benar';
-                                        } elseif ($questionStatus) {
-                                            $statusClass = 'unanswered';
-                                            $statusText = 'Salah';
-                                        }
                                     }
                                 @endphp
                                 <a href="{{ route('user.tryout.finish', ['tryout' => $tryout->id, 'review' => $i]) }}"
