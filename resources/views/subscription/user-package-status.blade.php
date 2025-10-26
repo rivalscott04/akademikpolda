@@ -156,7 +156,7 @@
                     </div>
                     
                     <div class="row m-t-md">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="widget style1 {{ $paketLengkapStatus['akademik']['completed'] ? 'navy-bg' : 'gray-bg' }}">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
@@ -172,28 +172,7 @@
                                                 <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['akademik']['tanggal'])->format('d M Y H:i') }}</small>
                                             @else
                                                 <h2 class="font-bold">-</h2>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="widget style1 {{ $paketLengkapStatus['simulasi']['completed'] ? 'navy-bg' : 'gray-bg' }}">
-                                <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <div class="progress-icon-container">
-                                            <i class="fa fa-{{ $paketLengkapStatus['simulasi']['completed'] ? 'check' : 'times' }}-circle fa-3x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <div class="progress-text-container">
-                                            <span class="progress-label">Simulasi Nilai</span>
-                                            @if($paketLengkapStatus['simulasi']['completed'])
-                                                <h2 class="font-bold">{{ $paketLengkapStatus['simulasi']['score'] }}</h2>
-                                                <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['simulasi']['tanggal'])->format('d M Y H:i') }}</small>
-                                            @else
-                                                <h2 class="font-bold">-</h2>
+                                                <small style="font-size: 10px; opacity: 0.8;">{{ $paketLengkapStatus['akademik']['message'] }}</small>
                                             @endif
                                         </div>
                                     </div>
