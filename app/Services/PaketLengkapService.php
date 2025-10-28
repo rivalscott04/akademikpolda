@@ -64,20 +64,13 @@ class PaketLengkapService
             return null;
         }
 
-        // Hitung final score dengan formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
+        // Hitung final score dengan formula: (skor tiap paket) dijumlahkan dibagi 4
         $bahasaInggrisScore = $status['bahasa_inggris']['score'] ?? 0;
         $puScore = $status['pu']['score'] ?? 0;
         $twkScore = $status['twk']['score'] ?? 0;
         $numerikScore = $status['numerik']['score'] ?? 0;
 
-        $setting = \App\Models\ScoringSetting::current();
-        $w1 = $setting->weight_bahasa_inggris / 100;
-        $w2 = $setting->weight_pu / 100;
-        $w3 = $setting->weight_twk / 100;
-        $w4 = $setting->weight_numerik / 100;
-
-        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
-        $finalScore = round($weightedSum / 4, 2);
+        $finalScore = round(($bahasaInggrisScore + $puScore + $twkScore + $numerikScore) / 4, 2);
         
         return $finalScore;
     }
