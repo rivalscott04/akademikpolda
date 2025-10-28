@@ -44,8 +44,8 @@ class PaketLengkapService
                 'pu' => $allData['pu'],
                 'twk' => $allData['twk'],
                 'numerik' => $allData['numerik'],
-                'final_score' => $isComplete ? $this->calculateFinalScoreFromData($allData) : null,
-                'scoring_info' => $isComplete ? $this->getScoringInfo($allData) : null
+                'final_score' => $akademikStatus['completed'] ? $this->calculateFinalScoreFromData($allData) : null,
+                'scoring_info' => $akademikStatus['completed'] ? $this->getScoringInfo($allData) : null
             ];
         });
     }
@@ -60,7 +60,7 @@ class PaketLengkapService
     {
         $status = $this->getCompletionStatus($user);
         
-        if (!$status['is_complete']) {
+        if (!$status['akademik']['completed']) {
             return null;
         }
 
