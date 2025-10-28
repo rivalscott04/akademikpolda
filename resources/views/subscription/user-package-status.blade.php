@@ -166,7 +166,7 @@
                                     </div>
                                     <div class="col-xs-8">
                                         <div class="progress-text-container">
-                                            <span class="progress-label">Tryout AKADEMIK</span>
+                                            <span class="progress-label">Nilai Akhir</span>
                                             @if($paketLengkapStatus['akademik']['completed'])
                                                 <h2 class="font-bold">{{ $paketLengkapStatus['akademik']['score'] }}</h2>
                                                 <small style="font-size: 10px; opacity: 0.8;">{{ \Carbon\Carbon::parse($paketLengkapStatus['akademik']['tanggal'])->format('d M Y H:i') }}</small>
