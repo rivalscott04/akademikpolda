@@ -14,7 +14,7 @@ class ScoringService
 		$w3 = $setting->weight_twk / 100;
 		$w4 = $setting->weight_numerik / 100;
 
-		$final = ($w1 * $bahasa_inggris) + ($w2 * $pu) + ($w3 * $twk) + ($w4 * $numerik);
+		$final = ($bahasa_inggris + $pu + $twk + $numerik) / 4;
 		$passed = $final >= (float) $setting->passing_grade;
 
 		return [
