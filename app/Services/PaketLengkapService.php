@@ -312,7 +312,7 @@ class PaketLengkapService
 
     /**
      * Calculate final score from pre-loaded data
-     * Formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
+     * Formula: (skor tiap paket) dijumlahkan dibagi 4
      */
     private function calculateFinalScoreFromData(array $allData): float
     {
@@ -322,24 +322,8 @@ class PaketLengkapService
         $twkScore = $allData['twk']['score'] ?? 0;
         $numerikScore = $allData['numerik']['score'] ?? 0;
 
-        // Gunakan ScoringService untuk menghitung dengan bobot
-        $scoringService = app(ScoringService::class);
-        $result = $scoringService->calculateFinalScore(
-            (float) $bahasaInggrisScore,
-            (float) $puScore,
-            (float) $twkScore,
-            (float) $numerikScore
-        );
-        
-        // Sesuai permintaan: (skor tiap paket × bobot) dijumlahkan dibagi 4
-        $setting = \App\Models\ScoringSetting::current();
-        $w1 = $setting->weight_bahasa_inggris / 100;
-        $w2 = $setting->weight_pu / 100;
-        $w3 = $setting->weight_twk / 100;
-        $w4 = $setting->weight_numerik / 100;
-
-        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
-        $finalScore = $weightedSum / 4;
+        // Formula sederhana: (skor tiap paket) dijumlahkan dibagi 4
+        $finalScore = ($bahasaInggrisScore + $puScore + $twkScore + $numerikScore) / 4;
         
         return round($finalScore, 2);
     }
@@ -355,17 +339,11 @@ class PaketLengkapService
         $twkScore = $allData['twk']['score'] ?? 0;
         $numerikScore = $allData['numerik']['score'] ?? 0;
 
-        // Hitung final score dengan formula: (skor tiap paket × bobot) dijumlahkan dibagi 4
-        $setting = \App\Models\ScoringSetting::current();
-        $w1 = $setting->weight_bahasa_inggris / 100;
-        $w2 = $setting->weight_pu / 100;
-        $w3 = $setting->weight_twk / 100;
-        $w4 = $setting->weight_numerik / 100;
-
-        $weightedSum = ($w1 * $bahasaInggrisScore) + ($w2 * $puScore) + ($w3 * $twkScore) + ($w4 * $numerikScore);
-        $finalScore = round($weightedSum / 4, 2);
+        // Hitung final score dengan formula: (skor tiap paket) dijumlahkan dibagi 4
+        $finalScore = round(($bahasaInggrisScore + $puScore + $twkScore + $numerikScore) / 4, 2);
         
         // Cek kelulusan berdasarkan passing grade
+        $setting = \App\Models\ScoringSetting::current();
         $passed = $finalScore >= (float) $setting->passing_grade;
 
         return [
