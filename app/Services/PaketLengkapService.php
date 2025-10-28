@@ -90,14 +90,14 @@ class PaketLengkapService
             $status = $this->getCompletionStatus($user);
             $completedCount = 0;
 
-            // Akademik wajib (1 poin) - semua jenis tes harus selesai
-            if ($status['akademik']['completed']) $completedCount++;
-            
-            // Simulasi wajib (1 poin)
-            if ($status['simulasi']['completed']) $completedCount++;
+            // Hitung berapa card yang sudah selesai (ada nilai)
+            if ($status['bahasa_inggris']['completed']) $completedCount++;
+            if ($status['pu']['completed']) $completedCount++;
+            if ($status['twk']['completed']) $completedCount++;
+            if ($status['numerik']['completed']) $completedCount++;
 
-            // Total maksimal 2 poin (akademik + simulasi)
-            return round(($completedCount / 2) * 100);
+            // Total maksimal 4 card
+            return round(($completedCount / 4) * 100);
         });
     }
 
@@ -119,12 +119,12 @@ class PaketLengkapService
 
         $progress = $this->getProgressPercentage($user);
         
-        if ($status['is_complete']) {
+        if ($status['akademik']['completed']) {
             return [
                 'title' => 'Paket Lengkap',
                 'progress' => 100,
                 'status' => 'completed',
-                'message' => 'Paket lengkap sudah selesai!',
+                'message' => 'Semua tes akademik sudah selesai!',
                 'final_score' => $status['scoring_info']['final_score'],
                 'passed' => $status['scoring_info']['passed'],
                 'passing_grade' => $status['scoring_info']['passing_grade'],
@@ -149,7 +149,6 @@ class PaketLengkapService
             if (!$status['numerik']['completed']) $akademikTasks[] = 'Numerik';
             $remainingTasks[] = 'Tes AKADEMIK (' . implode(', ', $akademikTasks) . ')';
         }
-        if (!$status['simulasi']['completed']) $remainingTasks[] = 'Simulasi Nilai';
 
         return [
             'title' => 'Paket Lengkap',
