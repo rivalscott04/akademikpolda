@@ -45,32 +45,55 @@
                                         <div class="card-body">
                                             <p class="card-text">{{ Str::limit($tryout->deskripsi, 100) }}</p>
 
-                                            <div class="mb-3 p-2 border rounded bg-light">
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <span class="text-muted"><i class="fa fa-question-circle"></i> Jumlah Soal:</span>
-                                                    <strong>{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }} soal</strong>
-                                                </div>
-                                                <div class="d-flex justify-content-between">
-                                                    <span class="text-muted"><i class="fa fa-clock-o"></i> Waktu Tersedia:</span>
-                                                    <strong>{{ $tryout->durasi_menit }} menit</strong>
+                                            {{-- Struktur Soal --}}
+                                            <div class="mb-2">
+                                                <span class="struktur-soal-label">Struktur Soal:</span>
+                                                @if($tryout->blueprints && $tryout->blueprints->count() > 0)
+                                                    @php
+                                                        $strukturKode = $tryout->blueprints->groupBy('kategori_id')->map(function($group) {
+                                                            $kategori = $group->first()->kategori;
+                                                            $jumlah = $group->sum('jumlah');
+                                                            return ($kategori ? $kategori->kode : 'N/A') . ' (' . $jumlah . ')';
+                                                        })->implode(', ');
+                                                    @endphp
+                                                    @if($strukturKode)
+                                                        <span class="badge badge-struktur">{{ $strukturKode }}</span>
+                                                    @endif
+                                                @endif
+                                            </div>
+
+                                            {{-- Info Cards --}}
+                                            <div class="mb-3">
+                                                <div class="info-cards-container">
+                                                    <div class="info-card">
+                                                        <div class="info-card-label">Total Soal</div>
+                                                        <div class="info-card-value">{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }}</div>
+                                                    </div>
+                                                    <div class="info-card">
+                                                        <div class="info-card-label">Durasi</div>
+                                                        <div class="info-card-value">{{ $tryout->durasi_menit }} menit</div>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            {{-- <div class="text-center">
-                                                <span
-                                                    class="badge badge-{{ $tryout->jenis_paket === 'lengkap' ? 'danger' : ($tryout->jenis_paket === 'kecerdasan' || $tryout->jenis_paket === 'akademik' ? 'primary' : 'success') }} mb-2">
-                                                    {{ strtoupper($tryout->jenis_paket) }}
+                                            {{-- Dynamic Paket Badge --}}
+                                            @php
+                                                $badgeClass = 'badge-primary';
+                                                if ($tryout->jenis_paket === 'lengkap') {
+                                                    $badgeClass = 'badge-danger';
+                                                } elseif (in_array($tryout->jenis_paket, ['bahasa_inggris', 'pu'])) {
+                                                    $badgeClass = 'badge-info';
+                                                } elseif (in_array($tryout->jenis_paket, ['twk', 'numerik'])) {
+                                                    $badgeClass = 'badge-warning';
+                                                } elseif ($tryout->jenis_paket === 'free') {
+                                                    $badgeClass = 'badge-success';
+                                                }
+                                            @endphp
+                                            <div class="text-center mb-3">
+                                                <span class="badge {{ $badgeClass }} badge-lg">
+                                                    {{ strtoupper(str_replace('_', ' ', $tryout->jenis_paket)) }}
                                                 </span>
-                                                @if ($tryout->jenis_paket === 'free')
-                                                    <br><small class="text-muted">Gratis untuk semua user</small>
-                                                @elseif($tryout->jenis_paket === 'kecerdasan')
-                                                    <br><small class="text-muted">Paket Kecerdasan</small>
-                                                @elseif($tryout->jenis_paket === 'akademik')
-                                                    <br><small class="text-muted">Paket AKADEMIK</small>
-                                                @elseif($tryout->jenis_paket === 'lengkap')
-                                                    <br><small class="text-muted">Paket Lengkap</small>
-                                                @endif
-                                            </div> --}}
+                                            </div>
                                         </div>
                                         <div class="card-footer">
                                             <!-- Single button for all packages -->
@@ -156,6 +179,85 @@
 
     .pagination .page-link i {
         font-size: 0.8rem;
+    }
+
+    /* Struktur Soal Styles */
+    .struktur-soal-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #495057;
+        margin-right: 0.5rem;
+    }
+
+    .badge-struktur {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        border: none;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        display: inline-block;
+    }
+
+    /* Info Cards Styles */
+    .info-cards-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .info-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #007bff;
+    }
+
+    .info-card-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-card-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .badge-lg {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+    }
+
+    @media (max-width: 768px) {
+        .info-cards-container {
+            gap: 0.5rem;
+        }
+
+        .info-card {
+            padding: 0.75rem;
+        }
+
+        .info-card-label {
+            font-size: 0.8rem;
+        }
+
+        .info-card-value {
+            font-size: 1.25rem;
+        }
     }
 </style>
 @endpush

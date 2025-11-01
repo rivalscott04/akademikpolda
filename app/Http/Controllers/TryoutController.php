@@ -431,7 +431,7 @@ class TryoutController extends Controller
         $type = $request->get('type');
 
         // Build base query with dynamic allowed types
-        $query = Tryout::active()->with('blueprints')->forUserPackage($user->paket_akses);
+        $query = Tryout::active()->with(['blueprints.kategori'])->forUserPackage($user->paket_akses);
 
         // Apply optional type filter unconditionally (empty result is acceptable if not allowed)
         if (!empty($type)) {
