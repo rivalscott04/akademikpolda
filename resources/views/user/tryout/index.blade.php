@@ -65,7 +65,7 @@
                                             {{-- Info Cards --}}
                                             <div class="row mb-3">
                                                 <div class="col-6">
-                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0;">
+                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0; border-width: 2px;">
                                                         <div class="row">
                                                             <div class="col-12 text-center">
                                                                 <span class="text-muted" style="font-size: 11px;">Total Soal</span>
@@ -75,7 +75,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0;">
+                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0; border-width: 2px;">
                                                         <div class="row">
                                                             <div class="col-12 text-center">
                                                                 <span class="text-muted" style="font-size: 11px;">Durasi</span>
