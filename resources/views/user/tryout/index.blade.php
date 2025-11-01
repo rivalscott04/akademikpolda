@@ -65,21 +65,21 @@
                                             {{-- Info Cards --}}
                                             <div class="row mb-3">
                                                 <div class="col-6">
-                                                    <div class="widget style1 lazur-bg" style="padding: 10px 15px; margin: 0;">
+                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0;">
                                                         <div class="row">
                                                             <div class="col-12 text-center">
-                                                                <span class="text-white" style="font-size: 11px; opacity: 0.9;">Total Soal</span>
-                                                                <h3 class="font-bold text-white m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }}</h3>
+                                                                <span class="text-muted" style="font-size: 11px;">Total Soal</span>
+                                                                <h3 class="font-bold m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }}</h3>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
-                                                    <div class="widget style1 navy-bg" style="padding: 10px 15px; margin: 0;">
+                                                    <div class="widget-text-box" style="padding: 10px 15px; margin: 0;">
                                                         <div class="row">
                                                             <div class="col-12 text-center">
-                                                                <span class="text-white" style="font-size: 11px; opacity: 0.9;">Durasi</span>
-                                                                <h3 class="font-bold text-white m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->durasi_menit }} menit</h3>
+                                                                <span class="text-muted" style="font-size: 11px;">Durasi</span>
+                                                                <h3 class="font-bold m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->durasi_menit }} menit</h3>
                                                             </div>
                                                         </div>
                                                     </div>
