@@ -47,7 +47,7 @@
 
                                             {{-- Struktur Soal --}}
                                             <div class="mb-2">
-                                                <span class="struktur-soal-label">Struktur Soal:</span>
+                                                <span class="text-muted">Struktur Soal:</span>
                                                 @if($tryout->blueprints && $tryout->blueprints->count() > 0)
                                                     @php
                                                         $strukturKode = $tryout->blueprints->groupBy('kategori_id')->map(function($group) {
@@ -57,21 +57,31 @@
                                                         })->implode(', ');
                                                     @endphp
                                                     @if($strukturKode)
-                                                        <span class="badge badge-struktur">{{ $strukturKode }}</span>
+                                                        <span class="badge badge-info">{{ $strukturKode }}</span>
                                                     @endif
                                                 @endif
                                             </div>
 
                                             {{-- Info Cards --}}
-                                            <div class="mb-3">
-                                                <div class="info-cards-container">
-                                                    <div class="info-card">
-                                                        <div class="info-card-label">Total Soal</div>
-                                                        <div class="info-card-value">{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }}</div>
+                                            <div class="row mb-3">
+                                                <div class="col-6">
+                                                    <div class="widget style1 lazur-bg" style="padding: 10px 15px; margin: 0;">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center">
+                                                                <span class="text-white" style="font-size: 11px; opacity: 0.9;">Total Soal</span>
+                                                                <h3 class="font-bold text-white m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->total_soal ?? $tryout->blueprints->sum('jumlah') ?? 0 }}</h3>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="info-card">
-                                                        <div class="info-card-label">Durasi</div>
-                                                        <div class="info-card-value">{{ $tryout->durasi_menit }} menit</div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="widget style1 navy-bg" style="padding: 10px 15px; margin: 0;">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center">
+                                                                <span class="text-white" style="font-size: 11px; opacity: 0.9;">Durasi</span>
+                                                                <h3 class="font-bold text-white m-t-xs m-b-none" style="font-size: 20px;">{{ $tryout->durasi_menit }} menit</h3>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,7 +100,7 @@
                                                 }
                                             @endphp
                                             <div class="text-center mb-3">
-                                                <span class="badge {{ $badgeClass }} badge-lg">
+                                                <span class="badge {{ $badgeClass }}">
                                                     {{ strtoupper(str_replace('_', ' ', $tryout->jenis_paket)) }}
                                                 </span>
                                             </div>
@@ -179,85 +189,6 @@
 
     .pagination .page-link i {
         font-size: 0.8rem;
-    }
-
-    /* Struktur Soal Styles */
-    .struktur-soal-label {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: #495057;
-        margin-right: 0.5rem;
-    }
-
-    .badge-struktur {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        border: none;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-        display: inline-block;
-    }
-
-    /* Info Cards Styles */
-    .info-cards-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
-
-    .info-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 1px solid #dee2e6;
-        border-radius: 12px;
-        padding: 1rem;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .info-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        border-color: #007bff;
-    }
-
-    .info-card-label {
-        font-size: 0.85rem;
-        color: #6c757d;
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-    }
-
-    .info-card-value {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #007bff;
-    }
-
-    .badge-lg {
-        font-size: 0.95rem;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-    }
-
-    @media (max-width: 768px) {
-        .info-cards-container {
-            gap: 0.5rem;
-        }
-
-        .info-card {
-            padding: 0.75rem;
-        }
-
-        .info-card-label {
-            font-size: 0.8rem;
-        }
-
-        .info-card-value {
-            font-size: 1.25rem;
-        }
     }
 </style>
 @endpush
